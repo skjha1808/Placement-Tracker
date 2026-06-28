@@ -2,8 +2,8 @@ const express = require("express");
 const dotenv = require("dotenv");
 const connectDB = require("./config/db");
 const studentRoutes = require("./routes/studentRoutes");
-
 const companyRoutes = require("./routes/companyRoutes");
+const applicationRoutes = require("./routes/applicationRoutes");
 
 dotenv.config();
 
@@ -20,8 +20,8 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/students", studentRoutes);
-
 app.use("/api/companies", companyRoutes);
+app.use("/api/applications", applicationRoutes);
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
