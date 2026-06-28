@@ -3,6 +3,8 @@ const dotenv = require("dotenv");
 const connectDB = require("./config/db");
 const studentRoutes = require("./routes/studentRoutes");
 
+const companyRoutes = require("./routes/companyRoutes");
+
 dotenv.config();
 
 connectDB();
@@ -18,6 +20,8 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/students", studentRoutes);
+
+app.use("/api/companies", companyRoutes);
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
