@@ -42,6 +42,18 @@ const studentSchema = new mongoose.Schema(
         resumeLink: {
             type: String,
         },
+
+        user: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User",
+            required: true,
+            unique: true,
+        },
+
+        isVerified: {
+            type: Boolean,
+            default: false,
+        },
     },
     {
         timestamps: true,

@@ -2,9 +2,115 @@ const Student = require("../models/Student");
 
 const createStudent = async (req, res) => {
     try {
-        const student = await Student.create(req.body);
+        const existingStudent = await Student.findOne({
+            user: req.user._id,
+        });
+
+        if (existingStudent) {
+            return res.status(400).json({
+                message: "Student profile already exists",
+            });
+        }
+
+        const student = await Student.create({
+            ...req.body,
+            user: req.user._id,
+        });
 
         res.status(201).json(student);
+
+    } catch (error) {
+        res.status(500).json({
+            message: error.message,
+        });
+    }
+};
+
+const getMyProfile = async (req, res) => {
+    try {
+        const student = await Student.findOne({
+            user: req.user._id,
+        });
+
+        res.status(200).json(student);
+
+    } catch (error) {
+        res.status(500).json({
+            message: error.message,
+        });
+    }
+};
+
+const updateMyProfile = async (req, res) => {
+    try {
+        const student = await Student.findOne({
+            user: req.user._id,
+        });
+
+        if (!student) {
+            return res.status(404).json({
+                message: "Student profile not found",
+            });
+        }
+
+        if (student.isVerified) {
+            const lockedFields = [
+                "name",
+                "branch",
+                "education",
+                "cgpa",
+            ];
+
+            const attemptedLockedFieldUpdate =
+                lockedFields.some(
+                    field => field in req.body
+                );
+
+            if (attemptedLockedFieldUpdate) {
+                return res.status(403).json({
+                    message:
+                        "Academic details cannot be updated after verification",
+                });
+            }
+        }
+
+        const updatedStudent =
+            await Student.findOneAndUpdate(
+                {
+                    user: req.user._id,
+                },
+                req.body,
+                {
+                    new: true,
+                }
+            );
+
+        res.status(200).json(updatedStudent);
+
+    } catch (error) {
+        res.status(500).json({
+            message: error.message,
+        });
+    }
+};
+
+const verifyStudent = async (req, res) => {
+    try {
+        const student = await Student.findByIdAndUpdate(
+            req.params.id,
+            {
+                isVerified: true,
+            },
+            {
+                new: true,
+            }
+        );
+
+        res.status(200).json({
+            message: "Student verified successfully",
+            student,
+        });
+
     } catch (error) {
         res.status(500).json({
             message: error.message,
@@ -14,9 +120,11 @@ const createStudent = async (req, res) => {
 
 const getAllStudents = async (req, res) => {
     try {
-        const students = await Student.find();
+        const students = await Student.find()
+            .populate("user", "name email role");
 
         res.status(200).json(students);
+
     } catch (error) {
         res.status(500).json({
             message: error.message,
@@ -26,9 +134,11 @@ const getAllStudents = async (req, res) => {
 
 const getStudentById = async (req, res) => {
     try {
-        const student = await Student.findById(req.params.id);
+        const student = await Student.findById(req.params.id)
+            .populate("user", "name email role");
 
         res.status(200).json(student);
+
     } catch (error) {
         res.status(500).json({
             message: error.message,
@@ -47,6 +157,7 @@ const updateStudent = async (req, res) => {
         );
 
         res.status(200).json(updatedStudent);
+
     } catch (error) {
         res.status(500).json({
             message: error.message,
@@ -64,6 +175,7 @@ const deleteStudent = async (req, res) => {
             message: "Student deleted successfully",
             deletedStudent,
         });
+
     } catch (error) {
         res.status(500).json({
             message: error.message,
@@ -73,6 +185,9 @@ const deleteStudent = async (req, res) => {
 
 module.exports = {
     createStudent,
+    getMyProfile,
+    updateMyProfile,
+    verifyStudent,
     getAllStudents,
     getStudentById,
     updateStudent,
