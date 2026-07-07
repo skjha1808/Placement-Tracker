@@ -12,6 +12,14 @@ function Dashboard() {
         navigate("/profile");
     };
 
+    const handleCompanies = () => {
+        navigate("/companies");
+    };
+
+    const handleApplications = () => {
+        navigate("/applications");
+    };
+
     const fetchProfile = async () => {
         try {
             const response = await api.get(
@@ -58,6 +66,19 @@ function Dashboard() {
                     View / Edit Profile
                 </button>
             )}
+
+            <br /><br />
+
+            <button onClick={handleCompanies}>
+                View Companies
+            </button>
+
+            <br /><br />
+
+            <button onClick={handleApplications}>
+                My Applications
+            </button>
+
         </div>
     );
 }

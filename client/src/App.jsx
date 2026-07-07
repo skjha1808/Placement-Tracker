@@ -7,6 +7,8 @@ import Dashboard from "./pages/Dashboard";
 import Profile from "./pages/Profile";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Navbar from "./components/Navbar";
+import Companies from "./pages/Companies";
+import MyApplications from "./pages/MyApplications";
 
 function App() {
     return (
@@ -24,6 +26,7 @@ function App() {
                     </ProtectedRoute>
                   }
                 />
+
                 <Route
                   path="/profile"
                   element={
@@ -32,6 +35,25 @@ function App() {
                     </ProtectedRoute>
                   }
                 />
+
+                <Route
+                  path="/companies"
+                  element={
+                    <ProtectedRoute>
+                      <Companies />
+                    </ProtectedRoute>
+                  }
+                />
+
+                <Route
+                  path="/applications"
+                  element={
+                    <ProtectedRoute>
+                      <MyApplications />
+                    </ProtectedRoute>
+                  }
+                />
+
             </Routes>
         </BrowserRouter>
     );
