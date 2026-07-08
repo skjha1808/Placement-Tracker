@@ -1,5 +1,5 @@
 import { useState } from "react";
-import api from "../services/api";
+import api from "../../services/api";
 import { useNavigate } from "react-router-dom";
 
 function Login() {
@@ -31,9 +31,9 @@ function Login() {
             );
 
             if (response.data.user.role === "admin") {
-                navigate("/admin");
+                navigate("/admin", { replace: true });
             } else {
-                navigate("/dashboard");
+                navigate("/dashboard", { replace: true });
             }
 
             console.log("Token saved successfully");

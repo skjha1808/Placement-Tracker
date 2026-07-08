@@ -1,99 +1,109 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+import Home from "./pages/Home";
+
+import Login from "./pages/auth/Login";
+import Register from "./pages/auth/Register";
+
+import AdminDashboard from "./pages/admin/AdminDashboard";
 import Students from "./pages/admin/Students";
 import AdminCompanies from "./pages/admin/Companies";
 import Applications from "./pages/admin/Applications";
 
-import Home from "./pages/Home";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import Dashboard from "./pages/Dashboard";
-import Profile from "./pages/Profile";
-import ProtectedRoute from "./components/ProtectedRoute";
-import Navbar from "./components/Navbar";
-import Companies from "./pages/Companies";
-import MyApplications from "./pages/MyApplications";
-import AdminDashboard from "./pages/admin/AdminDashboard";
+import Dashboard from "./pages/student/Dashboard";
+import Profile from "./pages/student/Profile";
+import Companies from "./pages/student/Companies";
+import MyApplications from "./pages/student/MyApplications";
+
+import Navbar from "./layouts/Navbar";
+
+import ProtectedRoute from "./components/routes/ProtectedRoute";
+import AdminProtectedRoute from "./components/routes/AdminProtectedRoute";
 
 function App() {
     return (
         <BrowserRouter>
             <Navbar />
+
             <Routes>
+                {/* Public Routes */}
                 <Route path="/" element={<Home />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
+
+                {/* Student Routes */}
                 <Route
-                  path="/dashboard"
-                  element={
-                    <ProtectedRoute>
-                      <Dashboard />
-                    </ProtectedRoute>
-                  }
+                    path="/dashboard"
+                    element={
+                        <ProtectedRoute>
+                            <Dashboard />
+                        </ProtectedRoute>
+                    }
                 />
 
                 <Route
-                  path="/profile"
-                  element={
-                    <ProtectedRoute>
-                      <Profile />
-                    </ProtectedRoute>
-                  }
+                    path="/profile"
+                    element={
+                        <ProtectedRoute>
+                            <Profile />
+                        </ProtectedRoute>
+                    }
                 />
 
                 <Route
-                  path="/companies"
-                  element={
-                    <ProtectedRoute>
-                      <Companies />
-                    </ProtectedRoute>
-                  }
+                    path="/companies"
+                    element={
+                        <ProtectedRoute>
+                            <Companies />
+                        </ProtectedRoute>
+                    }
                 />
 
                 <Route
-                  path="/applications"
-                  element={
-                    <ProtectedRoute>
-                      <MyApplications />
-                    </ProtectedRoute>
-                  }
+                    path="/applications"
+                    element={
+                        <ProtectedRoute>
+                            <MyApplications />
+                        </ProtectedRoute>
+                    }
                 />
 
+                {/* Admin Routes */}
                 <Route
-                  path="/admin"
-                  element={
-                    <ProtectedRoute>
-                      <AdminDashboard />
-                    </ProtectedRoute>
-                  }
+                    path="/admin"
+                    element={
+                        <AdminProtectedRoute>
+                            <AdminDashboard />
+                        </AdminProtectedRoute>
+                    }
                 />
 
                 <Route
                     path="/admin/students"
                     element={
-                        <ProtectedRoute>
+                        <AdminProtectedRoute>
                             <Students />
-                        </ProtectedRoute>
+                        </AdminProtectedRoute>
                     }
                 />
 
                 <Route
                     path="/admin/companies"
                     element={
-                        <ProtectedRoute>
+                        <AdminProtectedRoute>
                             <AdminCompanies />
-                        </ProtectedRoute>
+                        </AdminProtectedRoute>
                     }
                 />
 
                 <Route
                     path="/admin/applications"
                     element={
-                        <ProtectedRoute>
+                        <AdminProtectedRoute>
                             <Applications />
-                        </ProtectedRoute>
+                        </AdminProtectedRoute>
                     }
                 />
-
             </Routes>
         </BrowserRouter>
     );

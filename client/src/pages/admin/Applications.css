@@ -1,0 +1,65 @@
+.applications-container {
+    padding: 30px;
+}
+
+.applications-title {
+    text-align: center;
+    font-size: 52px;
+    margin-bottom: 25px;
+}
+
+.applications-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.applications-table th,
+.applications-table td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: center;
+}
+
+.applications-table th {
+    background: #f5f5f5;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.applications-table tbody tr:hover {
+    background: #f7f7f7;
+}
+
+.edit-btn {
+    background: #ffc107;
+    color: black;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 600;
+    margin-right: 8px;
+}
+
+.edit-btn:hover {
+    background: #e0a800;
+}
+
+.delete-btn {
+    background: #dc3545;
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.delete-btn:hover {
+    background: #c82333;
+}
+
+.no-applications {
+    text-align: center;
+    color: gray;
+}

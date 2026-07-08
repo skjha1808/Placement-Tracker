@@ -4,8 +4,11 @@ import "./Students.css";
 
 function Students() {
     const [students, setStudents] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     const fetchStudents = async () => {
+        setLoading(true);
+
         try {
             const response = await api.get(
                 "/students",
@@ -17,11 +20,12 @@ function Students() {
             );
 
             setStudents(response.data);
-
         } catch (error) {
             console.log(
                 error.response?.data || error.message
             );
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -44,7 +48,6 @@ function Students() {
             alert("Student verified successfully!");
 
             fetchStudents();
-
         } catch (error) {
             console.log(
                 error.response?.data || error.message
@@ -58,7 +61,11 @@ function Students() {
                 Manage Students
             </h1>
 
-            {students.length === 0 ? (
+            {loading ? (
+                <h3 className="no-students">
+                    Loading...
+                </h3>
+            ) : students.length === 0 ? (
                 <h3 className="no-students">
                     No Students Found
                 </h3>

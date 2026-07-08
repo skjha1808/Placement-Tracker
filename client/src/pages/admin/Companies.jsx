@@ -5,10 +5,13 @@ import CompanyForm from "../../components/CompanyForm";
 
 function Companies() {
     const [companies, setCompanies] = useState([]);
+    const [loading, setLoading] = useState(true);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedCompany, setSelectedCompany] = useState(null);
 
     const fetchCompanies = async () => {
+        setLoading(true);
+
         try {
             const response = await api.get("/companies");
 
@@ -18,6 +21,8 @@ function Companies() {
             console.log(
                 error.response?.data || error.message
             );
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -76,7 +81,11 @@ function Companies() {
 
             <br />
 
-            {companies.length === 0 ? (
+            {loading ? (
+                <h3 className="no-companies">
+                    Loading...
+                </h3>
+            ) : companies.length === 0 ? (
                 <h3 className="no-companies">
                     No Companies Found
                 </h3>
