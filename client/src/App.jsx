@@ -1,4 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Students from "./pages/admin/Students";
+import AdminCompanies from "./pages/admin/Companies";
+import Applications from "./pages/admin/Applications";
 
 import Home from "./pages/Home";
 import Login from "./pages/Login";
@@ -9,6 +12,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Navbar from "./components/Navbar";
 import Companies from "./pages/Companies";
 import MyApplications from "./pages/MyApplications";
+import AdminDashboard from "./pages/admin/AdminDashboard";
 
 function App() {
     return (
@@ -52,6 +56,42 @@ function App() {
                       <MyApplications />
                     </ProtectedRoute>
                   }
+                />
+
+                <Route
+                  path="/admin"
+                  element={
+                    <ProtectedRoute>
+                      <AdminDashboard />
+                    </ProtectedRoute>
+                  }
+                />
+
+                <Route
+                    path="/admin/students"
+                    element={
+                        <ProtectedRoute>
+                            <Students />
+                        </ProtectedRoute>
+                    }
+                />
+
+                <Route
+                    path="/admin/companies"
+                    element={
+                        <ProtectedRoute>
+                            <AdminCompanies />
+                        </ProtectedRoute>
+                    }
+                />
+
+                <Route
+                    path="/admin/applications"
+                    element={
+                        <ProtectedRoute>
+                            <Applications />
+                        </ProtectedRoute>
+                    }
                 />
 
             </Routes>
