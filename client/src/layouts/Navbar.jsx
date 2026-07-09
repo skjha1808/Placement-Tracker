@@ -1,4 +1,5 @@
-import { Link, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import "./Navbar.css";
 
 function Navbar() {
     const navigate = useNavigate();
@@ -14,38 +15,87 @@ function Navbar() {
     };
 
     return (
-        <nav>
-            <Link to="/">Home</Link>
+        <nav className="navbar">
 
-            {" | "}
+            <div className="navbar-logo">
+                <NavLink to="/">
+                    Placement Tracker
+                </NavLink>
+            </div>
 
-            {token && user?.role === "student" && (
-                <>
-                    <Link to="/dashboard">Dashboard</Link>
-                    {" | "}
-                </>
-            )}
+            <div className="navbar-links">
 
-            {token && user?.role === "admin" && (
-                <>
-                    <Link to="/admin">Admin Dashboard</Link>
-                    {" | "}
-                </>
-            )}
+                <NavLink to="/">
+                    Home
+                </NavLink>
 
-            {!token && (
-                <>
-                    <Link to="/login">Login</Link>
-                    {" | "}
-                    <Link to="/register">Register</Link>
-                </>
-            )}
+                {token && user?.role === "student" && (
+                    <>
+                        <NavLink to="/dashboard">
+                            Dashboard
+                        </NavLink>
+
+                        <NavLink to="/companies">
+                            Companies
+                        </NavLink>
+
+                        <NavLink to="/applications">
+                            Applications
+                        </NavLink>
+                    </>
+                )}
+
+                {token && user?.role === "admin" && (
+                    <>
+                        <NavLink to="/admin">
+                            Dashboard
+                        </NavLink>
+
+                        <NavLink to="/admin/students">
+                            Students
+                        </NavLink>
+
+                        <NavLink to="/admin/companies">
+                            Companies
+                        </NavLink>
+
+                        <NavLink to="/admin/applications">
+                            Applications
+                        </NavLink>
+                    </>
+                )}
+
+                {!token && (
+                    <>
+                        <NavLink to="/login">
+                            Login
+                        </NavLink>
+
+                        <NavLink to="/register">
+                            Register
+                        </NavLink>
+                    </>
+                )}
+
+            </div>
 
             {token && (
-                <button onClick={handleLogout}>
-                    Logout
-                </button>
+                <div className="navbar-user">
+
+                    <span>
+                        👤 {user?.name}
+                    </span>
+
+                    <button
+                        className="logout-btn"
+                        onClick={handleLogout}
+                    >
+                        Logout
+                    </button>
+
+                </div>
             )}
+
         </nav>
     );
 }

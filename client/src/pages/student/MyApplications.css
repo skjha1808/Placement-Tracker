@@ -1,69 +1,78 @@
-.my-applications-container {
-    padding: 30px;
+.applications-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(360px,1fr));
+
+    gap:24px;
 }
 
-.my-applications-title {
-    text-align: center;
-    font-size: 52px;
-    margin-bottom: 30px;
+.application-card{
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:space-between;
+
+    min-height:280px;
 }
 
-.application-card {
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    padding: 20px;
-    margin-bottom: 25px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-    transition: 0.3s;
+.application-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:20px;
 }
 
-.application-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+.application-header h2{
+
+    color:var(--primary-color);
+
+    font-size:28px;
 }
 
-.company-name {
-    font-size: 28px;
-    margin-bottom: 15px;
+.application-info{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:12px;
+
+    margin-bottom:24px;
 }
 
-.application-card p {
-    margin: 8px 0;
-    font-size: 17px;
+.application-info p{
+
+    color:var(--text-secondary);
+
+    font-size:16px;
 }
 
-.loading-text,
-.no-applications {
-    text-align: center;
-    color: gray;
-    font-size: 20px;
+.application-btn{
+
+    width:100%;
 }
 
-.status {
-    color: white;
-    padding: 4px 10px;
-    border-radius: 20px;
-    font-size: 14px;
-    font-weight: 600;
-    display: inline-block;
+.application-card:hover{
+
+    transform:translateY(-6px);
+
+    box-shadow:var(--shadow-md);
+
+    transition:var(--transition);
 }
 
-.status-applied {
-    background: #0d6efd;
-}
+@media(max-width:768px){
 
-.status-oa-cleared {
-    background: #6f42c1;
-}
+    .applications-grid{
 
-.status-interview {
-    background: #fd7e14;
-}
+        grid-template-columns:1fr;
+    }
 
-.status-selected {
-    background: #198754;
-}
-
-.status-rejected {
-    background: #dc3545;
 }

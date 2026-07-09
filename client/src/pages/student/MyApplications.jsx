@@ -2,118 +2,162 @@ import { useEffect, useState } from "react";
 import api from "../../services/api";
 import "./MyApplications.css";
 
+import LoadingSpinner from "../../components/ui/LoadingSpinner";
+import EmptyState from "../../components/ui/EmptyState";
+
 function MyApplications() {
+
     const [applications, setApplications] = useState([]);
     const [loading, setLoading] = useState(true);
 
     const fetchApplications = async () => {
+
         setLoading(true);
 
         try {
+
             const response = await api.get("/applications/my");
 
             setApplications(response.data);
 
         } catch (error) {
+
             console.log(
                 error.response?.data || error.message
             );
+
         } finally {
+
             setLoading(false);
+
         }
+
     };
 
     useEffect(() => {
+
         fetchApplications();
+
     }, []);
 
     const getStatusClass = (status) => {
+
         switch (status) {
+
             case "Applied":
-                return "status-applied";
+                return "badge badge-primary";
 
             case "OA Cleared":
-                return "status-oa-cleared";
+                return "badge badge-warning";
 
             case "Interview":
-                return "status-interview";
+                return "badge badge-info";
 
             case "Selected":
-                return "status-selected";
+                return "badge badge-success";
 
             case "Rejected":
-                return "status-rejected";
+                return "badge badge-danger";
 
             default:
-                return "";
+                return "badge";
         }
+
     };
 
-    return (
-        <div className="my-applications-container">
+    if (loading) {
 
-            <h1 className="my-applications-title">
+        return <LoadingSpinner />;
+
+    }
+
+    return (
+
+        <div className="page">
+
+            <h1 className="page-title">
                 My Applications
             </h1>
 
-            {loading ? (
-                <h3 className="loading-text">
-                    Loading...
-                </h3>
-            ) : applications.length === 0 ? (
-                <h3 className="no-applications">
-                    No Applications Found
-                </h3>
+            {applications.length === 0 ? (
+
+                <EmptyState
+                    message="No Applications Found"
+                />
+
             ) : (
-                applications.map((application) => (
-                    <div
-                        key={application._id}
-                        className="application-card"
-                    >
-                        <h2 className="company-name">
-                            {application.company.companyName}
-                        </h2>
 
-                        <p>
-                            <strong>Role:</strong>{" "}
-                            {application.company.role}
-                        </p>
+                <div className="applications-grid">
 
-                        <p>
-                            <strong>Package:</strong>{" "}
-                            ₹{application.company.package} LPA
-                        </p>
+                    {applications.map((application) => (
 
-                        <p>
-                            <strong>Status:</strong>{" "}
-                            <span
-                                className={`status ${getStatusClass(
-                                    application.status
-                                )}`}
+                        <div
+                            key={application._id}
+                            className="card application-card"
+                        >
+
+                            <div className="application-header">
+
+                                <h2>
+                                    {application.company.companyName}
+                                </h2>
+
+                                <span
+                                    className={getStatusClass(
+                                        application.status
+                                    )}
+                                >
+                                    {application.status}
+                                </span>
+
+                            </div>
+
+                            <div className="application-info">
+
+                                <p>
+                                    💼 <strong>Role:</strong>{" "}
+                                    {application.company.role}
+                                </p>
+
+                                <p>
+                                    💰 <strong>Package:</strong>{" "}
+                                    ₹{application.company.package} LPA
+                                </p>
+
+                                <p>
+                                    📅 <strong>Applied On:</strong>{" "}
+                                    {new Date(
+                                        application.appliedDate
+                                    ).toLocaleDateString(
+                                        "en-GB",
+                                        {
+                                            day: "2-digit",
+                                            month: "short",
+                                            year: "numeric",
+                                        }
+                                    )}
+                                </p>
+
+                            </div>
+
+                            <button
+                                className="btn btn-primary application-btn"
                             >
-                                {application.status}
-                            </span>
-                        </p>
+                                View Company
+                            </button>
 
-                        <p>
-                            <strong>Applied On:</strong>{" "}
-                            {new Date(
-                                application.appliedDate
-                            ).toLocaleDateString(
-                                "en-GB",
-                                {
-                                    day: "2-digit",
-                                    month: "short",
-                                    year: "numeric",
-                                }
-                            )}
-                        </p>
-                    </div>
-                ))
+                        </div>
+
+                    ))}
+
+                </div>
+
             )}
 
         </div>
+
     );
+
 }
 
 export default MyApplications;

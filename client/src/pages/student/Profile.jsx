@@ -1,8 +1,15 @@
 import { useState, useEffect } from "react";
-import api from "../../services/api";
 import { useNavigate } from "react-router-dom";
+import api from "../../services/api";
+
+import "./Profile.css";
+
+import ProfileSection from "../../components/ui/ProfileSection";
+import StatusBadge from "../../components/ui/StatusBadge";
+import LoadingSpinner from "../../components/ui/LoadingSpinner";
 
 function Profile() {
+
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [phone, setPhone] = useState("");
@@ -14,16 +21,14 @@ function Profile() {
 
     const [profileExists, setProfileExists] = useState(false);
     const [isVerified, setIsVerified] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     const navigate = useNavigate();
 
     const fetchProfile = async () => {
         try {
-            const response = await api.get("/students/me", {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem("token")}`,
-                },
-            });
+
+            const response = await api.get("/students/me");
 
             setName(response.data.name);
             setEmail(response.data.email);
@@ -38,12 +43,19 @@ function Profile() {
             setIsVerified(response.data.isVerified);
 
         } catch (error) {
-            // If profile doesn't exist, stay in create mode
+
             if (error.response?.status !== 404) {
+
                 console.log(
                     error.response?.data || error.message
                 );
+
             }
+
+        } finally {
+
+            setLoading(false);
+
         }
     };
 
@@ -52,59 +64,69 @@ function Profile() {
     }, []);
 
     const handleSubmit = async (e) => {
+
         e.preventDefault();
 
         try {
+
             let data;
 
             if (isVerified) {
+
                 data = {
+
                     email,
+
                     phone,
+
                     skills: skills
                         .split(",")
-                        .map((skill) => skill.trim()),
+                        .map(skill => skill.trim()),
+
                     resumeLink,
+
                 };
+
             } else {
+
                 data = {
+
                     name,
+
                     email,
+
                     phone,
+
                     branch,
+
                     education,
+
                     cgpa,
+
                     skills: skills
                         .split(",")
-                        .map((skill) => skill.trim()),
+                        .map(skill => skill.trim()),
+
                     resumeLink,
+
                 };
+
             }
 
             if (profileExists) {
+
                 await api.put(
                     "/students/me",
-                    data,
-                    {
-                        headers: {
-                            Authorization: `Bearer ${localStorage.getItem(
-                                "token"
-                            )}`,
-                        },
-                    }
+                    data
                 );
+
             } else {
+
                 await api.post(
                     "/students",
-                    data,
-                    {
-                        headers: {
-                            Authorization: `Bearer ${localStorage.getItem(
-                                "token"
-                            )}`,
-                        },
-                    }
+                    data
                 );
+
             }
 
             alert(
@@ -116,140 +138,244 @@ function Profile() {
             navigate("/dashboard");
 
         } catch (error) {
-            console.log(error.response?.status);
-            console.log(error.response?.data);
+
+            console.log(
+                error.response?.data || error.message
+            );
 
             alert(
                 error.response?.data?.message ||
                 "Something went wrong!"
             );
+
         }
+
     };
 
+    if (loading) {
+
+        return <LoadingSpinner />;
+
+    }
+
     return (
-        <div>
-            <h1>Profile</h1>
-            <p>Verification Status:{" "}
-                {isVerified ? "✅ Verified" : "⏳ Pending Verification"}
-            </p>
+
+        <div className="page">
+
+            <h1 className="page-title">
+                Student Profile
+            </h1>
+
+            <div className="profile-status-container">
+
+                <h3>
+                    Verification Status
+                </h3>
+
+                <StatusBadge
+                    verified={isVerified}
+                />
+
+            </div>
 
             <form onSubmit={handleSubmit}>
-                <label>Name</label>
-                <br />
-                <input
-                    type="text"
-                    placeholder="Enter Name"
-                    value={name}
-                    disabled={isVerified}
-                    onChange={(e) =>
-                        setName(e.target.value)
-                    }
-                />
 
-                <br /><br />
+                <ProfileSection
+                    title="👤 Personal Information"
+                >
 
-                <label>Email</label>
-                <br />
-                <input
-                    type="email"
-                    placeholder="Enter Email"
-                    value={email}
-                    onChange={(e) =>
-                        setEmail(e.target.value)
-                    }
-                />
+                    <div className="profile-grid">
 
-                <br /><br />
+                        <div className="form-group">
 
-                <label>Phone</label>
-                <br />
-                <input
-                    type="tel"
-                    placeholder="Enter Phone"
-                    value={phone}
-                    onChange={(e) =>
-                        setPhone(e.target.value)
-                    }
-                />
+                            <label>
+                                Name
+                            </label>
 
-                <br /><br />
+                            <input
+                                className="input"
+                                type="text"
+                                value={name}
+                                disabled={isVerified}
+                                placeholder="Enter Name"
+                                onChange={(e) =>
+                                    setName(e.target.value)
+                                }
+                            />
 
-                <label>Branch</label>
-                <br />
-                <input
-                    type="text"
-                    placeholder="Enter Branch"
-                    value={branch}
-                    disabled={isVerified}
-                    onChange={(e) =>
-                        setBranch(e.target.value)
-                    }
-                />
+                        </div>
 
-                <br /><br />
+                        <div className="form-group">
 
-                <label>Education</label>
-                <br />
-                <input
-                    type="text"
-                    placeholder="Enter Education"
-                    value={education}
-                    disabled={isVerified}
-                    onChange={(e) =>
-                        setEducation(e.target.value)
-                    }
-                />
+                            <label>
+                                Email
+                            </label>
 
-                <br /><br />
+                            <input
+                                className="input"
+                                type="email"
+                                value={email}
+                                placeholder="Enter Email"
+                                onChange={(e) =>
+                                    setEmail(e.target.value)
+                                }
+                            />
 
-                <label>CGPA</label>
-                <br />
-                <input
-                    type="number"
-                    step="0.01"
-                    placeholder="Enter CGPA"
-                    value={cgpa}
-                    disabled={isVerified}
-                    onChange={(e) =>
-                        setCgpa(e.target.value)
-                    }
-                />
+                        </div>
 
-                <br /><br />
+                        <div className="form-group">
 
-                <label>Skills</label>
-                <br />
-                <input
-                    type="text"
-                    placeholder="C++, DSA, MERN"
-                    value={skills}
-                    onChange={(e) =>
-                        setSkills(e.target.value)
-                    }
-                />
+                            <label>
+                                Phone
+                            </label>
 
-                <br /><br />
+                            <input
+                                className="input"
+                                type="tel"
+                                value={phone}
+                                placeholder="Enter Phone"
+                                onChange={(e) =>
+                                    setPhone(e.target.value)
+                                }
+                            />
 
-                <label>Resume Link</label>
-                <br />
-                <input
-                    type="url"
-                    placeholder="Enter Resume Link"
-                    value={resumeLink}
-                    onChange={(e) =>
-                        setResumeLink(e.target.value)
-                    }
-                />
+                        </div>
 
-                <br /><br />
+                    </div>
 
-                <button type="submit">
-                    {profileExists
-                        ? "Update Profile"
-                        : "Create Profile"}
-                </button>
+                </ProfileSection>
+
+                <ProfileSection
+                    title="🎓 Academic Information"
+                >
+
+                    <div className="profile-grid">
+
+                        <div className="form-group">
+
+                            <label>
+                                Branch
+                            </label>
+
+                            <input
+                                className="input"
+                                type="text"
+                                value={branch}
+                                disabled={isVerified}
+                                placeholder="Enter Branch"
+                                onChange={(e) =>
+                                    setBranch(e.target.value)
+                                }
+                            />
+
+                        </div>
+
+                        <div className="form-group">
+
+                            <label>
+                                Education
+                            </label>
+
+                            <input
+                                className="input"
+                                type="text"
+                                value={education}
+                                disabled={isVerified}
+                                placeholder="Enter Education"
+                                onChange={(e) =>
+                                    setEducation(e.target.value)
+                                }
+                            />
+
+                        </div>
+
+                        <div className="form-group">
+
+                            <label>
+                                CGPA
+                            </label>
+
+                            <input
+                                className="input"
+                                type="number"
+                                step="0.01"
+                                value={cgpa}
+                                disabled={isVerified}
+                                placeholder="Enter CGPA"
+                                onChange={(e) =>
+                                    setCgpa(e.target.value)
+                                }
+                            />
+
+                        </div>
+
+                    </div>
+
+                </ProfileSection>
+
+                <ProfileSection
+                    title="💼 Professional Information"
+                >
+
+                    <div className="profile-grid">
+
+                        <div className="form-group">
+
+                            <label>
+                                Skills
+                            </label>
+
+                            <input
+                                className="input"
+                                type="text"
+                                value={skills}
+                                placeholder="C++, React, Node.js"
+                                onChange={(e) =>
+                                    setSkills(e.target.value)
+                                }
+                            />
+
+                        </div>
+
+                        <div className="form-group">
+
+                            <label>
+                                Resume Link
+                            </label>
+
+                            <input
+                                className="input"
+                                type="url"
+                                value={resumeLink}
+                                placeholder="https://drive.google.com/..."
+                                onChange={(e) =>
+                                    setResumeLink(e.target.value)
+                                }
+                            />
+
+                        </div>
+
+                    </div>
+
+                </ProfileSection>
+
+                <div className="profile-actions">
+
+                    <button
+                        type="submit"
+                        className="btn btn-primary"
+                    >
+                        {profileExists
+                            ? "Update Profile"
+                            : "Create Profile"}
+                    </button>
+
+                </div>
+
             </form>
+
         </div>
+
     );
 }
 
