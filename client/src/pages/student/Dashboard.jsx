@@ -1,42 +1,30 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import api from "../services/api";
+import api from "../../services/api";
+import "./Dashboard.css";
 
 function Dashboard() {
     const user = JSON.parse(localStorage.getItem("user"));
+
     const [profile, setProfile] = useState(null);
+    const [loading, setLoading] = useState(true);
 
     const navigate = useNavigate();
 
-    const handleProfile = () => {
-        navigate("/profile");
-    };
-
-    const handleCompanies = () => {
-        navigate("/companies");
-    };
-
-    const handleApplications = () => {
-        navigate("/applications");
-    };
-
     const fetchProfile = async () => {
+        setLoading(true);
+
         try {
-            const response = await api.get(
-                "/students/me",
-                {
-                    headers: {
-                        Authorization: `Bearer ${localStorage.getItem("token")}`,
-                    },
-                }
-            );
+            const response = await api.get("/students/me");
+
+            console.log("Dashboard Response:", response.data);
 
             setProfile(response.data);
 
         } catch (error) {
-            console.log(
-                error.response?.data || error.message
-            );
+            console.log("Dashboard Error:", error.response?.data || error.message);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -45,39 +33,61 @@ function Dashboard() {
     }, []);
 
     return (
-        <div>
-            <h1>Welcome {user?.name}</h1>
+        <div className="dashboard-container">
 
-            <p>
-                Profile Status:{" "}
-                {profile
-                    ? "Profile Created"
-                    : "Not Created"}
-            </p>
+            <h1 className="dashboard-title">
+                Student Dashboard
+            </h1>
 
-            {!profile && (
-                <button onClick={handleProfile}>
-                    Complete Profile
-                </button>
+            <h2 className="welcome-text">
+                👋 Welcome, {user?.name}
+            </h2>
+
+            {loading ? (
+                <p className="profile-status">
+                    Loading...
+                </p>
+            ) : (
+                <p className="profile-status">
+                    Profile Status :{" "}
+                    {profile ? (
+                        <span className="profile-complete">
+                            ✅ Completed
+                        </span>
+                    ) : (
+                        <span className="profile-pending">
+                            ❌ Not Completed
+                        </span>
+                    )}
+                </p>
             )}
 
-            {profile && (
-                <button onClick={handleProfile}>
-                    View / Edit Profile
-                </button>
-            )}
+            <div className="dashboard-actions">
 
-            <br /><br />
+                <div
+                    className="dashboard-card"
+                    onClick={() => navigate("/profile")}
+                >
+                    👤 {profile
+                        ? "View / Edit Profile"
+                        : "Complete Profile"}
+                </div>
 
-            <button onClick={handleCompanies}>
-                View Companies
-            </button>
+                <div
+                    className="dashboard-card"
+                    onClick={() => navigate("/companies")}
+                >
+                    🏢 View Companies
+                </div>
 
-            <br /><br />
+                <div
+                    className="dashboard-card"
+                    onClick={() => navigate("/applications")}
+                >
+                    📄 My Applications
+                </div>
 
-            <button onClick={handleApplications}>
-                My Applications
-            </button>
+            </div>
 
         </div>
     );

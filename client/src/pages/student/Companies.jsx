@@ -1,10 +1,14 @@
 import { useState, useEffect } from "react";
-import api from "../services/api";
+import api from "../../services/api";
+import "./Companies.css";
 
 function Companies() {
     const [companies, setCompanies] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     const fetchCompanies = async () => {
+        setLoading(true);
+
         try {
             const response = await api.get("/companies");
             setCompanies(response.data);
@@ -12,6 +16,8 @@ function Companies() {
             console.log(
                 error.response?.data || error.message
             );
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -26,80 +32,106 @@ function Companies() {
                 {
                     company: companyId,
                     notes: "",
-                },
-                {
-                    headers: {
-                        Authorization: `Bearer ${localStorage.getItem("token")}`,
-                    },
                 }
             );
 
             alert("Applied Successfully!");
 
         } catch (error) {
-            console.log(error.response?.data || error.message);
+            console.log(
+                error.response?.data || error.message
+            );
+
             alert(
                 error.response?.data?.message ||
                 "Failed to apply."
             );
         }
     };
-    
+
     return (
-        <div>
-            <h1>Available Companies</h1>
+        <div className="companies-container">
 
-            {companies.map((company) => (
-                <div
-                    key={company._id}
-                    style={{
-                        border: "1px solid black",
-                        padding: "10px",
-                        marginBottom: "15px",
-                    }}
-                >
-                    <h2>{company.companyName}</h2>
+            <h1 className="companies-title">
+                Available Companies
+            </h1>
 
-                    <p>
-                        <strong>Role:</strong>{" "}
-                        {company.role}
-                    </p>
-
-                    <p>
-                        <strong>Package:</strong>{" "}
-                        {company.package} LPA
-                    </p>
-
-                    <p>
-                        <strong>Location:</strong>{" "}
-                        {company.location}
-                    </p>
-
-                    <p>
-                        <strong>Eligible Branches:</strong>{" "}
-                        {company.eligibleBranches.join(", ")}
-                    </p>
-
-                    <p>
-                        <strong>Minimum CGPA:</strong>{" "}
-                        {company.minimumCGPA}
-                    </p>
-
-                    <p>
-                        <strong>Deadline:</strong>{" "}
-                        {new Date(
-                            company.applicationDeadline
-                        ).toLocaleDateString()}
-                    </p>
-
-                    <button
-                       onClick={() => handleApply(company._id)}
+            {loading ? (
+                <h3 className="loading-text">
+                    Loading...
+                </h3>
+            ) : companies.length === 0 ? (
+                <h3 className="no-companies">
+                    No Companies Available
+                </h3>
+            ) : (
+                companies.map((company) => (
+                    <div
+                        key={company._id}
+                        className="company-card"
                     >
-                       Apply
-                    </button>
+                        <h2 className="company-name">
+                            {company.companyName}
+                        </h2>
 
-                </div>
-            ))}
+                        <p>
+                            <strong>Role:</strong>{" "}
+                            {company.role}
+                        </p>
+
+                        <p>
+                            <strong>Package:</strong>{" "}
+                            ₹{company.package} LPA
+                        </p>
+
+                        <p>
+                            <strong>Location:</strong>{" "}
+                            {company.location}
+                        </p>
+
+                        <p>
+                            <strong>Eligible Branches:</strong>{" "}
+                            {company.eligibleBranches.join(", ")}
+                        </p>
+
+                        <p>
+                            <strong>Minimum CGPA:</strong>{" "}
+                            {company.minimumCGPA}
+                        </p>
+
+                        <p>
+                            <strong>Status:</strong>{" "}
+                            <span className="status-open">
+                                {company.status}
+                            </span>
+                        </p>
+
+                        <p>
+                            <strong>Deadline:</strong>{" "}
+                            {new Date(
+                                company.applicationDeadline
+                            ).toLocaleDateString(
+                                "en-GB",
+                                {
+                                    day: "2-digit",
+                                    month: "short",
+                                    year: "numeric",
+                                }
+                            )}
+                        </p>
+
+                        <button
+                            className="apply-btn"
+                            onClick={() =>
+                                handleApply(company._id)
+                            }
+                        >
+                            Apply
+                        </button>
+                    </div>
+                ))
+            )}
+
         </div>
     );
 }

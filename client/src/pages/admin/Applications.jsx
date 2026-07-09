@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import api from "../../services/api";
 import "./Applications.css";
-import ApplicationForm from "../../components/ApplicationForm";
+import ApplicationForm from "../../components/forms/ApplicationForm";
 
 function Applications() {
     const [applications, setApplications] = useState([]);
@@ -85,7 +85,7 @@ function Applications() {
 
                                 <td>{application.student.name}</td>
 
-                                <td>{application.company.name}</td>
+                                <td>{application.company?.companyName}</td>
 
                                 <td>{application.status}</td>
 

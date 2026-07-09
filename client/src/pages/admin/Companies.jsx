@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import api from "../../services/api";
 import "./Companies.css";
-import CompanyForm from "../../components/CompanyForm";
+import CompanyForm from "../../components/forms/CompanyForm";
 
 function Companies() {
     const [companies, setCompanies] = useState([]);
