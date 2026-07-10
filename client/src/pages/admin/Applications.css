@@ -1,65 +1,96 @@
-.applications-container {
-    padding: 30px;
+.applications-toolbar{
+
+    display:flex;
+
+    justify-content:flex-end;
+
+    margin-bottom:25px;
 }
 
-.applications-title {
-    text-align: center;
-    font-size: 52px;
-    margin-bottom: 25px;
+.search-input{
+
+    width:320px;
 }
 
-.applications-table {
-    width: 100%;
-    border-collapse: collapse;
+.table-container{
+
+    overflow-x:auto;
+
+    background:var(--card-bg);
+
+    border-radius:12px;
+
+    box-shadow:var(--shadow-sm);
 }
 
-.applications-table th,
-.applications-table td {
-    border: 1px solid #ddd;
-    padding: 12px;
-    text-align: center;
+.applications-table{
+
+    width:100%;
+
+    border-collapse:collapse;
 }
 
-.applications-table th {
-    background: #f5f5f5;
-    font-size: 18px;
-    font-weight: 700;
+.applications-table thead{
+
+    background:var(--primary-color);
 }
 
-.applications-table tbody tr:hover {
-    background: #f7f7f7;
+.applications-table th{
+
+    color:white;
+
+    padding:16px;
+
+    text-align:center;
+
+    font-size:15px;
 }
 
-.edit-btn {
-    background: #ffc107;
-    color: black;
-    border: none;
-    padding: 8px 14px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: 600;
-    margin-right: 8px;
+.applications-table td{
+
+    padding:16px;
+
+    text-align:center;
+
+    border-bottom:1px solid var(--border-color);
 }
 
-.edit-btn:hover {
-    background: #e0a800;
+.applications-table tbody tr{
+
+    transition:var(--transition);
 }
 
-.delete-btn {
-    background: #dc3545;
-    color: white;
-    border: none;
-    padding: 8px 14px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: 600;
+.applications-table tbody tr:hover{
+
+    background:rgba(255,255,255,.03);
 }
 
-.delete-btn:hover {
-    background: #c82333;
+.action-buttons{
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:10px;
 }
 
-.no-applications {
-    text-align: center;
-    color: gray;
+.badge-info{
+
+    background:#0dcaf0;
+
+    color:#111827;
+}
+
+@media(max-width:768px){
+
+    .applications-toolbar{
+
+        justify-content:center;
+    }
+
+    .search-input{
+
+        width:100%;
+    }
+
 }

@@ -1,0 +1,22 @@
+.dashboard-subtitle{
+    text-align:center;
+    color:var(--text-secondary);
+    margin-bottom:35px;
+    font-size:18px;
+}
+
+.admin-actions{
+    display:flex;
+    flex-direction:column;
+    gap:20px;
+}
+
+.admin-actions .dashboard-card{
+    cursor:pointer;
+}
+
+.admin-actions .dashboard-card:hover{
+    transform:translateY(-6px);
+    box-shadow:var(--shadow-md);
+    transition:var(--transition);
+}
