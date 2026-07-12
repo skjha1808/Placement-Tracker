@@ -41,17 +41,12 @@ function Companies() {
     };
 
     useEffect(() => {
-
         fetchCompanies();
-
     }, []);
 
     const handleEdit = (company) => {
-
         setSelectedCompany(company);
-
         setIsModalOpen(true);
-
     };
 
     const handleDelete = async (id) => {

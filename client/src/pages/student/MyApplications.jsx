@@ -4,6 +4,7 @@ import "./MyApplications.css";
 
 import LoadingSpinner from "../../components/ui/LoadingSpinner";
 import EmptyState from "../../components/ui/EmptyState";
+import ApplicationCard from "../../components/applications/ApplicationCard";
 
 function MyApplications() {
 
@@ -35,9 +36,7 @@ function MyApplications() {
     };
 
     useEffect(() => {
-
         fetchApplications();
-
     }, []);
 
     const getStatusClass = (status) => {
@@ -91,62 +90,11 @@ function MyApplications() {
 
                     {applications.map((application) => (
 
-                        <div
+                        <ApplicationCard
                             key={application._id}
-                            className="card application-card"
-                        >
-
-                            <div className="application-header">
-
-                                <h2>
-                                    {application.company.companyName}
-                                </h2>
-
-                                <span
-                                    className={getStatusClass(
-                                        application.status
-                                    )}
-                                >
-                                    {application.status}
-                                </span>
-
-                            </div>
-
-                            <div className="application-info">
-
-                                <p>
-                                    💼 <strong>Role:</strong>{" "}
-                                    {application.company.role}
-                                </p>
-
-                                <p>
-                                    💰 <strong>Package:</strong>{" "}
-                                    ₹{application.company.package} LPA
-                                </p>
-
-                                <p>
-                                    📅 <strong>Applied On:</strong>{" "}
-                                    {new Date(
-                                        application.appliedDate
-                                    ).toLocaleDateString(
-                                        "en-GB",
-                                        {
-                                            day: "2-digit",
-                                            month: "short",
-                                            year: "numeric",
-                                        }
-                                    )}
-                                </p>
-
-                            </div>
-
-                            <button
-                                className="btn btn-primary application-btn"
-                            >
-                                View Company
-                            </button>
-
-                        </div>
+                            application={application}
+                            getStatusClass={getStatusClass}
+                        />
 
                     ))}
 

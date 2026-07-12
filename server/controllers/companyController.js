@@ -7,6 +7,17 @@ const createCompany = async (req, res) => {
 
             ...req.body,
 
+            companyName:
+                req.body.companyName
+                    .trim()
+                    .split(" ")
+                    .map(
+                        word =>
+                            word.charAt(0).toUpperCase() +
+                            word.slice(1).toLowerCase()
+                    )
+                    .join(" "),
+
             location:
                 req.body.location
                     .trim()
@@ -84,6 +95,17 @@ const updateCompany = async (req, res) => {
             req.params.id,
             {
                 ...req.body,
+
+                companyName:
+                    req.body.companyName
+                        ?.trim()
+                        .split(" ")
+                        .map(
+                            word =>
+                                word.charAt(0).toUpperCase() +
+                                word.slice(1).toLowerCase()
+                        )
+                        .join(" "),
 
                 location:
                     req.body.location

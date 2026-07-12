@@ -109,9 +109,7 @@ function Companies() {
     };
 
     useEffect(() => {
-
         fetchData();
-
     }, []);
 
     const locations = [
@@ -163,11 +161,8 @@ function Companies() {
                 "/applications",
 
                 {
-
                     company: companyId,
-
                     notes: "",
-
                 }
 
             );
