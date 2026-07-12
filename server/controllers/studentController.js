@@ -1,4 +1,5 @@
 const Student = require("../models/Student");
+const Notification = require("../models/Notification");
 
 const createStudent = async (req, res) => {
     try {
@@ -94,6 +95,60 @@ const updateMyProfile = async (req, res) => {
     }
 };
 
+const uploadResume = async (req, res) => {
+
+    try {
+
+        const student = await Student.findOne({
+            user: req.user._id,
+        });
+
+        if (!student) {
+
+            return res.status(404).json({
+                message: "Student profile not found",
+            });
+
+        }
+
+        if (!req.file) {
+
+            return res.status(400).json({
+                message: "Please upload a PDF resume",
+            });
+
+        }
+
+        student.resume = {
+
+            fileName: req.file.originalname,
+
+            filePath: `/uploads/resumes/${req.file.filename}`,
+
+        };
+
+        await student.save();
+
+        res.status(200).json({
+
+            message: "Resume uploaded successfully",
+
+            resume: student.resume,
+
+        });
+
+    } catch (error) {
+
+        res.status(500).json({
+
+            message: error.message,
+
+        });
+
+    }
+
+};
+
 const verifyStudent = async (req, res) => {
     try {
         const student = await Student.findByIdAndUpdate(
@@ -105,6 +160,21 @@ const verifyStudent = async (req, res) => {
                 new: true,
             }
         );
+
+        const Notification = require("../models/Notification");
+
+            await Notification.create({
+
+                user: student.user,
+
+                title: "Profile Verified",
+
+                message:
+                    "Your profile has been verified by the placement cell.",
+
+                type: "success",
+
+        });
 
         res.status(200).json({
             message: "Student verified successfully",
@@ -187,6 +257,7 @@ module.exports = {
     createStudent,
     getMyProfile,
     updateMyProfile,
+    uploadResume,
     verifyStudent,
     getAllStudents,
     getStudentById,

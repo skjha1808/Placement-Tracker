@@ -1,5 +1,6 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import "./Navbar.css";
+import NotificationBell from "../components/notifications/NotificationBell";
 
 function Navbar() {
     const navigate = useNavigate();
@@ -81,6 +82,7 @@ function Navbar() {
 
             {token && (
                 <div className="navbar-user">
+                    <NotificationBell />
 
                     <span>
                         👤 {user?.name}
@@ -92,7 +94,6 @@ function Navbar() {
                     >
                         Logout
                     </button>
-
                 </div>
             )}
 

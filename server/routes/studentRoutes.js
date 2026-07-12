@@ -4,11 +4,13 @@ const router = express.Router();
 const authMiddleware = require("../middleware/authMiddleware");
 const studentMiddleware = require("../middleware/studentMiddleware");
 const adminMiddleware = require("../middleware/adminMiddleware");
+const uploadResumeMiddleware = require("../middleware/uploadResume");
 
 const {
     createStudent,
     getMyProfile,
     updateMyProfile,
+    uploadResume,
     verifyStudent,
     getAllStudents,
     getStudentById,
@@ -35,6 +37,19 @@ router.put(
     authMiddleware,
     studentMiddleware,
     updateMyProfile
+);
+
+router.post(
+
+    "/upload-resume",
+
+    authMiddleware,
+
+    studentMiddleware,
+
+    uploadResumeMiddleware.single("resume"),
+
+    uploadResume
 );
 
 router.put(

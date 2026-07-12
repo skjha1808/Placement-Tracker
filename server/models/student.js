@@ -39,8 +39,16 @@ const studentSchema = new mongoose.Schema(
             },
         ],
 
-        resumeLink: {
-            type: String,
+        resume: {
+            fileName: {
+                type: String,
+                default: "",
+            },
+
+            filePath: {
+                type: String,
+                default: "",
+            },
         },
 
         user: {

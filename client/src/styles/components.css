@@ -184,3 +184,24 @@
     font-size:17px;
     font-weight:600;
 }
+
+.search-bar,
+.filter-dropdown{
+    padding:10px 15px;
+    border:1px solid rgba(255,255,255,.1);
+    background:#2b2f36;
+    color:white;
+    border-radius:8px;
+    font-size:15px;
+    min-width:180px;
+}
+
+.search-bar{
+    flex:1;
+}
+
+.filter-dropdown:focus,
+.search-bar:focus{
+    outline:none;
+    border-color:#2563eb;
+}

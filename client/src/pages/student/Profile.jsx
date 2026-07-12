@@ -17,11 +17,12 @@ function Profile() {
     const [education, setEducation] = useState("");
     const [cgpa, setCgpa] = useState("");
     const [skills, setSkills] = useState("");
-    const [resumeLink, setResumeLink] = useState("");
 
     const [profileExists, setProfileExists] = useState(false);
     const [isVerified, setIsVerified] = useState(false);
     const [loading, setLoading] = useState(true);
+    const [resumeFile, setResumeFile] = useState(null);
+    const [resume, setResume] = useState(null);
 
     const navigate = useNavigate();
 
@@ -37,7 +38,8 @@ function Profile() {
             setEducation(response.data.education);
             setCgpa(response.data.cgpa);
             setSkills(response.data.skills.join(", "));
-            setResumeLink(response.data.resumeLink);
+            setResumeFile(null);
+            setResume(response.data.resume);
 
             setProfileExists(true);
             setIsVerified(response.data.isVerified);
@@ -64,69 +66,42 @@ function Profile() {
     }, []);
 
     const handleSubmit = async (e) => {
-
         e.preventDefault();
-
         try {
-
             let data;
-
             if (isVerified) {
-
                 data = {
-
                     email,
-
                     phone,
-
                     skills: skills
                         .split(",")
                         .map(skill => skill.trim()),
-
-                    resumeLink,
-
                 };
-
             } else {
-
                 data = {
-
                     name,
-
                     email,
-
                     phone,
-
                     branch,
-
                     education,
-
                     cgpa,
-
                     skills: skills
                         .split(",")
                         .map(skill => skill.trim()),
-
-                    resumeLink,
-
                 };
-
             }
 
             if (profileExists) {
-
                 await api.put(
                     "/students/me",
                     data
                 );
 
             } else {
-
                 await api.post(
                     "/students",
                     data
                 );
-
             }
 
             alert(
@@ -138,24 +113,64 @@ function Profile() {
             navigate("/dashboard");
 
         } catch (error) {
-
             console.log(
                 error.response?.data || error.message
             );
-
             alert(
                 error.response?.data?.message ||
                 "Something went wrong!"
             );
-
         }
+    };
 
+    const handleResumeUpload = async () => {
+        if (!resumeFile) {
+            return alert("Please select a PDF.");
+        }
+        try {
+            const formData = new FormData();
+            formData.append(
+                "resume",
+                resumeFile
+            );
+            await api.post(
+                "/students/upload-resume",
+                formData,
+                {
+                    headers: {
+                        "Content-Type":
+                            "multipart/form-data",
+                    },
+                }
+            );
+            alert(
+                "Resume uploaded successfully!"
+            );
+
+            const response = await api.post(
+                "/students/upload-resume",
+                formData,
+                {
+                    headers: {
+                        "Content-Type":"multipart/form-data",
+                    },
+                }
+            );
+
+            setResume(response.data.resume);
+            fetchProfile();
+
+        } catch (error) {
+            console.log(error);
+            alert(
+                error.response?.data?.message ||
+                "Upload failed."
+            );
+        }
     };
 
     if (loading) {
-
         return <LoadingSpinner />;
-
     }
 
     return (
@@ -316,11 +331,9 @@ function Profile() {
                 <ProfileSection
                     title="💼 Professional Information"
                 >
-
+                    
                     <div className="profile-grid">
-
                         <div className="form-group">
-
                             <label>
                                 Skills
                             </label>
@@ -334,25 +347,73 @@ function Profile() {
                                     setSkills(e.target.value)
                                 }
                             />
-
                         </div>
 
-                        <div className="form-group">
-
-                            <label>
-                                Resume Link
-                            </label>
-
-                            <input
-                                className="input"
-                                type="url"
-                                value={resumeLink}
-                                placeholder="https://drive.google.com/..."
-                                onChange={(e) =>
-                                    setResumeLink(e.target.value)
+                        <div className="resume-card">
+                            <div className="resume-header">
+                                <h3>📄 Resume</h3>
+                                {
+                                    resume?.fileName && (
+                                        <span className="resume-badge">
+                                            Uploaded
+                                        </span>
+                                    )
                                 }
-                            />
+                            </div>
 
+                            <p className="resume-name">
+                                {
+                                    resume?.fileName
+                                        ? resume.fileName
+                                        : "No resume uploaded"
+                                }
+                            </p>
+
+                            {
+                                resume?.fileName && (
+                                    <div className="resume-actions">
+                                        <a
+                                            href={`http://localhost:5000${resume.filePath}`}
+                                            target="_blank"
+                                            rel="noreferrer"
+                                            className="resume-btn view-btn"
+                                        >
+                                            👁 View
+                                        </a>
+
+                                        <a
+                                            href={`http://localhost:5000${resume.filePath}`}
+                                            download
+                                            className="resume-btn download-btn"
+                                        >
+                                            ⬇ Download
+                                        </a>
+
+                                    </div>
+                                )
+                            }
+
+                            <div className="resume-upload">
+                                <input
+                                    type="file"
+                                    accept=".pdf"
+                                    onChange={(e) =>
+                                        setResumeFile(e.target.files[0])
+                                    }
+                                />
+
+                                <button
+                                    type="button"
+                                    className="upload-btn"
+                                    onClick={handleResumeUpload}
+                                >
+                                    {
+                                        resume?.fileName
+                                            ? "Replace Resume"
+                                            : "Upload Resume"
+                                    }
+                                </button>
+                            </div>
                         </div>
 
                     </div>

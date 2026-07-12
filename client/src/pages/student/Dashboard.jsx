@@ -3,6 +3,12 @@ import { useNavigate } from "react-router-dom";
 import api from "../../services/api";
 import "./Dashboard.css";
 
+import StatCard from "../../components/dashboard/StatCard";
+import ProfileProgress from "../../components/dashboard/ProfileProgress";
+import RecentApplications from "../../components/dashboard/RecentApplications";
+import UpcomingDeadlines from "../../components/dashboard/UpcomingDeadlines";
+import DashboardCharts from "../../components/dashboard/DashboardCharts";
+
 function Dashboard() {
     const user = JSON.parse(localStorage.getItem("user"));
 
@@ -15,6 +21,9 @@ function Dashboard() {
         selected: 0,
         rejected: 0,
     });
+
+    const [applications, setApplications] = useState([]);
+    const [companies, setCompanies] = useState([]);
 
     const navigate = useNavigate();
 
@@ -31,26 +40,33 @@ function Dashboard() {
 
     const fetchStats = async () => {
         try {
-            const response = await api.get("/applications/my");
+            const [applicationsRes, companiesRes] =
+                await Promise.all([
+                    api.get("/applications/my"),
+                    api.get("/companies"),
+                ]);
 
-            const applications = response.data;
+            const apps = applicationsRes.data;
+            const comps = companiesRes.data;
+
+            setApplications(apps);
+            setCompanies(comps);
 
             setStats({
-                applied: applications.length,
+                applied: apps.length,
 
-                interview: applications.filter(
+                interview: apps.filter(
                     (app) => app.status === "Interview"
                 ).length,
 
-                selected: applications.filter(
+                selected: apps.filter(
                     (app) => app.status === "Selected"
                 ).length,
 
-                rejected: applications.filter(
+                rejected: apps.filter(
                     (app) => app.status === "Rejected"
                 ).length,
             });
-
         } catch (error) {
             console.log(
                 error.response?.data || error.message
@@ -97,25 +113,53 @@ function Dashboard() {
 
             <div className="dashboard-stats">
 
-                <div className="stat-card">
-                    <h2>📄 {stats.applied}</h2>
-                    <p>Applications</p>
-                </div>
+                <StatCard
+                    icon="📄"
+                    value={stats.applied}
+                    label="Applications"
+                    color="#3b82f6"
+                />
 
-                <div className="stat-card">
-                    <h2>💼 {stats.interview}</h2>
-                    <p>Interview</p>
-                </div>
+                <StatCard
+                    icon="💼"
+                    value={stats.interview}
+                    label="Interview"
+                    color="#f59e0b"
+                />
 
-                <div className="stat-card">
-                    <h2>🎉 {stats.selected}</h2>
-                    <p>Selected</p>
-                </div>
+                <StatCard
+                    icon="🎉"
+                    value={stats.selected}
+                    label="Selected"
+                    color="#22c55e"
+                />
 
-                <div className="stat-card">
-                    <h2>❌ {stats.rejected}</h2>
-                    <p>Rejected</p>
-                </div>
+                <StatCard
+                    icon="❌"
+                    value={stats.rejected}
+                    label="Rejected"
+                    color="#ef4444"
+                />
+
+            </div>
+
+            <DashboardCharts
+                stats={stats}
+            />
+
+            <ProfileProgress
+                profile={profile}
+            />
+
+            <div className="dashboard-grid">
+
+                <RecentApplications
+                    applications={applications}
+                />
+
+                <UpcomingDeadlines
+                    companies={companies}
+                />
 
             </div>
 
@@ -123,35 +167,56 @@ function Dashboard() {
 
                 <div
                     className="card dashboard-card"
-                    onClick={() => navigate("/profile")}
+                    onClick={() =>
+                        navigate("/profile")
+                    }
                 >
-                    <h3>👤 Profile</h3>
+
+                    <h3>
+                        👤 Profile
+                    </h3>
 
                     <p>
-                        View or update your profile information.
+                        View or update your profile
+                        information.
                     </p>
+
                 </div>
 
                 <div
                     className="card dashboard-card"
-                    onClick={() => navigate("/companies")}
+                    onClick={() =>
+                        navigate("/companies")
+                    }
                 >
-                    <h3>🏢 Companies</h3>
+
+                    <h3>
+                        🏢 Companies
+                    </h3>
 
                     <p>
-                        Browse all available placement opportunities.
+                        Browse all available
+                        placement opportunities.
                     </p>
+
                 </div>
 
                 <div
                     className="card dashboard-card"
-                    onClick={() => navigate("/applications")}
+                    onClick={() =>
+                        navigate("/applications")
+                    }
                 >
-                    <h3>📄 My Applications</h3>
+
+                    <h3>
+                        📄 My Applications
+                    </h3>
 
                     <p>
-                        Track your application status and progress.
+                        Track your application
+                        status and progress.
                     </p>
+
                 </div>
 
             </div>
