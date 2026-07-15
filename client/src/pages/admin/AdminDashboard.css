@@ -12,6 +12,7 @@
 }
 
 .admin-actions .dashboard-card{
+    transition:.3s;
     cursor:pointer;
 }
 
@@ -19,4 +20,8 @@
     transform:translateY(-6px);
     box-shadow:var(--shadow-md);
     transition:var(--transition);
+}
+
+.dashboard-stats > div{
+    cursor:pointer;
 }

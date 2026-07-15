@@ -4,20 +4,24 @@ const userSchema = new mongoose.Schema(
     {
         name: {
             type: String,
-            required: true,
+            required: [true, "Name is required"],
+            trim: true,
+            minlength: 2,
+            maxlength: 50,
         },
 
         email: {
             type: String,
-            required: true,
+            required: [true, "Email is required"],
             unique: true,
             lowercase: true,
             trim: true,
+            match: [/^\S+@\S+\.\S+$/, "Please enter a valid email"]
         },
 
         password: {
             type: String,
-            required: true,
+            required: [true, "Password is required"],
             minlength: 6,
         },
 
@@ -25,7 +29,7 @@ const userSchema = new mongoose.Schema(
             type: String,
             enum: ["student", "admin"],
             default: "student",
-            required: true,
+            required: [true, "Name is required"]
         },
     },
     {

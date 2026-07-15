@@ -150,42 +150,73 @@ const uploadResume = async (req, res) => {
 };
 
 const verifyStudent = async (req, res) => {
+
     try {
-        const student = await Student.findByIdAndUpdate(
-            req.params.id,
-            {
-                isVerified: true,
-            },
-            {
-                new: true,
-            }
-        );
 
-        const Notification = require("../models/Notification");
+        console.log("verifyStudent called");
 
-            await Notification.create({
+        const student = await Student.findById(req.params.id);
 
-                user: student.user,
+        console.log("Student Found:", student);
 
-                title: "Profile Verified",
+        if (!student) {
 
-                message:
-                    "Your profile has been verified by the placement cell.",
+            return res.status(404).json({
+                message: "Student not found",
+            });
 
-                type: "success",
+        }
+
+        if (student.isVerified) {
+
+            console.log("Student already verified");
+
+            return res.status(400).json({
+                message: "Student is already verified",
+            });
+
+        }
+
+        student.isVerified = true;
+
+        await student.save();
+
+        console.log("Student verified");
+
+        await Notification.create({
+
+            user: student.user,
+
+            title: "Profile Verified",
+
+            message: "Your profile has been verified by the placement cell.",
+
+            type: "success",
 
         });
 
+        console.log("Notification created");
+
         res.status(200).json({
+
             message: "Student verified successfully",
+
             student,
+
         });
 
     } catch (error) {
+
+        console.log(error);
+
         res.status(500).json({
+
             message: error.message,
+
         });
+
     }
+
 };
 
 const getAllStudents = async (req, res) => {

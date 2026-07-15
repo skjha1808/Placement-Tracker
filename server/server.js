@@ -8,11 +8,11 @@ const studentRoutes = require("./routes/studentRoutes");
 const companyRoutes = require("./routes/companyRoutes");
 const applicationRoutes = require("./routes/applicationRoutes");
 const eligibilityRoutes = require("./routes/eligibilityRoutes");
-
+const dashboardRoutes = require("./routes/dashboardRoutes");
 const authRoutes = require("./routes/authRoutes");
+const notificationRoutes = require("./routes/notificationRoutes");
 
 dotenv.config();
-
 connectDB();
 
 const app = express();
@@ -35,14 +35,11 @@ app.get("/", (req, res) => {
 app.use("/api/students", studentRoutes);
 app.use("/api/companies", companyRoutes);
 app.use("/api/applications", applicationRoutes);
-
 app.use("/api/auth", authRoutes);
+app.use("/api/eligibility", eligibilityRoutes);
+app.use("/api/dashboard", dashboardRoutes);
+app.use("/api/notifications", notificationRoutes);
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
-
-app.use(
-    "/api/eligibility",
-    eligibilityRoutes
-);

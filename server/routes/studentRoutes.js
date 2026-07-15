@@ -42,13 +42,9 @@ router.put(
 router.post(
 
     "/upload-resume",
-
     authMiddleware,
-
     studentMiddleware,
-
     uploadResumeMiddleware.single("resume"),
-
     uploadResume
 );
 

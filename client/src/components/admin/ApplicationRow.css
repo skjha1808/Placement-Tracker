@@ -1,0 +1,93 @@
+.application-row{
+    display:flex;
+    flex-direction:column;
+    gap:20px;
+    transition:.3s;
+}
+
+.application-row:hover{
+    transform:translateY(-5px);
+    box-shadow:var(--shadow-md);
+}
+
+.application-row-header{
+    display:flex;
+    align-items:center;
+    gap:16px;
+}
+
+.student-avatar{
+    width:56px;
+    height:56px;
+    border-radius:50%;
+    background:#2563eb;
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:24px;
+    font-weight:700;
+    flex-shrink:0;
+}
+
+.student-details h3{
+    margin:0;
+    font-size:22px;
+    color:var(--primary-color);
+}
+
+.student-details p{
+    margin-top:5px;
+    color:var(--text-secondary);
+}
+
+.application-row-body{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.application-row-body label{
+    display:block;
+    margin-bottom:8px;
+    font-weight:600;
+    color:var(--text-secondary);
+}
+
+.application-row-body select{
+    min-width:220px;
+}
+
+.application-row-actions{
+    display:flex;
+    gap:12px;
+}
+
+.application-row-actions .btn{
+    flex:1;
+}
+
+@media(max-width:768px){
+    .application-row-body{
+        flex-direction:column;
+        align-items:stretch;
+    }
+
+    .application-row-body select{
+        width:100%;
+    }
+
+    .application-row-actions{
+        flex-direction:column;
+    }
+}
+
+.student-name{
+    cursor:pointer;
+    transition:.3s;
+}
+
+.student-name:hover{
+    color:#2563eb;
+    text-decoration:underline;
+}

@@ -1,58 +1,32 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../../services/api";
+import LoadingSpinner from "../../components/ui/LoadingSpinner";
 
 import "./AdminDashboard.css";
+
+import AdminStatCard from "../../components/admin/dashboard/AdminStatCard";
+import AdminCharts from "../../components/admin/dashboard/AdminCharts";
+import RecentActivities from "../../components/admin/dashboard/RecentActivities";
 
 function AdminDashboard() {
 
     const navigate = useNavigate();
-
-    const [stats, setStats] = useState({
-        students: 0,
-        companies: 0,
-        applications: 0,
-        selected: 0,
-    });
+    const [dashboard, setDashboard] = useState(null);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
 
-        const fetchDashboardStats = async () => {
+        const fetchDashboard = async () => {
 
             try {
 
-                const [
-                    studentsRes,
-                    companiesRes,
-                    applicationsRes,
-                ] = await Promise.all([
-                    api.get("/students"),
-                    api.get("/companies"),
-                    api.get("/applications"),
-                ]);
+                const response =
+                    await api.get(
+                        "/dashboard/admin"
+                    );
 
-                const applications =
-                    applicationsRes.data;
-
-                setStats({
-
-                    students:
-                        studentsRes.data.length,
-
-                    companies:
-                        companiesRes.data.length,
-
-                    applications:
-                        applications.length,
-
-                    selected:
-                        applications.filter(
-                            (app) =>
-                                app.status ===
-                                "Selected"
-                        ).length,
-
-                });
+                setDashboard(response.data);
 
             } catch (error) {
 
@@ -61,13 +35,25 @@ function AdminDashboard() {
                     error.message
                 );
 
+            } finally {
+
+                setLoading(false);
+
             }
 
         };
 
-        fetchDashboardStats();
+        fetchDashboard();
 
     }, []);
+
+    if (loading) {
+        return <LoadingSpinner />;
+    }
+
+    if (!dashboard) {
+        return <h2>Failed to load dashboard.</h2>;
+    }
 
     return (
 
@@ -83,80 +69,76 @@ function AdminDashboard() {
 
             <div className="dashboard-stats">
 
-                <div className="stat-card">
-                    <h2>👨‍🎓</h2>
-                    <h3>{stats.students}</h3>
-                    <p>Students</p>
-                </div>
-
-                <div className="stat-card">
-                    <h2>🏢</h2>
-                    <h3>{stats.companies}</h3>
-                    <p>Companies</p>
-                </div>
-
-                <div className="stat-card">
-                    <h2>📄</h2>
-                    <h3>{stats.applications}</h3>
-                    <p>Applications</p>
-                </div>
-
-                <div className="stat-card">
-                    <h2>🎉</h2>
-                    <h3>{stats.selected}</h3>
-                    <p>Selected</p>
-                </div>
-
-            </div>
-
-            <div className="admin-actions">
-
                 <div
-                    className="dashboard-card"
                     onClick={() =>
                         navigate("/admin/students")
                     }
                 >
-                    <h3>
-                        👨‍🎓 Students
-                    </h3>
 
-                    <p>
-                        View, verify and manage student profiles.
-                    </p>
+                    <AdminStatCard
+                        icon="👨‍🎓"
+                        value={dashboard.stats.students}
+                        label="Students"
+                        color="#2563eb"
+                    />
+
                 </div>
 
                 <div
-                    className="dashboard-card"
                     onClick={() =>
                         navigate("/admin/companies")
                     }
                 >
-                    <h3>
-                        🏢 Companies
-                    </h3>
 
-                    <p>
-                        Add, edit and manage placement drives.
-                    </p>
+                    <AdminStatCard
+                        icon="🏢"
+                        value={dashboard.stats.companies}
+                        label="Companies"
+                        color="#16a34a"
+                    />
+
                 </div>
 
                 <div
-                    className="dashboard-card"
                     onClick={() =>
                         navigate("/admin/applications")
                     }
                 >
-                    <h3>
-                        📄 Applications
-                    </h3>
 
-                    <p>
-                        Track application status and update results.
-                    </p>
+                    <AdminStatCard
+                        icon="📄"
+                        value={dashboard.stats.applications}
+                        label="Applications"
+                        color="#f59e0b"
+                    />
+
+                </div>
+
+                <div
+                    onClick={() =>
+                        navigate("/admin/applications")
+                    }
+                >
+
+                    <AdminStatCard
+                        icon="🎉"
+                        value={dashboard.stats.selected}
+                        label="Selected"
+                        color="#22c55e"
+                    />
+
                 </div>
 
             </div>
+
+            <AdminCharts
+                statusData={dashboard.statusData}
+                branchData={dashboard.branchData}
+            />
+
+            <RecentActivities
+                activities={dashboard.recentActivities}
+            />
 
         </div>
 

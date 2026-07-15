@@ -4,13 +4,10 @@ const router = express.Router();
 const authMiddleware = require("../middleware/authMiddleware");
 
 const {
-
     getMyNotifications,
-
     markAsRead,
-
     markAllAsRead,
-
+    deleteNotification,
 } = require("../controllers/notificationController");
 
 router.get(
@@ -29,6 +26,12 @@ router.put(
     "/read-all",
     authMiddleware,
     markAllAsRead
+);
+
+router.delete(
+    "/:id",
+    authMiddleware,
+    deleteNotification
 );
 
 module.exports = router;

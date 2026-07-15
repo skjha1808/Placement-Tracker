@@ -96,19 +96,32 @@ const getApplicationById = async (req, res) => {
 
 const updateApplication = async (req, res) => {
     try {
-        const updatedApplication = await Application.findByIdAndUpdate(
+
+        const application = await Application.findByIdAndUpdate(
             req.params.id,
             req.body,
             {
                 new: true,
+                runValidators: true,
             }
-        );
+        )
+            .populate("student")
+            .populate("company");
 
-        res.status(200).json(updatedApplication);
+        if (!application) {
+            return res.status(404).json({
+                message: "Application not found",
+            });
+        }
+
+        res.status(200).json(application);
+
     } catch (error) {
+
         res.status(500).json({
             message: error.message,
         });
+
     }
 };
 

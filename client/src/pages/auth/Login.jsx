@@ -1,88 +1,136 @@
 import { useState } from "react";
 import api from "../../services/api";
 import { useNavigate } from "react-router-dom";
+import { validateLogin } from "../../utils/validation";
+import "./Auth.css";
 
 function Login() {
+    const [formData, setFormData] = useState({
+        email: "",
+        password: "",
+    });
 
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+    const [errors, setErrors] = useState({});
+    const [serverError, setServerError] = useState("");
+    const [loading, setLoading] = useState(false);
+
     const navigate = useNavigate();
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+
+        setFormData((prev) => ({
+            ...prev,
+            [name]: value,
+        }));
+
+        setErrors((prev) => ({
+            ...prev,
+            [name]: "",
+        }));
+
+        setServerError("");
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        try {
-            const response = await api.post(
-                "/auth/login",
-                {
-                    email,
-                    password,
-                }
-            );
+        setErrors({});
+        setServerError("");
 
+        const validationErrors = validateLogin(formData);
+
+        if (Object.keys(validationErrors).length > 0) {
+            setErrors(validationErrors);
+            return;
+        }
+
+        try {
+            setLoading(true);
+
+            const response = await api.post("/auth/login", {
+                email: formData.email.trim().toLowerCase(),
+                password: formData.password,
+            });
+
+            // Save JWT
             localStorage.setItem(
                 "token",
                 response.data.token
             );
 
+            // Save user
             localStorage.setItem(
                 "user",
                 JSON.stringify(response.data.user)
             );
 
-            if (response.data.user.role === "admin") {
-                navigate("/admin", { replace: true });
-            } else {
-                navigate("/dashboard", { replace: true });
-            }
-
-            console.log("Token saved successfully");
-            console.log("Login successful");
+            navigate("/");
 
         } catch (error) {
-            console.log(
-                error.response?.data || error.message
+            setServerError(
+                error.response?.data?.message ||
+                "Something went wrong"
             );
+        } finally {
+            setLoading(false);
         }
     };
 
     return (
-        <div>
-            <h1>Login</h1>
+        <div className="register-container">
+            <h1 className="register-title">
+                Login
+            </h1>
 
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label>Email</label>
-                    <br />
-                    <input
-                        type="email"
-                        placeholder="Enter email"
-                        value={email}
-                        onChange={(e) =>
-                            setEmail(e.target.value)
-                        }
-                    />
-                </div>
+            {serverError && (
+                <p className="server-error">
+                    {serverError}
+                </p>
+            )}
 
-                <br />
+            <form
+                className="register-form"
+                onSubmit={handleSubmit}
+            >
+                <input
+                    type="email"
+                    name="email"
+                    placeholder="Email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    disabled={loading}
+                    autoFocus
+                />
 
-                <div>
-                    <label>Password</label>
-                    <br />
-                    <input
-                        type="password"
-                        placeholder="Enter password"
-                        value={password}
-                        onChange={(e) =>
-                            setPassword(e.target.value)
-                        }
-                    />
-                </div>
+                {errors.email && (
+                    <p className="error">
+                        {errors.email}
+                    </p>
+                )}
 
-                <br />
+                <input
+                    type="password"
+                    name="password"
+                    placeholder="Password"
+                    value={formData.password}
+                    onChange={handleChange}
+                    disabled={loading}
+                />
 
-                <button type="submit">
-                    Login
+                {errors.password && (
+                    <p className="error">
+                        {errors.password}
+                    </p>
+                )}
+
+                <button
+                    type="submit"
+                    disabled={loading}
+                >
+                    {loading
+                        ? "Logging in..."
+                        : "Login"}
                 </button>
             </form>
         </div>

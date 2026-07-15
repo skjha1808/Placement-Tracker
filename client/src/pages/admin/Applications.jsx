@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
 import api from "../../services/api";
+
 import LoadingSpinner from "../../components/ui/LoadingSpinner";
 import EmptyState from "../../components/ui/EmptyState";
-import ApplicationForm from "../../components/forms/ApplicationForm";
+import ApplicationRow from "../../components/admin/ApplicationRow";
+import ApplicationStats from "../../components/admin/ApplicationStats";
+import StudentDrawer from "../../components/admin/StudentDrawer";
 
 import "./Applications.css";
 
@@ -10,12 +13,11 @@ function Applications() {
 
     const [applications, setApplications] = useState([]);
     const [loading, setLoading] = useState(true);
-
     const [search, setSearch] = useState("");
-
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [selectedApplication, setSelectedApplication] = useState(null);
-
+    const [statusFilter, setStatusFilter] = useState("All");
+    const [selectedStudent, setSelectedStudent] = useState(null);
+    const [drawerOpen, setDrawerOpen] = useState(false);
+    
     const fetchApplications = async () => {
 
         setLoading(true);
@@ -41,18 +43,8 @@ function Applications() {
     };
 
     useEffect(() => {
-
         fetchApplications();
-
     }, []);
-
-    const handleEdit = (application) => {
-
-        setSelectedApplication(application);
-
-        setIsModalOpen(true);
-
-    };
 
     const handleDelete = async (id) => {
 
@@ -66,7 +58,9 @@ function Applications() {
 
             await api.delete(`/applications/${id}`);
 
-            alert("Application deleted successfully!");
+            alert(
+                "Application deleted successfully!"
+            );
 
             fetchApplications();
 
@@ -79,6 +73,11 @@ function Applications() {
 
         }
 
+    };
+
+    const handleViewStudent = (student) => {
+        setSelectedStudent(student);
+        setDrawerOpen(true);
     };
 
     const getStatusClass = (status) => {
@@ -110,29 +109,34 @@ function Applications() {
     const filteredApplications =
         applications.filter((application) => {
 
-            const keyword =
-                search.toLowerCase();
+        const keyword = search.toLowerCase();
 
-            return (
+        const matchesSearch =
 
-                application.student.name
-                    .toLowerCase()
-                    .includes(keyword)
+            application.student.name
+                .toLowerCase()
+                .includes(keyword)
 
-                ||
+            ||
 
-                application.company?.companyName
-                    ?.toLowerCase()
-                    .includes(keyword)
+            application.company?.companyName
+                ?.toLowerCase()
+                .includes(keyword);
 
-            );
+        const matchesStatus =
 
-        });
+            statusFilter === "All"
+
+            ||
+
+            application.status === statusFilter;
+
+        return matchesSearch && matchesStatus;
+
+    });
 
     if (loading) {
-
         return <LoadingSpinner />;
-
     }
 
     return (
@@ -143,16 +147,61 @@ function Applications() {
                 Manage Applications
             </h1>
 
+            <ApplicationStats
+                applications={applications}
+            />
+
+            <div className="status-filters">
+
+                {[
+                    "All",
+                    "Applied",
+                    "OA Cleared",
+                    "Interview",
+                    "Selected",
+                    "Rejected",
+                ].map((status) => (
+
+                    <button
+
+                        key={status}
+
+                        className={
+                            statusFilter === status
+                                ? "filter-btn active"
+                                : "filter-btn"
+                        }
+
+                        onClick={() =>
+                            setStatusFilter(status)
+                        }
+
+                    >
+
+                        {status}
+
+                    </button>
+
+                ))}
+
+            </div>
+
             <div className="applications-toolbar">
 
                 <input
+
                     className="input search-input"
+
                     type="text"
-                    placeholder="🔍 Search..."
+
+                    placeholder="🔍 Search Student or Company..."
+
                     value={search}
+
                     onChange={(e) =>
                         setSearch(e.target.value)
                     }
+
                 />
 
             </div>
@@ -165,123 +214,60 @@ function Applications() {
 
             ) : (
 
-                <div className="table-container">
+                <div className="applications-grid">
 
-                    <table className="applications-table">
+                    {filteredApplications.map(
+                        (application) => (
 
-                        <thead>
+                            <ApplicationRow
 
-                            <tr>
+                                key={
+                                    application._id
+                                }
 
-                                <th>#</th>
+                                application={
+                                    application
+                                }
 
-                                <th>Student</th>
+                                getStatusClass={
+                                    getStatusClass
+                                }
 
-                                <th>Company</th>
+                                fetchApplications={
+                                    fetchApplications
+                                }
 
-                                <th>Status</th>
+                                onDelete={
+                                    handleDelete
+                                }
 
-                                <th>Actions</th>
+                                onViewStudent={
+                                    handleViewStudent
+                                }
 
-                            </tr>
+                            />
 
-                        </thead>
-
-                        <tbody>
-
-                            {filteredApplications.map(
-                                (
-                                    application,
-                                    index
-                                ) => (
-
-                                    <tr
-                                        key={
-                                            application._id
-                                        }
-                                    >
-
-                                        <td>
-                                            {index + 1}
-                                        </td>
-
-                                        <td>
-                                            {
-                                                application.student.name
-                                            }
-                                        </td>
-
-                                        <td>
-                                            {
-                                                application.company
-                                                    ?.companyName
-                                            }
-                                        </td>
-
-                                        <td>
-
-                                            <span
-                                                className={getStatusClass(
-                                                    application.status
-                                                )}
-                                            >
-                                                {
-                                                    application.status
-                                                }
-                                            </span>
-
-                                        </td>
-
-                                        <td className="action-buttons">
-
-                                            <button
-                                                className="btn btn-warning"
-                                                onClick={() =>
-                                                    handleEdit(
-                                                        application
-                                                    )
-                                                }
-                                            >
-                                                Edit
-                                            </button>
-
-                                            <button
-                                                className="btn btn-danger"
-                                                onClick={() =>
-                                                    handleDelete(
-                                                        application._id
-                                                    )
-                                                }
-                                            >
-                                                Delete
-                                            </button>
-
-                                        </td>
-
-                                    </tr>
-
-                                )
-                            )}
-
-                        </tbody>
-
-                    </table>
+                        )
+                    )}
 
                 </div>
 
             )}
 
-            <ApplicationForm
-                isOpen={isModalOpen}
+            <StudentDrawer
+
+                isOpen={drawerOpen}
+
                 onClose={() => {
 
-                    setIsModalOpen(false);
+                    setDrawerOpen(false);
 
-                    setSelectedApplication(null);
+                    setSelectedStudent(null);
 
                 }}
-                selectedApplication={selectedApplication}
-                fetchApplications={fetchApplications}
+
+                student={selectedStudent}
+
             />
 
         </div>
