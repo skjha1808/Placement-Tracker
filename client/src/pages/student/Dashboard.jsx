@@ -47,14 +47,16 @@ function Dashboard() {
                 ]);
 
             const apps = applicationsRes.data;
-            const comps = companiesRes.data;
+            const comps = companiesRes.data.companies;
 
             setApplications(apps);
             setCompanies(comps);
 
+            console.log("apps:", apps);
+            console.log("comps:", comps);    
+
             setStats({
                 applied: apps.length,
-
                 interview: apps.filter(
                     (app) => app.status === "Interview"
                 ).length,
@@ -218,9 +220,7 @@ function Dashboard() {
                     </p>
 
                 </div>
-
             </div>
-
         </div>
     );
 }

@@ -3,12 +3,12 @@ const User = require("../models/User");
 
 const authMiddleware = async (req, res, next) => {
     try {
-
         const authHeader = req.headers.authorization;
 
         if (!authHeader || !authHeader.startsWith("Bearer ")) {
             return res.status(401).json({
-                message: "Not authorized, no token provided",
+                success: false,
+                message: "Access denied. No token provided.",
             });
         }
 
@@ -19,23 +19,24 @@ const authMiddleware = async (req, res, next) => {
             process.env.JWT_SECRET
         );
 
-        const user = await User.findById(decoded.id);
+        const user = await User.findById(decoded.id).select("-password");
 
         if (!user) {
             return res.status(401).json({
-                message: "User not found",
+                success: false,
+                message: "User not found.",
             });
         }
 
         req.user = user;
 
         next();
-
     } catch (error) {
-        console.log(error);
+        console.error("Authentication Error:", error.message);
 
-        res.status(401).json({
-            message: error.message,
+        return res.status(401).json({
+            success: false,
+            message: "Invalid or expired token.",
         });
     }
 };

@@ -12,26 +12,29 @@ const {
     deleteCompany,
 } = require("../controllers/companyController");
 
+// Apply authentication to all routes
+router.use(authMiddleware);
+
+// Common Routes (Admin & Student)
+
 router.get("/", getAllCompanies);
 router.get("/:id", getCompanyById);
 
+// Admin Routes
 router.post(
     "/",
-    authMiddleware,
     adminMiddleware,
     createCompany
 );
 
 router.put(
     "/:id",
-    authMiddleware,
     adminMiddleware,
     updateCompany
 );
 
 router.delete(
     "/:id",
-    authMiddleware,
     adminMiddleware,
     deleteCompany
 );

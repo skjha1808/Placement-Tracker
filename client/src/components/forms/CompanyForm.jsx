@@ -23,7 +23,18 @@ function CompanyForm({
             setRole(selectedCompany.role);
             setPackageOffered(selectedCompany.package);
             setLocation(selectedCompany.location);
-            setJobType(selectedCompany.jobType);
+            const jobTypeMap = {
+                "internship": "Internship",
+                "full time": "Full-time",
+                "full-time": "Full-time",
+                "internship + fte": "Internship + FTE",
+            };
+
+            setJobType(
+                jobTypeMap[selectedCompany.jobType.toLowerCase()] ||
+                selectedCompany.jobType
+            );
+
             setEligibleBranches(
                 selectedCompany.eligibleBranches.join(", ")
             );
@@ -53,11 +64,15 @@ function CompanyForm({
         e.preventDefault();
 
         try {
+            console.log({
+                jobType,
+                applicationDeadline,
+            });
             const data = {
-                companyName,
-                role,
+                companyName: companyName.trim(),
+                role: role.trim(),
                 package: Number(packageOffered),
-                location,
+                location: location.trim(),
                 jobType,
                 eligibleBranches: eligibleBranches
                     .split(",")
@@ -97,8 +112,9 @@ function CompanyForm({
             onClose();
 
         } catch (error) {
-            console.log(
-                error.response?.data || error.message
+            alert(
+                error.response?.data?.message ||
+                "Something went wrong."
             );
         }
     };
@@ -124,8 +140,6 @@ function CompanyForm({
                         }
                     />
 
-                    <br /><br />
-
                     <input
                         type="text"
                         placeholder="Role"
@@ -135,18 +149,17 @@ function CompanyForm({
                         }
                     />
 
-                    <br /><br />
-
                     <input
                         type="number"
                         placeholder="Package (LPA)"
                         value={packageOffered}
+                        min="0"
+                        max="100"
+                        step="0.1"
                         onChange={(e) =>
                             setPackageOffered(e.target.value)
                         }
                     />
-
-                    <br /><br />
 
                     <input
                         type="text"
@@ -157,18 +170,29 @@ function CompanyForm({
                         }
                     />
 
-                    <br /><br />
-
-                    <input
-                        type="text"
-                        placeholder="Job Type"
+                    <select
                         value={jobType}
                         onChange={(e) =>
                             setJobType(e.target.value)
                         }
-                    />
+                    >
+                        <option value="">
+                            Select Job Type
+                        </option>
 
-                    <br /><br />
+                        <option value="Full-time">
+                            Full-time
+                        </option>
+
+                        <option value="Internship">
+                            Internship
+                        </option>
+
+                        <option value="Internship + FTE">
+                            Internship + FTE
+                        </option>
+
+                    </select>
 
                     <input
                         type="text"
@@ -179,46 +203,45 @@ function CompanyForm({
                         }
                     />
 
-                    <br /><br />
-
                     <input
                         type="number"
                         placeholder="Minimum CGPA"
                         value={minimumCGPA}
+                        min="0"
+                        max="10"
+                        step="0.01"
                         onChange={(e) =>
                             setMinimumCGPA(e.target.value)
                         }
                     />
 
-                    <br /><br />
-
                     <input
                         type="date"
+                        min={new Date().toISOString().split("T")[0]}
                         value={applicationDeadline}
                         onChange={(e) =>
                             setApplicationDeadline(e.target.value)
                         }
                     />
 
-                    <br /><br />
+                    <div className="modal-buttons">
 
-                    <button type="submit">
-                        {selectedCompany
-                            ? "Update Company"
-                            : "Save Company"}
-                    </button>
+                        <button type="button"
+                            onClick={() => {
+                                clearForm();
+                                onClose();
+                            }}
+                        >
+                            Cancel
+                        </button>
 
-                    {" "}
+                        <button type="submit">
+                            {selectedCompany
+                                ? "Update Company"
+                                : "Save Company"}
+                        </button>
 
-                    <button
-                        type="button"
-                        onClick={() => {
-                            clearForm();
-                            onClose();
-                        }}
-                    >
-                        Cancel
-                    </button>
+                    </div>
 
                 </form>
 

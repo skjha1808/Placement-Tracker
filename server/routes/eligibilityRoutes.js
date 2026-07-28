@@ -8,9 +8,12 @@ const {
     checkEligibility,
 } = require("../controllers/eligibilityController");
 
+// Apply authentication to all routes
+router.use(authMiddleware);
+
+// Check eligibility for a company
 router.get(
     "/:companyId",
-    authMiddleware,
     studentMiddleware,
     checkEligibility
 );

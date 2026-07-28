@@ -24,7 +24,7 @@ function Companies() {
 
             const response = await api.get("/companies");
 
-            setCompanies(response.data);
+            setCompanies(response.data.companies);
 
         } catch (error) {
 
@@ -88,8 +88,10 @@ function Companies() {
     );
     });
 
-    return (
+    console.log("companies =", companies);
+    console.log("Array?", Array.isArray(companies));
 
+    return (
         <div className="page">
 
             <h1 className="page-title">

@@ -10,27 +10,27 @@ const {
     deleteNotification,
 } = require("../controllers/notificationController");
 
+// Apply authentication to all routes
+router.use(authMiddleware);
+
+// Notification Routes
 router.get(
     "/",
-    authMiddleware,
     getMyNotifications
 );
 
 router.put(
     "/:id/read",
-    authMiddleware,
     markAsRead
 );
 
 router.put(
     "/read-all",
-    authMiddleware,
     markAllAsRead
 );
 
 router.delete(
     "/:id",
-    authMiddleware,
     deleteNotification
 );
 

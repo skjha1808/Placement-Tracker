@@ -1,65 +1,113 @@
 const Company = require("../models/Company");
 
+const {
+    formatText,
+    formatRole,
+    formatBranches,
+} = require("../utils/formatters");
+
+const {
+    isPositiveNumber,
+    isValidCGPA,
+    isFutureDate,
+} = require("../utils/validators");
+
 const createCompany = async (req, res) => {
     try {
+        const {
+            companyName,
+            role,
+            package,
+            location,
+            jobType,
+            eligibleBranches,
+            minimumCGPA,
+            applicationDeadline,
+        } = req.body;
 
-        const company = await Company.create({
+        // Check required fields
+        if (
+            !companyName ||
+            !role ||
+            package === undefined ||
+            !location ||
+            !jobType ||
+            !eligibleBranches ||
+            eligibleBranches.length === 0 ||
+            minimumCGPA === undefined ||
+            !applicationDeadline
+        ) {
+            return res.status(400).json({
+                success: false,
+                message: "All fields are required",
+            });
+        }
 
-            ...req.body,
+        // Validate package
+        if (!isPositiveNumber(package)) {
+            return res.status(400).json({
+                success: false,
+                message: "Package must be a positive number",
+            });
+        }
 
-            companyName:
-                req.body.companyName
-                    .trim()
-                    .split(" ")
-                    .map(
-                        word =>
-                            word.charAt(0).toUpperCase() +
-                            word.slice(1).toLowerCase()
-                    )
-                    .join(" "),
+        // Validate CGPA
+        if (!isValidCGPA(minimumCGPA)) {
+            return res.status(400).json({
+                success: false,
+                message: "Minimum CGPA must be between 0 and 10",
+            });
+        }
 
-            location:
-                req.body.location
-                    .trim()
-                    .split(" ")
-                    .map(
-                        word =>
-                            word.charAt(0).toUpperCase() +
-                            word.slice(1).toLowerCase()
-                    )
-                    .join(" "),
+        // Validate deadline
+        if (!isFutureDate(applicationDeadline)) {
+            return res.status(400).json({
+                success: false,
+                message: "Application deadline cannot be in the past",
+            });
+        }
 
-            role:
-                req.body.role
-                    .trim()
-                    .split(" ")
-                    .map(
-                        word =>
-                            word.toUpperCase() === "SDE"
-                                ? "SDE"
-                                : word.charAt(0).toUpperCase() +
-                                  word.slice(1).toLowerCase()
-                    )
-                    .join(" "),
+        // Format values
+        const formattedCompanyName = formatText(companyName);
+        const formattedRole = formatRole(role);
+        const formattedLocation = formatText(location);
+        const formattedBranches =
+            formatBranches(eligibleBranches);
 
-            eligibleBranches:
-                req.body.eligibleBranches.map(
-                    branch =>
-                        branch
-                            .trim()
-                            .toUpperCase()
-                ),
-
+        // Check duplicate company
+        const existingCompany = await Company.findOne({
+            companyName: formattedCompanyName,
+            role: formattedRole,
         });
 
-        res.status(201).json(company);
+        if (existingCompany) {
+            return res.status(409).json({
+                success: false,
+                message:
+                    "Company with this role already exists",
+            });
+        }
+
+        // Create company
+        const company = await Company.create({
+            ...req.body,
+            companyName: formattedCompanyName,
+            role: formattedRole,
+            location: formattedLocation,
+            eligibleBranches: formattedBranches,
+        });
+
+        return res.status(201).json({
+            success: true,
+            message: "Company created successfully",
+            company,
+        });
 
     } catch (error) {
-
-        res.status(500).json({
+        return res.status(500).json({
+            success: false,
             message: error.message,
         });
-
     }
 };
 
@@ -67,9 +115,33 @@ const getAllCompanies = async (req, res) => {
     try {
         const companies = await Company.find();
 
-        res.status(200).json(companies);
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        const updatedCompanies = companies.map((company) => {
+            const companyObj = company.toObject();
+
+            const deadline = new Date(companyObj.applicationDeadline);
+            deadline.setHours(0, 0, 0, 0);
+
+            if (
+                companyObj.status === "Open" &&
+                deadline < today
+            ) {
+                companyObj.status = "Closed";
+            }
+            
+            return companyObj;
+        });
+
+        return res.status(200).json({
+            success: true,
+            companies: updatedCompanies,
+        });
+
     } catch (error) {
-        res.status(500).json({
+        return res.status(500).json({
+            success: false,
             message: error.message,
         });
     }
@@ -77,11 +149,37 @@ const getAllCompanies = async (req, res) => {
 
 const getCompanyById = async (req, res) => {
     try {
-        const company = await Company.findById(req.params.id);
+        const company = await Company.findById(
+            req.params.id
+        );
 
-        res.status(200).json(company);
+        const companyObj = company.toObject();
+
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        if (
+            companyObj.status === "Open" &&
+            new Date(companyObj.applicationDeadline) < today
+        ) {
+            companyObj.status = "Closed";
+        }
+
+        if (!company) {
+            return res.status(404).json({
+                success: false,
+                message: "Company not found",
+            });
+        }
+
+        return res.status(200).json({
+            success: true,
+            company: companyObj,
+        });
+
     } catch (error) {
-        res.status(500).json({
+        return res.status(500).json({
+            success: false,
             message: error.message,
         });
     }
@@ -89,66 +187,90 @@ const getCompanyById = async (req, res) => {
 
 const updateCompany = async (req, res) => {
     try {
+        const updateData = { ...req.body };
 
-        const updatedCompany = await Company.findByIdAndUpdate(
+        if (updateData.companyName) {
+            updateData.companyName = formatText(
+                updateData.companyName
+            );
+        }
 
-            req.params.id,
-            {
-                ...req.body,
+        if (updateData.role) {
+            updateData.role = formatRole(
+                updateData.role
+            );
+        }
 
-                companyName:
-                    req.body.companyName
-                        ?.trim()
-                        .split(" ")
-                        .map(
-                            word =>
-                                word.charAt(0).toUpperCase() +
-                                word.slice(1).toLowerCase()
-                        )
-                        .join(" "),
+        if (updateData.location) {
+            updateData.location = formatText(
+                updateData.location
+            );
+        }
 
-                location:
-                    req.body.location
-                        ?.trim()
-                        .split(" ")
-                        .map(
-                            word =>
-                                word.charAt(0).toUpperCase() +
-                                word.slice(1).toLowerCase()
-                        )
-                        .join(" "),
+        if (updateData.eligibleBranches) {
+            updateData.eligibleBranches =
+                formatBranches(
+                    updateData.eligibleBranches
+                );
+        }
 
-                role:
-                    req.body.role
-                        ?.trim()
-                        .split(" ")
-                        .map(
-                            word =>
-                                word.toUpperCase() === "SDE"
-                                    ? "SDE"
-                                    : word.charAt(0).toUpperCase() +
-                                      word.slice(1).toLowerCase()
-                        )
-                        .join(" "),
-
-                eligibleBranches:
-                    req.body.eligibleBranches?.map(
-                        branch =>
-                            branch
-                                .trim()
-                                .toUpperCase()
-                    ),
-            },
-            {
-                new: true,
-            }
+        // Check if company exists
+        const currentCompany = await Company.findById(
+            req.params.id
         );
 
-        res.status(200).json(updatedCompany);
+        if (!currentCompany) {
+            return res.status(404).json({
+                success: false,
+                message: "Company not found",
+            });
+        }
+
+        // Values after update
+        const companyName =
+            updateData.companyName ||
+            currentCompany.companyName;
+
+        const role =
+            updateData.role ||
+            currentCompany.role;
+
+        // Check duplicate company
+        const existingCompany = await Company.findOne({
+            companyName,
+            role,
+            _id: { $ne: req.params.id },
+        });
+
+        if (existingCompany) {
+            return res.status(409).json({
+                success: false,
+                message:
+                    "Company with this role already exists",
+            });
+        }
+
+        console.log("Update Data:", updateData);
+        
+        const updatedCompany =
+            await Company.findByIdAndUpdate(
+                req.params.id,
+                updateData,
+                {
+                    new: true,
+                    runValidators: true,
+                }
+            );
+
+        return res.status(200).json({
+            success: true,
+            message: "Company updated successfully",
+            company: updatedCompany,
+        });
 
     } catch (error) {
-
-        res.status(500).json({
+        return res.status(500).json({
+            success: false,
             message: error.message,
         });
     }
@@ -156,16 +278,26 @@ const updateCompany = async (req, res) => {
 
 const deleteCompany = async (req, res) => {
     try {
-        const deletedCompany = await Company.findByIdAndDelete(
-            req.params.id
-        );
+        const deletedCompany =
+            await Company.findByIdAndDelete(
+                req.params.id
+            );
 
-        res.status(200).json({
+        if (!deletedCompany) {
+            return res.status(404).json({
+                success: false,
+                message: "Company not found",
+            });
+        }
+
+        return res.status(200).json({
+            success: true,
             message: "Company deleted successfully",
-            deletedCompany,
         });
+
     } catch (error) {
-        res.status(500).json({
+        return res.status(500).json({
+            success: false,
             message: error.message,
         });
     }

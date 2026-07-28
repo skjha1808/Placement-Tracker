@@ -81,17 +81,10 @@ function Companies() {
 
             ]);
 
-            setCompanies(
-                companiesRes.data
-            );
-
-            setProfile(
-                profileRes.data
-            );
-
-            await fetchEligibility(
-                companiesRes.data
-            );
+            const companiesList = companiesRes.data.companies;
+            setCompanies(companiesList);
+            setProfile(profileRes.data);
+            await fetchEligibility(companiesList);
 
         } catch (error) {
 
@@ -201,7 +194,7 @@ function Companies() {
 
     }
 
-    const filteredCompanies = [...companies]
+    const filteredCompanies = [...(Array.isArray(companies) ? companies : [])]
 
         .filter((company) => {
 

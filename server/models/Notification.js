@@ -6,22 +6,26 @@ const notificationSchema = new mongoose.Schema(
             type:mongoose.Schema.Types.ObjectId,
             ref:"User",
             required:true,
+            index:true,
         },
 
         title:{
             type:String,
-            required:true,
+            required:[true,"Notification title is required"],
+            trim:true,
         },
 
         message:{
             type:String,
-            required:true,
+            required:[true,"Notification message is required"],
+            trim:true,
         },
 
         link:{
-        type:String,
-        default:"",
-    },
+            type:String,
+            trim:true,
+            default:"",
+        },
 
         type:{
             type:String,

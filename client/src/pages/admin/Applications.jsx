@@ -19,15 +19,10 @@ function Applications() {
     const [drawerOpen, setDrawerOpen] = useState(false);
     
     const fetchApplications = async () => {
-
         setLoading(true);
-
         try {
-
             const response = await api.get("/applications");
-
             setApplications(response.data);
-
         } catch (error) {
 
             console.log(
@@ -35,11 +30,8 @@ function Applications() {
             );
 
         } finally {
-
             setLoading(false);
-
         }
-
     };
 
     useEffect(() => {
@@ -47,7 +39,6 @@ function Applications() {
     }, []);
 
     const handleDelete = async (id) => {
-
         if (
             !window.confirm(
                 "Delete this application?"
@@ -55,9 +46,7 @@ function Applications() {
         ) return;
 
         try {
-
             await api.delete(`/applications/${id}`);
-
             alert(
                 "Application deleted successfully!"
             );
@@ -65,14 +54,11 @@ function Applications() {
             fetchApplications();
 
         } catch (error) {
-
             console.log(
                 error.response?.data ||
                 error.message
             );
-
         }
-
     };
 
     const handleViewStudent = (student) => {
@@ -101,38 +87,27 @@ function Applications() {
 
             default:
                 return "badge";
-
         }
-
     };
 
-    const filteredApplications =
-        applications.filter((application) => {
-
+    const filteredApplications = applications.filter((application) => {
         const keyword = search.toLowerCase();
 
         const matchesSearch =
-
-            application.student.name
-                .toLowerCase()
-                .includes(keyword)
-
+            application.student?.name
+                ?.toLowerCase()
+                .includes(keyword) 
             ||
-
             application.company?.companyName
                 ?.toLowerCase()
                 .includes(keyword);
 
         const matchesStatus =
-
             statusFilter === "All"
-
             ||
-
             application.status === statusFilter;
 
         return matchesSearch && matchesStatus;
-
     });
 
     if (loading) {
@@ -140,7 +115,6 @@ function Applications() {
     }
 
     return (
-
         <div className="page">
 
             <h1 className="page-title">
@@ -152,7 +126,6 @@ function Applications() {
             />
 
             <div className="status-filters">
-
                 {[
                     "All",
                     "Applied",
@@ -163,9 +136,7 @@ function Applications() {
                 ].map((status) => (
 
                     <button
-
                         key={status}
-
                         className={
                             statusFilter === status
                                 ? "filter-btn active"
@@ -175,21 +146,14 @@ function Applications() {
                         onClick={() =>
                             setStatusFilter(status)
                         }
-
                     >
-
                         {status}
-
                     </button>
-
                 ))}
-
             </div>
 
             <div className="applications-toolbar">
-
                 <input
-
                     className="input search-input"
 
                     type="text"
@@ -201,17 +165,13 @@ function Applications() {
                     onChange={(e) =>
                         setSearch(e.target.value)
                     }
-
                 />
-
             </div>
 
             {filteredApplications.length === 0 ? (
-
                 <EmptyState
                     message="No Applications Found"
                 />
-
             ) : (
 
                 <div className="applications-grid">
@@ -244,36 +204,23 @@ function Applications() {
                                 onViewStudent={
                                     handleViewStudent
                                 }
-
                             />
-
                         )
                     )}
-
                 </div>
-
             )}
 
             <StudentDrawer
-
                 isOpen={drawerOpen}
 
                 onClose={() => {
-
                     setDrawerOpen(false);
-
                     setSelectedStudent(null);
-
                 }}
-
                 student={selectedStudent}
-
             />
-
         </div>
-
     );
-
 }
 
 export default Applications;

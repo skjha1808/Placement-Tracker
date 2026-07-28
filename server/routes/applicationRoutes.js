@@ -14,44 +14,43 @@ const {
     deleteApplication,
 } = require("../controllers/applicationController");
 
+// Apply authentication to all routes
+router.use(authMiddleware);
+
+// Student Routes
 router.post(
     "/",
-    authMiddleware,
     studentMiddleware,
     createApplication
 );
 
 router.get(
     "/my",
-    authMiddleware,
     studentMiddleware,
-    getMyApplications,
+    getMyApplications
 );
 
+// Admin Routes
 router.get(
     "/",
-    authMiddleware,
     adminMiddleware,
     getAllApplications
 );
 
 router.get(
     "/:id",
-    authMiddleware,
     adminMiddleware,
     getApplicationById
 );
 
 router.put(
     "/:id",
-    authMiddleware,
     adminMiddleware,
     updateApplication
 );
 
 router.delete(
     "/:id",
-    authMiddleware,
     adminMiddleware,
     deleteApplication
 );

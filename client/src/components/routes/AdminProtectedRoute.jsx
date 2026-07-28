@@ -5,7 +5,7 @@ function AdminProtectedRoute({ children }) {
     const token = localStorage.getItem("token");
 
     const user = JSON.parse(
-        localStorage.getItem("user")
+        localStorage.getItem("user") || "null"
     );
 
     if (!token) {
@@ -15,7 +15,6 @@ function AdminProtectedRoute({ children }) {
     if (!user || user.role !== "admin") {
         return <Navigate to="/dashboard" replace />;
     }
-
     return children;
 }
 

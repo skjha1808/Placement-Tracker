@@ -23,13 +23,14 @@ const userSchema = new mongoose.Schema(
             type: String,
             required: [true, "Password is required"],
             minlength: 6,
+            select: false,
         },
 
         role: {
             type: String,
             enum: ["student", "admin"],
             default: "student",
-            required: [true, "Name is required"]
+            required: [true, "Role is required"],
         },
     },
     {

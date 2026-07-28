@@ -33,10 +33,19 @@ const getMyProfile = async (req, res) => {
             user: req.user._id,
         });
 
+        if (!student) {
+            return res.status(404).json({
+                success: false,
+                message: "Student profile not found",
+            });
+        }
+
         res.status(200).json(student);
 
     } catch (error) {
+
         res.status(500).json({
+            success: false,
             message: error.message,
         });
     }
@@ -152,71 +161,41 @@ const uploadResume = async (req, res) => {
 const verifyStudent = async (req, res) => {
 
     try {
-
-        console.log("verifyStudent called");
-
         const student = await Student.findById(req.params.id);
 
-        console.log("Student Found:", student);
-
         if (!student) {
-
             return res.status(404).json({
                 message: "Student not found",
             });
-
         }
 
         if (student.isVerified) {
-
-            console.log("Student already verified");
-
             return res.status(400).json({
                 message: "Student is already verified",
             });
-
         }
 
         student.isVerified = true;
 
         await student.save();
 
-        console.log("Student verified");
-
         await Notification.create({
-
             user: student.user,
-
             title: "Profile Verified",
-
             message: "Your profile has been verified by the placement cell.",
-
             type: "success",
-
         });
 
-        console.log("Notification created");
-
         res.status(200).json({
-
             message: "Student verified successfully",
-
             student,
-
         });
 
     } catch (error) {
-
-        console.log(error);
-
         res.status(500).json({
-
             message: error.message,
-
         });
-
     }
-
 };
 
 const getAllStudents = async (req, res) => {
@@ -238,6 +217,13 @@ const getStudentById = async (req, res) => {
         const student = await Student.findById(req.params.id)
             .populate("user", "name email role");
 
+        if (!student) {
+            return res.status(404).json({
+                success: false,
+                message: "Student not found",
+            });
+        }
+
         res.status(200).json(student);
 
     } catch (error) {
@@ -249,17 +235,37 @@ const getStudentById = async (req, res) => {
 
 const updateStudent = async (req, res) => {
     try {
+        const allowedUpdates = {
+            name: req.body.name,
+            email: req.body.email,
+            phone: req.body.phone,
+            branch: req.body.branch,
+            education: req.body.education,
+            cgpa: req.body.cgpa,
+            skills: req.body.skills,
+            isVerified: req.body.isVerified,
+        };
+
         const updatedStudent = await Student.findByIdAndUpdate(
             req.params.id,
-            req.body,
+            allowedUpdates,
             {
                 new: true,
+                runValidators: true,
             }
         );
+
+        if (!updatedStudent) {
+            return res.status(404).json({
+                success: false,
+                message: "Student not found",
+            });
+        }
 
         res.status(200).json(updatedStudent);
 
     } catch (error) {
+
         res.status(500).json({
             message: error.message,
         });

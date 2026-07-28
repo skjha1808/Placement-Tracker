@@ -25,6 +25,8 @@ function Profile() {
     const [resume, setResume] = useState(null);
 
     const navigate = useNavigate();
+    const BASE_URL =
+        import.meta.env.VITE_API_URL || "http://localhost:5000";
 
     const fetchProfile = async () => {
         try {
@@ -37,7 +39,7 @@ function Profile() {
             setBranch(response.data.branch);
             setEducation(response.data.education);
             setCgpa(response.data.cgpa);
-            setSkills(response.data.skills.join(", "));
+            setSkills(response.data.skills?.join(", ") || "" );
             setResumeFile(null);
             setResume(response.data.resume);
 
@@ -45,19 +47,14 @@ function Profile() {
             setIsVerified(response.data.isVerified);
 
         } catch (error) {
-
             if (error.response?.status !== 404) {
-
                 console.log(
                     error.response?.data || error.message
                 );
-
             }
 
         } finally {
-
             setLoading(false);
-
         }
     };
 
@@ -124,49 +121,40 @@ function Profile() {
     };
 
     const handleResumeUpload = async () => {
-        if (!resumeFile) {
-            return alert("Please select a PDF.");
-        }
-        try {
-            const formData = new FormData();
-            formData.append(
-                "resume",
-                resumeFile
-            );
-            await api.post(
-                "/students/upload-resume",
-                formData,
-                {
-                    headers: {
-                        "Content-Type":
-                            "multipart/form-data",
-                    },
-                }
-            );
-            alert(
-                "Resume uploaded successfully!"
-            );
 
-            const response = await api.post(
-                "/students/upload-resume",
-                formData,
-                {
-                    headers: {
-                        "Content-Type":"multipart/form-data",
-                    },
-                }
-            );
+    if (!resumeFile) {
+        return alert("Please select a PDF.");
+    }
 
-            setResume(response.data.resume);
-            fetchProfile();
+    try {
+        const formData = new FormData();
 
-        } catch (error) {
-            console.log(error);
-            alert(
-                error.response?.data?.message ||
-                "Upload failed."
-            );
-        }
+        formData.append("resume", resumeFile);
+
+        const response = await api.post(
+            "/students/upload-resume",
+            formData,
+            {
+                headers: {
+                    "Content-Type":
+                        "multipart/form-data",
+                },
+            }
+        );
+
+        setResume(response.data.resume);
+        setResumeFile(null);
+        alert("Resume uploaded successfully!");
+        fetchProfile();
+
+    } catch (error) {
+        console.log(error);
+
+        alert(
+            error.response?.data?.message ||
+            "Upload failed."
+        );
+    }
     };
 
     if (loading) {
@@ -373,7 +361,7 @@ function Profile() {
                                 resume?.fileName && (
                                     <div className="resume-actions">
                                         <a
-                                            href={`http://localhost:5000${resume.filePath}`}
+                                            href={`${BASE_URL}${resume.filePath}`}
                                             target="_blank"
                                             rel="noreferrer"
                                             className="resume-btn view-btn"
@@ -382,7 +370,7 @@ function Profile() {
                                         </a>
 
                                         <a
-                                            href={`http://localhost:5000${resume.filePath}`}
+                                            href={`${BASE_URL}${resume.filePath}`}
                                             download
                                             className="resume-btn download-btn"
                                         >

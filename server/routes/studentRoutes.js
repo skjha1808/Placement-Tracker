@@ -18,67 +18,62 @@ const {
     deleteStudent,
 } = require("../controllers/studentController");
 
+// Apply authentication to all routes
+router.use(authMiddleware);
+
+// Student Routes
 router.post(
     "/",
-    authMiddleware,
     studentMiddleware,
     createStudent
 );
 
 router.get(
     "/me",
-    authMiddleware,
     studentMiddleware,
     getMyProfile
 );
 
 router.put(
     "/me",
-    authMiddleware,
     studentMiddleware,
     updateMyProfile
 );
 
 router.post(
-
     "/upload-resume",
-    authMiddleware,
     studentMiddleware,
     uploadResumeMiddleware.single("resume"),
     uploadResume
 );
 
+// Admin Routes
 router.put(
     "/:id/verify",
-    authMiddleware,
     adminMiddleware,
     verifyStudent
 );
 
 router.get(
     "/",
-    authMiddleware,
     adminMiddleware,
     getAllStudents
 );
 
 router.get(
     "/:id",
-    authMiddleware,
     adminMiddleware,
     getStudentById
 );
 
 router.put(
     "/:id",
-    authMiddleware,
     adminMiddleware,
     updateStudent
 );
 
 router.delete(
     "/:id",
-    authMiddleware,
     adminMiddleware,
     deleteStudent
 );

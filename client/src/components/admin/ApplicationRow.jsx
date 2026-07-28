@@ -3,19 +3,12 @@ import "./ApplicationRow.css";
 import api from "../../services/api";
 
 function ApplicationRow({
-
     application,
-
     getStatusClass,
-
     fetchApplications,
-
     onDelete,
-
     onViewStudent,
-
 }) {
-
     const [status, setStatus] = useState(
         application.status
     );
@@ -24,11 +17,13 @@ function ApplicationRow({
         useState(false);
 
     const handleUpdate = async () => {
-
+        if (status === application.status) {
+            alert("No changes to update.");
+            return;
+        }
+        
         try {
-
             setUpdating(true);
-
             await api.put(
                 `/applications/${application._id}`,
                 {
@@ -43,7 +38,6 @@ function ApplicationRow({
             fetchApplications();
 
         } catch (error) {
-
             console.log(
                 error.response?.data ||
                 error.message
@@ -55,25 +49,18 @@ function ApplicationRow({
             );
 
         } finally {
-
             setUpdating(false);
-
         }
-
     };
 
     return (
-
         <div className="card application-row">
-
             <div className="application-row-header">
 
                 <div className="student-avatar">
-
-                    {application.student.name
-                        .charAt(0)
-                        .toUpperCase()}
-
+                    {application.student?.name
+                    ?.charAt(0)
+                    ?.toUpperCase() || "?"}
                 </div>
 
                 <div className="student-details">
@@ -81,38 +68,26 @@ function ApplicationRow({
                     <h3
                         className="student-name"
                         onClick={() =>
-                            onViewStudent(
-                                application.student
-                            )
+                            application.student &&
+                            onViewStudent(application.student)
                         }
                     >
-
-                        {application.student.name}
-
+                        {application.student?.name || "Student Deleted"}
                     </h3>
 
                     <p>
-
-                        🏢 {application.company?.companyName}
-
+                        🏢 {application.company?.companyName || "Company Deleted"}
                     </p>
-
                 </div>
-
             </div>
 
             <div className="application-row-body">
-
                 <div>
-
                     <label>
-
                         Current Status
-
                     </label>
 
                     <select
-
                         className="input"
 
                         value={status}
@@ -122,9 +97,7 @@ function ApplicationRow({
                                 e.target.value
                             )
                         }
-
                     >
-
                         <option>
                             Applied
                         </option>
@@ -144,9 +117,7 @@ function ApplicationRow({
                         <option>
                             Rejected
                         </option>
-
                     </select>
-
                 </div>
 
                 <span
@@ -156,21 +127,19 @@ function ApplicationRow({
                 >
                     {status}
                 </span>
-
             </div>
 
             <div className="application-row-actions">
 
                 <button
-
                     className="btn btn-primary"
 
-                    disabled={updating}
-
+                    disabled={
+                        updating ||
+                        status === application.status
+                    }
                     onClick={handleUpdate}
-
                 >
-
                     {updating
                         ? "Updating..."
                         : "Update"}
@@ -178,8 +147,8 @@ function ApplicationRow({
                 </button>
 
                 <button
-
                     className="btn btn-danger"
+                    disabled={updating}
 
                     onClick={() =>
                         onDelete(
@@ -188,17 +157,12 @@ function ApplicationRow({
                     }
 
                 >
-
                     Delete
 
                 </button>
-
             </div>
-
         </div>
-
     );
-
 }
 
 export default ApplicationRow;

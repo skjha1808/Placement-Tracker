@@ -8,9 +8,12 @@ const {
     getAdminDashboard,
 } = require("../controllers/dashboardController");
 
+// Apply authentication to all routes
+router.use(authMiddleware);
+
+// Admin Dashboard
 router.get(
     "/admin",
-    authMiddleware,
     adminMiddleware,
     getAdminDashboard
 );

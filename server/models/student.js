@@ -9,13 +9,16 @@ const studentSchema = new mongoose.Schema(
 
         email: {
             type: String,
-            required: true,
+            required: [true, "Email is required"],
             unique: true,
+            trim: true,
+            lowercase: true,
         },
 
         phone: {
             type: String,
-            required: true,
+            required: [true, "Phone number is required"],
+            trim: true,
         },
 
         branch: {
@@ -30,7 +33,9 @@ const studentSchema = new mongoose.Schema(
 
         cgpa: {
             type: Number,
-            required: true,
+            required: [true, "CGPA is required"],
+            min: [0, "CGPA cannot be less than 0"],
+            max: [10, "CGPA cannot exceed 10"],
         },
 
         skills: [
@@ -40,15 +45,17 @@ const studentSchema = new mongoose.Schema(
         ],
 
         resume: {
-            fileName: {
-                type: String,
-                default: "",
+            type: {
+                fileName: {
+                    type: String,
+                    default: "",
+                },
+                filePath: {
+                    type: String,
+                    default: "",
+                },
             },
-
-            filePath: {
-                type: String,
-                default: "",
-            },
+            default: {},
         },
 
         user: {
