@@ -22,7 +22,8 @@ function Applications() {
         setLoading(true);
         try {
             const response = await api.get("/applications");
-            setApplications(response.data);
+            setApplications(response.data || []);
+
         } catch (error) {
 
             console.log(
@@ -47,11 +48,10 @@ function Applications() {
 
         try {
             await api.delete(`/applications/${id}`);
+            await fetchApplications();
             alert(
                 "Application deleted successfully!"
             );
-
-            fetchApplications();
 
         } catch (error) {
             console.log(
@@ -94,14 +94,18 @@ function Applications() {
         const keyword = search.toLowerCase();
 
         const matchesSearch =
-            application.student?.name
-                ?.toLowerCase()
-                .includes(keyword) 
+            (application.student?.name || "")
+                .toLowerCase()
+                .includes(keyword)
             ||
-            application.company?.companyName
-                ?.toLowerCase()
+            (application.company?.companyName || "")
+                .toLowerCase()
+                .includes(keyword)
+            ||
+            (application.student?.email || "")
+                .toLowerCase()
                 .includes(keyword);
-
+                
         const matchesStatus =
             statusFilter === "All"
             ||

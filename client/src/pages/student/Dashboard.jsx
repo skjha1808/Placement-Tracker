@@ -10,7 +10,7 @@ import UpcomingDeadlines from "../../components/dashboard/UpcomingDeadlines";
 import DashboardCharts from "../../components/dashboard/DashboardCharts";
 
 function Dashboard() {
-    const user = JSON.parse(localStorage.getItem("user"));
+    const user = JSON.parse(localStorage.getItem("user") || "{}" );
 
     const [profile, setProfile] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -46,14 +46,11 @@ function Dashboard() {
                     api.get("/companies"),
                 ]);
 
-            const apps = applicationsRes.data;
-            const comps = companiesRes.data.companies;
+            const apps = applicationsRes.data || [];
+            const comps = companiesRes.data.companies || [];
 
             setApplications(apps);
-            setCompanies(comps);
-
-            console.log("apps:", apps);
-            console.log("comps:", comps);    
+            setCompanies(comps);   
 
             setStats({
                 applied: apps.length,

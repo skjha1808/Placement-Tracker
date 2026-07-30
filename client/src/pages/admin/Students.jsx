@@ -13,12 +13,9 @@ function Students() {
     const fetchStudents = async () => {
 
         setLoading(true);
-
         try {
-
             const response = await api.get("/students");
-
-            setStudents(response.data);
+            setStudents(response.data || []);
 
         } catch (error) {
 
@@ -27,49 +24,43 @@ function Students() {
             );
 
         } finally {
-
             setLoading(false);
-
         }
-
     };
 
     useEffect(() => {
-
         fetchStudents();
-
     }, []);
 
     const handleVerify = async (id) => {
 
         try {
-
             await api.put(`/students/${id}/verify`);
-
+            await fetchStudents();
             alert("Student verified successfully!");
-
-            fetchStudents();
-
+            
         } catch (error) {
 
             console.log(
                 error.response?.data || error.message
             );
-
         }
-
     };
 
+    const searchText = search.toLowerCase();
+
     const filteredStudents = students.filter((student) =>
-        student.name
+        (student.name || "")
             .toLowerCase()
-            .includes(search.toLowerCase())
+            .includes(searchText) ||
+
+        (student.email || "")
+            .toLowerCase()
+            .includes(searchText)
     );
 
     if (loading) {
-
         return <LoadingSpinner />;
-
     }
 
     return (
@@ -91,7 +82,6 @@ function Students() {
                         setSearch(e.target.value)
                     }
                 />
-
             </div>
 
             {filteredStudents.length === 0 ? (
@@ -101,35 +91,23 @@ function Students() {
                 />
 
             ) : (
-
                 <div className="table-container">
 
                     <table className="students-table">
 
                         <thead>
-
                             <tr>
-
                                 <th>#</th>
-
                                 <th>Name</th>
-
                                 <th>Email</th>
-
                                 <th>Branch</th>
-
                                 <th>CGPA</th>
-
                                 <th>Status</th>
-
                                 <th>Action</th>
-
                             </tr>
-
                         </thead>
 
                         <tbody>
-
                             {filteredStudents.map(
                                 (
                                     student,
@@ -141,7 +119,6 @@ function Students() {
                                             student._id
                                         }
                                     >
-
                                         <td>
                                             {index + 1}
                                         </td>
@@ -171,7 +148,6 @@ function Students() {
                                         </td>
 
                                         <td>
-
                                             <span
                                                 className={
                                                     student.isVerified
@@ -179,17 +155,13 @@ function Students() {
                                                         : "badge badge-warning"
                                                 }
                                             >
-
                                                 {student.isVerified
                                                     ? "Verified"
                                                     : "Pending"}
-
                                             </span>
-
                                         </td>
 
                                         <td>
-
                                             {!student.isVerified ? (
 
                                                 <button
@@ -200,43 +172,26 @@ function Students() {
                                                         )
                                                     }
                                                 >
-
                                                     Verify
-
                                                 </button>
-
                                             ) : (
-
                                                 <button
                                                     className="btn"
                                                     disabled
                                                 >
-
                                                     Verified
-
                                                 </button>
-
                                             )}
-
                                         </td>
-
                                     </tr>
-
                                 )
                             )}
-
                         </tbody>
-
                     </table>
-
                 </div>
-
             )}
-
         </div>
-
     );
-
 }
 
 export default Students;

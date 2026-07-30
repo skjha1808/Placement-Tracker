@@ -16,10 +16,14 @@ function MyApplications() {
         setLoading(true);
 
         try {
-
             const response = await api.get("/applications/my");
-
-            setApplications(response.data);
+            setApplications(
+                (response.data || []).sort(
+                    (a, b) =>
+                        new Date(b.createdAt) -
+                        new Date(a.createdAt)
+                )
+            );
 
         } catch (error) {
 
@@ -28,11 +32,8 @@ function MyApplications() {
             );
 
         } finally {
-
             setLoading(false);
-
         }
-
     };
 
     useEffect(() => {
@@ -61,17 +62,13 @@ function MyApplications() {
             default:
                 return "badge";
         }
-
     };
 
     if (loading) {
-
         return <LoadingSpinner />;
-
     }
 
     return (
-
         <div className="page">
 
             <h1 className="page-title">
@@ -83,7 +80,6 @@ function MyApplications() {
                 <EmptyState
                     message="No Applications Found"
                 />
-
             ) : (
 
                 <div className="applications-grid">
@@ -97,15 +93,10 @@ function MyApplications() {
                         />
 
                     ))}
-
                 </div>
-
             )}
-
         </div>
-
     );
-
 }
 
 export default MyApplications;

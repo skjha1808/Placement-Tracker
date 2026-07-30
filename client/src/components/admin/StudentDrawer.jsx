@@ -1,21 +1,15 @@
 import "./StudentDrawer.css";
 
 function StudentDrawer({
-
     isOpen,
-
     onClose,
-
     student,
-
 }) {
 
     if (!isOpen || !student) return null;
 
     return (
-
         <>
-
             <div
                 className="drawer-overlay"
                 onClick={onClose}

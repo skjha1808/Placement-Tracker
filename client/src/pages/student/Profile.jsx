@@ -8,6 +8,18 @@ import ProfileSection from "../../components/ui/ProfileSection";
 import StatusBadge from "../../components/ui/StatusBadge";
 import LoadingSpinner from "../../components/ui/LoadingSpinner";
 
+import { formatName, formatSkills } from "../../utils/formatters";
+
+import {
+    validateProfile,
+    validatePhone,
+} from "../../utils/validation";
+
+import {
+    BRANCH_OPTIONS,
+    EDUCATION_OPTIONS,
+} from "../../constants/options";
+
 function Profile() {
 
     const [name, setName] = useState("");
@@ -23,6 +35,7 @@ function Profile() {
     const [loading, setLoading] = useState(true);
     const [resumeFile, setResumeFile] = useState(null);
     const [resume, setResume] = useState(null);
+    const [errors, setErrors] = useState({});
 
     const navigate = useNavigate();
     const BASE_URL =
@@ -33,12 +46,12 @@ function Profile() {
 
             const response = await api.get("/students/me");
 
-            setName(response.data.name);
-            setEmail(response.data.email);
-            setPhone(response.data.phone);
-            setBranch(response.data.branch);
-            setEducation(response.data.education);
-            setCgpa(response.data.cgpa);
+            setName(response.data.name || "");
+            setEmail(response.data.email || "");
+            setPhone(response.data.phone || "");
+            setBranch(response.data.branch || "");
+            setEducation(response.data.education || "");
+            setCgpa(response.data.cgpa || "");
             setSkills(response.data.skills?.join(", ") || "" );
             setResumeFile(null);
             setResume(response.data.resume);
@@ -64,27 +77,77 @@ function Profile() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        try {
+
+        let validationErrors={};
+
+        if(isVerified){
+
+        const phoneError=validatePhone(phone);
+
+        if(phoneError){
+
+        validationErrors.phone=phoneError;
+
+        }
+
+        if(!email.trim()){
+
+        validationErrors.email="Email is required";
+
+        }
+
+        if(!skills.trim()){
+
+        validationErrors.skills="Please enter at least one skill";
+
+        }
+
+        }
+        else{
+
+        validationErrors=validateProfile({
+
+        name,
+        email,
+        phone,
+        branch,
+        education,
+        cgpa,
+        skills
+
+        });
+        }
+
+        if(Object.keys(validationErrors).length){
+        setErrors(validationErrors);
+        return;
+        }
+
+        setErrors({});
+
+        try{
             let data;
             if (isVerified) {
                 data = {
-                    email,
-                    phone,
-                    skills: skills
+                    email: email.trim().toLowerCase(),
+                    phone: phone.trim(),
+                    skills: formatSkills(skills)
                         .split(",")
-                        .map(skill => skill.trim()),
+                        .map(skill => skill.trim())
+                        .filter(Boolean),
                 };
             } else {
                 data = {
-                    name,
-                    email,
-                    phone,
+                    name: formatName(name),
+                    email: email.trim().toLowerCase(),
+                    phone: phone.trim(),
                     branch,
                     education,
                     cgpa,
-                    skills: skills
+                    skills: formatSkills(skills)
                         .split(",")
-                        .map(skill => skill.trim()),
+                        .map(skill => skill.trim())
+                        .filter(Boolean),
                 };
             }
 
@@ -126,6 +189,14 @@ function Profile() {
         return alert("Please select a PDF.");
     }
 
+    if (resumeFile.type !== "application/pdf") {
+        return alert("Only PDF files are allowed.");
+    }
+
+    if (resumeFile.size > 2 * 1024 * 1024) {
+        return alert("Resume size should be less than 2 MB.");
+    }
+
     try {
         const formData = new FormData();
 
@@ -144,8 +215,8 @@ function Profile() {
 
         setResume(response.data.resume);
         setResumeFile(null);
+        await fetchProfile();
         alert("Resume uploaded successfully!");
-        fetchProfile();
 
     } catch (error) {
         console.log(error);
@@ -162,7 +233,6 @@ function Profile() {
     }
 
     return (
-
         <div className="page">
 
             <h1 className="page-title">
@@ -186,7 +256,6 @@ function Profile() {
                 <ProfileSection
                     title="👤 Personal Information"
                 >
-
                     <div className="profile-grid">
 
                         <div className="form-group">
@@ -201,11 +270,21 @@ function Profile() {
                                 value={name}
                                 disabled={isVerified}
                                 placeholder="Enter Name"
-                                onChange={(e) =>
-                                    setName(e.target.value)
-                                }
+                                onChange={(e)=>{
+                                    setName(e.target.value);
+                                    setErrors({
+                                        ...errors,
+                                        name:""
+                                    });
+                                }}
                             />
 
+                            {
+                                errors.name &&
+                                <p className="error-text">
+                                {errors.name}
+                                </p>
+                            }
                         </div>
 
                         <div className="form-group">
@@ -219,11 +298,21 @@ function Profile() {
                                 type="email"
                                 value={email}
                                 placeholder="Enter Email"
-                                onChange={(e) =>
-                                    setEmail(e.target.value)
-                                }
+                                onChange={(e) => {
+                                    setEmail(e.target.value);
+                                    setErrors({
+                                        ...errors,
+                                        email: "",
+                                    });
+                                }}
                             />
 
+                            {
+                                errors.email &&
+                                <p className="error-text">
+                                {errors.email}
+                                </p>
+                            }
                         </div>
 
                         <div className="form-group">
@@ -235,17 +324,34 @@ function Profile() {
                             <input
                                 className="input"
                                 type="tel"
+                                inputMode="numeric"
+                                maxLength={10}
                                 value={phone}
                                 placeholder="Enter Phone"
-                                onChange={(e) =>
-                                    setPhone(e.target.value)
-                                }
+                                onChange={(e) => {
+                                    setPhone(
+                                        e.target.value
+                                            .replace(/\D/g, "")
+                                            .slice(0, 10)
+                                    );
+
+                                    setErrors({
+                                        ...errors,
+                                        phone: "",
+                                    });
+                                }}
                             />
 
+                            {
+                                errors.phone && (
+                                    <p className="error-text">
+                                        {errors.phone}
+                                    </p>
+                                )
+                            }
+
                         </div>
-
                     </div>
-
                 </ProfileSection>
 
                 <ProfileSection
@@ -260,16 +366,42 @@ function Profile() {
                                 Branch
                             </label>
 
-                            <input
+                            <select
                                 className="input"
-                                type="text"
                                 value={branch}
                                 disabled={isVerified}
-                                placeholder="Enter Branch"
-                                onChange={(e) =>
-                                    setBranch(e.target.value)
-                                }
-                            />
+                                onChange={(e)=>{
+                                    setBranch(e.target.value);
+                                    setErrors({
+                                        ...errors,
+                                        branch:""
+                                    });
+                                }}
+                            >
+
+                            <option value="">
+                            Select Branch
+                            </option>
+
+                            {
+                            BRANCH_OPTIONS.map(branch=>(
+                            <option
+                            key={branch}
+                            value={branch}
+                            >
+                            {branch}
+                            </option>
+                            ))
+                            }
+
+                            </select>
+
+                            {
+                            errors.branch &&
+                            <p className="error-text">
+                            {errors.branch}
+                            </p>
+                            }
 
                         </div>
 
@@ -279,16 +411,39 @@ function Profile() {
                                 Education
                             </label>
 
-                            <input
+                            <select
                                 className="input"
-                                type="text"
                                 value={education}
                                 disabled={isVerified}
-                                placeholder="Enter Education"
-                                onChange={(e) =>
-                                    setEducation(e.target.value)
-                                }
-                            />
+                                onChange={(e) => {
+                                    setEducation(e.target.value);
+                                    setErrors({
+                                        ...errors,
+                                        education: "",
+                                    });
+                                }}
+                            >
+                                <option value="">
+                                    Select Education
+                                </option>
+
+                                {EDUCATION_OPTIONS.map((education) => (
+                                    <option
+                                        key={education}
+                                        value={education}
+                                    >
+                                        {education}
+                                    </option>
+                                ))}
+                            </select>
+
+                            {
+                                errors.education && (
+                                    <p className="error-text">
+                                        {errors.education}
+                                    </p>
+                                )
+                            }
 
                         </div>
 
@@ -300,15 +455,29 @@ function Profile() {
 
                             <input
                                 className="input"
-                                type="number"
+                                type="number" 
+                                inputMode="decimal"
+                                min="0"
+                                max="10"
                                 step="0.01"
                                 value={cgpa}
                                 disabled={isVerified}
                                 placeholder="Enter CGPA"
-                                onChange={(e) =>
-                                    setCgpa(e.target.value)
-                                }
+                                onChange={(e)=>{
+                                setCgpa(e.target.value);
+                                setErrors({
+                                ...errors,
+                                cgpa:""
+                                });
+                                }}
                             />
+
+                            {
+                                errors.cgpa &&
+                                <p className="error-text">
+                                {errors.cgpa}
+                                </p>
+                            }
 
                         </div>
 
@@ -331,10 +500,23 @@ function Profile() {
                                 type="text"
                                 value={skills}
                                 placeholder="C++, React, Node.js"
-                                onChange={(e) =>
-                                    setSkills(e.target.value)
-                                }
+                                onChange={(e) => {
+                                    setSkills(e.target.value);
+
+                                    setErrors({
+                                        ...errors,
+                                        skills: "",
+                                    });
+                                }}
                             />
+
+                            {
+                                errors.skills &&
+                                <p className="error-text">
+                                {errors.skills}
+                                </p>
+                            }
+
                         </div>
 
                         <div className="resume-card">
@@ -384,9 +566,9 @@ function Profile() {
                             <div className="resume-upload">
                                 <input
                                     type="file"
-                                    accept=".pdf"
+                                    accept="application/pdf,.pdf"
                                     onChange={(e) =>
-                                        setResumeFile(e.target.files[0])
+                                        setResumeFile(e.target.files?.[0] || null)
                                     }
                                 />
 
@@ -403,13 +585,10 @@ function Profile() {
                                 </button>
                             </div>
                         </div>
-
                     </div>
-
                 </ProfileSection>
 
                 <div className="profile-actions">
-
                     <button
                         type="submit"
                         className="btn btn-primary"
@@ -418,13 +597,9 @@ function Profile() {
                             ? "Update Profile"
                             : "Create Profile"}
                     </button>
-
                 </div>
-
             </form>
-
         </div>
-
     );
 }
 

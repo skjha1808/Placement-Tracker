@@ -3,7 +3,6 @@ import api from "../../services/api";
 import "./CompanyForm.css";
 
 function CompanyForm({
-    isOpen,
     onClose,
     fetchCompanies,
     selectedCompany,
@@ -17,36 +16,6 @@ function CompanyForm({
     const [minimumCGPA, setMinimumCGPA] = useState("");
     const [applicationDeadline, setApplicationDeadline] = useState("");
 
-    useEffect(() => {
-        if (selectedCompany) {
-            setCompanyName(selectedCompany.companyName);
-            setRole(selectedCompany.role);
-            setPackageOffered(selectedCompany.package);
-            setLocation(selectedCompany.location);
-            const jobTypeMap = {
-                "internship": "Internship",
-                "full time": "Full-time",
-                "full-time": "Full-time",
-                "internship + fte": "Internship + FTE",
-            };
-
-            setJobType(
-                jobTypeMap[selectedCompany.jobType.toLowerCase()] ||
-                selectedCompany.jobType
-            );
-
-            setEligibleBranches(
-                selectedCompany.eligibleBranches.join(", ")
-            );
-            setMinimumCGPA(selectedCompany.minimumCGPA);
-            setApplicationDeadline(
-                selectedCompany.applicationDeadline.slice(0, 10)
-            );
-        } else {
-            clearForm();
-        }
-    }, [selectedCompany]);
-
     const clearForm = () => {
         setCompanyName("");
         setRole("");
@@ -58,16 +27,49 @@ function CompanyForm({
         setApplicationDeadline("");
     };
 
-    if (!isOpen) return null;
+    useEffect(() => {
+        if (!selectedCompany) {
+            clearForm();
+            return;
+        }
+
+        const jobTypeMap = {
+            internship: "Internship",
+            "full time": "Full-time",
+            "full-time": "Full-time",
+            "internship + fte": "Internship + FTE",
+        };
+
+        setCompanyName(selectedCompany.companyName || "");
+        setRole(selectedCompany.role || "");
+        setPackageOffered(selectedCompany.package ?? "");
+        setLocation(selectedCompany.location || "");
+
+        setJobType(
+            jobTypeMap[selectedCompany.jobType?.toLowerCase()] ??
+                selectedCompany.jobType ??
+                ""
+        );
+
+        setEligibleBranches(
+            selectedCompany.eligibleBranches?.join(", ") || ""
+        );
+
+        setMinimumCGPA(selectedCompany.minimumCGPA ?? "");
+
+        setApplicationDeadline(
+            selectedCompany.applicationDeadline
+                ? new Date(selectedCompany.applicationDeadline)
+                      .toISOString()
+                      .split("T")[0]
+                : ""
+        );
+    }, [selectedCompany]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         try {
-            console.log({
-                jobType,
-                applicationDeadline,
-            });
             const data = {
                 companyName: companyName.trim(),
                 role: role.trim(),
@@ -76,7 +78,8 @@ function CompanyForm({
                 jobType,
                 eligibleBranches: eligibleBranches
                     .split(",")
-                    .map((branch) => branch.trim()),
+                    .map((branch) => branch.trim())
+                    .filter(Boolean),
                 minimumCGPA: Number(minimumCGPA),
                 applicationDeadline,
             };
@@ -84,30 +87,20 @@ function CompanyForm({
             if (selectedCompany) {
                 await api.put(
                     `/companies/${selectedCompany._id}`,
-                    data,
-                    {
-                        headers: {
-                            Authorization: `Bearer ${localStorage.getItem("token")}`,
-                        },
-                    }
+                    data
                 );
 
                 alert("Company updated successfully!");
             } else {
                 await api.post(
                     "/companies",
-                    data,
-                    {
-                        headers: {
-                            Authorization: `Bearer ${localStorage.getItem("token")}`,
-                        },
-                    }
+                    data
                 );
 
                 alert("Company added successfully!");
             }
 
-            fetchCompanies();
+            await fetchCompanies();
             clearForm();
             onClose();
 
@@ -122,7 +115,6 @@ function CompanyForm({
     return (
         <div className="modal-overlay">
             <div className="modal">
-
                 <h2>
                     {selectedCompany
                         ? "Edit Company"
@@ -130,7 +122,6 @@ function CompanyForm({
                 </h2>
 
                 <form onSubmit={handleSubmit}>
-
                     <input
                         type="text"
                         placeholder="Company Name"
@@ -151,6 +142,7 @@ function CompanyForm({
 
                     <input
                         type="number"
+                        inputMode="decimal"
                         placeholder="Package (LPA)"
                         value={packageOffered}
                         min="0"
@@ -191,7 +183,6 @@ function CompanyForm({
                         <option value="Internship + FTE">
                             Internship + FTE
                         </option>
-
                     </select>
 
                     <input
@@ -205,6 +196,7 @@ function CompanyForm({
 
                     <input
                         type="number"
+                        inputMode="decimal"
                         placeholder="Minimum CGPA"
                         value={minimumCGPA}
                         min="0"
@@ -225,8 +217,8 @@ function CompanyForm({
                     />
 
                     <div className="modal-buttons">
-
-                        <button type="button"
+                        <button
+                            type="button"
                             onClick={() => {
                                 clearForm();
                                 onClose();
@@ -240,11 +232,8 @@ function CompanyForm({
                                 ? "Update Company"
                                 : "Save Company"}
                         </button>
-
                     </div>
-
                 </form>
-
             </div>
         </div>
     );

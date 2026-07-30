@@ -35,7 +35,6 @@ function Companies() {
             companiesList.map(async (company) => {
 
                 try {
-
                     const response =
                         await api.get(
                             `/eligibility/${company._id}`
@@ -44,21 +43,15 @@ function Companies() {
                     result[company._id] =
                         response.data;
 
-                } catch (error) {
-
+                } catch {
                     result[company._id] = {
                         eligible: false,
                         reason: "Unable to check",
                     };
-
                 }
-
             })
-
         );
-
         setEligibility(result);
-
     };
 
     const fetchData = async () => {
@@ -66,22 +59,16 @@ function Companies() {
         setLoading(true);
 
         try {
-
             const [
-
                 companiesRes,
-
                 profileRes,
 
             ] = await Promise.all([
-
                 api.get("/companies"),
-
                 api.get("/students/me"),
-
             ]);
 
-            const companiesList = companiesRes.data.companies;
+            const companiesList = companiesRes.data.companies || [];
             setCompanies(companiesList);
             setProfile(profileRes.data);
             await fetchEligibility(companiesList);
@@ -94,11 +81,8 @@ function Companies() {
             );
 
         } finally {
-
             setLoading(false);
-
         }
-
     };
 
     useEffect(() => {
@@ -106,92 +90,62 @@ function Companies() {
     }, []);
 
     const locations = [
-
         "All",
-
         ...new Set(
 
             companies.map(
-
                 company => company.location
-
             )
-
         ),
-
     ];
 
     const packageOptions = [
-
         "All",
-
         "5+ LPA",
-
         "10+ LPA",
-
         "15+ LPA",
-
         "20+ LPA",
-
     ];
 
     const statusOptions = [
-
         "All",
-
         "Open",
-
         "Closed",
-
     ];
 
     const handleApply = async (companyId) => {
 
         try {
-
             await api.post(
-
                 "/applications",
-
                 {
                     company: companyId,
                     notes: "",
                 }
-
             );
 
             alert(
                 "Applied Successfully!"
             );
 
-            fetchData();
+            await fetchData();
 
         } catch (error) {
 
             console.log(
-
                 error.response?.data ||
-
                 error.message
-
             );
 
             alert(
-
                 error.response?.data?.message ||
-
                 "Failed to apply."
-
             );
-
         }
-
     };
 
     if (loading) {
-
         return <LoadingSpinner />;
-
     }
 
     const filteredCompanies = [...(Array.isArray(companies) ? companies : [])]
@@ -205,9 +159,7 @@ function Companies() {
                     .toLowerCase()
 
                     .includes(
-
                         search.toLowerCase()
-
                     ) ||
 
                 company.role
@@ -215,9 +167,7 @@ function Companies() {
                     .toLowerCase()
 
                     .includes(
-
                         search.toLowerCase()
-
                     );
 
             const matchesLocation =
@@ -249,15 +199,10 @@ function Companies() {
                 company.status === statusFilter;
 
             return (
-
                 matchesSearch &&
-
                 matchesLocation &&
-
                 matchesPackage &&
-
                 matchesStatus
-
             );
 
         });
@@ -269,9 +214,7 @@ function Companies() {
             filteredCompanies.sort(
 
                 (a, b) =>
-
                     b.package - a.package
-
             );
 
             break;
@@ -279,11 +222,8 @@ function Companies() {
         case "packageLow":
 
             filteredCompanies.sort(
-
                 (a, b) =>
-
                     a.package - b.package
-
             );
 
             break;
@@ -291,9 +231,7 @@ function Companies() {
         case "deadline":
 
             filteredCompanies.sort(
-
                 (a, b) =>
-
                     new Date(
                         a.applicationDeadline
                     ) -
@@ -301,7 +239,6 @@ function Companies() {
                     new Date(
                         b.applicationDeadline
                     )
-
             );
 
             break;
@@ -311,21 +248,15 @@ function Companies() {
             filteredCompanies.sort(
 
                 (a, b) =>
-
                     a.companyName.localeCompare(
-
                         b.companyName
-
                     )
-
             );
 
             break;
 
         default:
-
             break;
-
     }
 
     return (
