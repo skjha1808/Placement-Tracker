@@ -1,6 +1,7 @@
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const { formatName } = require("../utils/formatters");
 
 const registerUser = async (req, res) => {
     try {
@@ -57,7 +58,7 @@ const registerUser = async (req, res) => {
 
         // Create new user
         const user = await User.create({
-            name,
+            name: formatName(name),
             email,
             password: hashedPassword,
         });
@@ -155,7 +156,6 @@ const loginUser = async (req, res) => {
         });
     }
 };
-
 
 module.exports = {
     registerUser,

@@ -1,5 +1,9 @@
 const Student = require("../models/Student");
 const Notification = require("../models/Notification");
+const {
+    formatName,
+    formatBranches,
+} = require("../utils/formatters");
 
 const createStudent = async (req, res) => {
     try {
@@ -15,6 +19,8 @@ const createStudent = async (req, res) => {
 
         const student = await Student.create({
             ...req.body,
+            name: formatName(req.body.name),
+            branch: formatBranches([req.body.branch])[0],
             user: req.user._id,
         });
 
@@ -84,14 +90,26 @@ const updateMyProfile = async (req, res) => {
             }
         }
 
+        const updateData = { ...req.body };
+
+        if (updateData.name) {
+            updateData.name = formatName(updateData.name);
+        }
+
+        if (updateData.branch) {
+            updateData.branch =
+                formatBranches([updateData.branch])[0];
+        }
+
         const updatedStudent =
             await Student.findOneAndUpdate(
                 {
                     user: req.user._id,
                 },
-                req.body,
+                updateData,
                 {
                     new: true,
+                    runValidators: true,
                 }
             );
 
@@ -236,10 +254,18 @@ const getStudentById = async (req, res) => {
 const updateStudent = async (req, res) => {
     try {
         const allowedUpdates = {
-            name: req.body.name,
+            name: req.body.name
+                ? formatName(req.body.name)
+                : undefined,
+
             email: req.body.email,
+
             phone: req.body.phone,
-            branch: req.body.branch,
+
+            branch: req.body.branch
+                ? formatBranches([req.body.branch])[0]
+                : undefined,
+
             education: req.body.education,
             cgpa: req.body.cgpa,
             skills: req.body.skills,

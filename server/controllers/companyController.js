@@ -2,6 +2,8 @@ const Company = require("../models/Company");
 
 const {
     formatText,
+    formatCompanyName,
+    formatLocation,
     formatRole,
     formatBranches,
 } = require("../utils/formatters");
@@ -68,9 +70,9 @@ const createCompany = async (req, res) => {
         }
 
         // Format values
-        const formattedCompanyName = formatText(companyName);
+        const formattedCompanyName = formatCompanyName(companyName);
         const formattedRole = formatRole(role);
-        const formattedLocation = formatText(location);
+        const formattedLocation = formatLocation(location);
         const formattedBranches =
             formatBranches(eligibleBranches);
 
@@ -153,6 +155,13 @@ const getCompanyById = async (req, res) => {
             req.params.id
         );
 
+        if (!company) {
+            return res.status(404).json({
+                success: false,
+                message: "Company not found",
+            });
+        }
+
         const companyObj = company.toObject();
 
         const today = new Date();
@@ -163,13 +172,6 @@ const getCompanyById = async (req, res) => {
             new Date(companyObj.applicationDeadline) < today
         ) {
             companyObj.status = "Closed";
-        }
-
-        if (!company) {
-            return res.status(404).json({
-                success: false,
-                message: "Company not found",
-            });
         }
 
         return res.status(200).json({
@@ -190,7 +192,7 @@ const updateCompany = async (req, res) => {
         const updateData = { ...req.body };
 
         if (updateData.companyName) {
-            updateData.companyName = formatText(
+            updateData.companyName = formatCompanyName(
                 updateData.companyName
             );
         }
@@ -202,7 +204,7 @@ const updateCompany = async (req, res) => {
         }
 
         if (updateData.location) {
-            updateData.location = formatText(
+            updateData.location = formatLocation(
                 updateData.location
             );
         }

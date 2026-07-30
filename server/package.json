@@ -5,7 +5,10 @@
   "main": "index.js",
   "scripts": {
     "start": "node server.js",
-    "dev": "nodemon server.js"
+    "dev": "nodemon server.js",
+    "format:users": "node scripts/formatExistingUsers.js",
+    "format:students": "node scripts/formatExistingStudents.js",
+    "format:companies": "node scripts/formatExistingCompanies.js"
   },
   "keywords": [],
   "author": "",
