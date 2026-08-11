@@ -1,0 +1,85 @@
+.resume-score-card {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 18px;
+    padding: 32px;
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
+    transition: all 0.3s ease;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+.resume-score-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 18px 40px rgba(15, 23, 42, 0.12);
+}
+
+.resume-score-card h3 {
+    margin: 0 0 24px;
+    color: #1f2937;
+    font-size: 1.3rem;
+    font-weight: 700;
+}
+
+/* Score circle */
+.resume-score-circle {
+    width: 150px;
+    height: 150px;
+    margin: 0 auto 20px;
+    border-radius: 50%;
+    background: #eff6ff;
+    border: 10px solid #dbeafe;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-content: center;
+    box-sizing: border-box;
+}
+
+.resume-score-value {
+    font-size: 3rem;
+    font-weight: 800;
+    line-height: 1;
+    color: #2563eb;
+}
+
+.resume-score-total {
+    margin-top: 8px;
+    margin-left: 4px;
+    color: #64748b;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+/* Score level */
+.resume-score-level {
+    display: inline-block;
+    padding: 7px 18px;
+    margin-bottom: 22px;
+
+    border-radius: 999px;
+    background: #dbeafe;
+    color: #1d4ed8;
+
+    font-size: 0.95rem;
+    font-weight: 700;
+}
+
+/* Progress bar */
+.resume-score-progress {
+    width: 100%;
+    height: 10px;
+    background: #e5e7eb;
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.resume-score-progress-bar {
+    height: 100%;
+    background: #2563eb;
+    border-radius: 999px;
+    transition: width 0.8s ease;
+}

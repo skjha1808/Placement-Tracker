@@ -1,0 +1,63 @@
+.overall-verdict-card {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 18px;
+    padding: 32px;
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
+    transition: all 0.3s ease;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+.overall-verdict-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 18px 40px rgba(15, 23, 42, 0.12);
+}
+
+.overall-verdict-card h3 {
+    margin: 0 0 24px;
+    color: #1f2937;
+    font-size: 1.3rem;
+    font-weight: 700;
+}
+
+/* Verdict badge */
+.verdict-badge {
+    display: inline-block;
+    padding: 8px 20px;
+    border-radius: 999px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 20px;
+}
+
+/* Verdict colors */
+.verdict-badge.excellent {
+    background: #16a34a;
+}
+
+.verdict-badge.very-good {
+    background: #2563eb;
+}
+
+.verdict-badge.good {
+    background: #2563eb;
+}
+
+.verdict-badge.average {
+    background: #f59e0b;
+}
+
+.verdict-badge.needs-improvement {
+    background: #dc2626;
+}
+
+/* Recommendation */
+.verdict-text {
+    max-width: 720px;
+    margin: 0 auto;
+    line-height: 1.7;
+    color: #64748b;
+    font-size: 1rem;
+}

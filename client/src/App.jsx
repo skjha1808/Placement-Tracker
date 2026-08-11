@@ -19,6 +19,8 @@ import Navbar from "./layouts/Navbar";
 import ProtectedRoute from "./components/routes/ProtectedRoute";
 import AdminProtectedRoute from "./components/routes/AdminProtectedRoute";
 
+import AIResumeAnalyzer from "./pages/student/AIResumeAnalyzer";;
+
 function App() {
     return (
         <BrowserRouter>
@@ -103,6 +105,16 @@ function App() {
                         </AdminProtectedRoute>
                     }
                 />
+
+                <Route
+                    path="/ai-resume-analyzer"
+                    element={
+                        <ProtectedRoute>
+                            <AIResumeAnalyzer />
+                        </ProtectedRoute>
+                    }
+                />
+
             </Routes>
         </BrowserRouter>
     );

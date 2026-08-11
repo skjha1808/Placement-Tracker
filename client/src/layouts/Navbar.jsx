@@ -46,6 +46,10 @@ function Navbar() {
                         <NavLink to="/applications">
                             Applications
                         </NavLink>
+
+                        <NavLink to="/ai-resume-analyzer">
+                            AI Resume
+                        </NavLink>
                     </>
                 )}
 
