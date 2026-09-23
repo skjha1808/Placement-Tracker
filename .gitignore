@@ -141,3 +141,7 @@ dist
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 .vite/
+
+# Uploaded resume files
+server/uploads/resumes/*
+!server/uploads/resumes/.gitkeep
