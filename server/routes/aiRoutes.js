@@ -1,16 +1,18 @@
 const express = require("express");
-const multer = require("multer");
+
 const { analyzeResumeController } = require("../controllers/aiController");
+
+const authMiddleware = require("../middleware/authMiddleware");
+const studentMiddleware = require("../middleware/studentMiddleware");
+const uploadAIResume = require("../middleware/uploadAIResume");
 
 const router = express.Router();
 
-const upload = multer({
-    storage: multer.memoryStorage(),
-});
-
 router.post(
     "/analyze-resume",
-    upload.single("resume"),
+    authMiddleware,
+    studentMiddleware,
+    uploadAIResume.single("resume"),
     analyzeResumeController
 );
 

@@ -18,9 +18,14 @@ const createStudent = async (req, res) => {
         }
 
         const student = await Student.create({
-            ...req.body,
             name: formatName(req.body.name),
+            email: req.body.email,
+            phone: req.body.phone,
             branch: formatBranches([req.body.branch])[0],
+            education: req.body.education,
+            cgpa: req.body.cgpa,
+            skills: req.body.skills,
+            resumeLink: req.body.resumeLink,
             user: req.user._id,
         });
 
@@ -90,15 +95,39 @@ const updateMyProfile = async (req, res) => {
             }
         }
 
-        const updateData = { ...req.body };
+        const updateData = {};
 
-        if (updateData.name) {
-            updateData.name = formatName(updateData.name);
+        if (req.body.name !== undefined) {
+            updateData.name = formatName(req.body.name);
         }
 
-        if (updateData.branch) {
+        if (req.body.email !== undefined) {
+            updateData.email = req.body.email;
+        }
+
+        if (req.body.phone !== undefined) {
+            updateData.phone = req.body.phone;
+        }
+
+        if (req.body.branch !== undefined) {
             updateData.branch =
-                formatBranches([updateData.branch])[0];
+                formatBranches([req.body.branch])[0];
+        }
+
+        if (req.body.education !== undefined) {
+            updateData.education = req.body.education;
+        }
+
+        if (req.body.cgpa !== undefined) {
+            updateData.cgpa = req.body.cgpa;
+        }
+
+        if (req.body.skills !== undefined) {
+            updateData.skills = req.body.skills;
+        }
+
+        if (req.body.resumeLink !== undefined) {
+            updateData.resumeLink = req.body.resumeLink;
         }
 
         const updatedStudent =
