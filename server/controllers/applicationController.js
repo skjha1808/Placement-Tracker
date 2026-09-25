@@ -1,6 +1,9 @@
 const Application = require("../models/Application");
-const Company = require("../models/Company");
 const Student = require("../models/Student");
+
+const {
+    checkStudentEligibility,
+} = require("../services/eligibilityService");
 
 const createApplication = async (req, res) => {
     try {
@@ -17,37 +20,15 @@ const createApplication = async (req, res) => {
             });
         }
 
-        const companyData = await Company.findById(company);
+        const eligibility = await checkStudentEligibility(
+            student,
+            company
+        );
 
-        if (!companyData) {
-            return res.status(404).json({
+        if (!eligibility.eligible) {
+            return res.status(eligibility.status).json({
                 success: false,
-                message: "Company not found",
-            });
-        }
-
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);
-
-        if (
-            companyData.status === "Closed" ||
-            new Date(companyData.applicationDeadline) < today
-        ) {
-            return res.status(400).json({
-                success: false,
-                message: "Applications for this company are closed.",
-            });
-        }
-
-        const existingApplication = await Application.findOne({
-            student: student._id,
-            company,
-        });
-
-        if (existingApplication) {
-            return res.status(400).json({
-                success: false,
-                message: "You have already applied to this company",
+                message: eligibility.reason,
             });
         }
 
