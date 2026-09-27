@@ -108,7 +108,7 @@ function StudentDrawer({
 
                     <a
 
-                        href={`http://localhost:5000/${student.resume.filePath}`}
+                        href={`${import.meta.env.VITE_API_URL?.replace(/\/api\/?$/, "")}/${student.resume.filePath}`}
 
                         target="_blank"
 
