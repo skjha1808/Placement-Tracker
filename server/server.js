@@ -19,11 +19,14 @@ const aiRoutes = require("./routes/aiRoutes");
 
 // Connect Database
 connectDB();
-
 const app = express();
 
 // Middleware
-app.use(cors());
+app.use(
+    cors({
+        origin: process.env.CLIENT_URL,
+    })
+);
 app.use(express.json());
 
 // Static Folder
@@ -47,7 +50,6 @@ app.use("/api/notifications", notificationRoutes);
 
 // AI Routes
 app.use("/api/ai", aiRoutes);
-
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
