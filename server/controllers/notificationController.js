@@ -15,9 +15,9 @@ const getMyNotifications = async (req, res) => {
         res.status(200).json(notifications);
 
     } catch (error) {
-
+        console.error(error);
         res.status(500).json({
-            message: error.message,
+            message: "Internal server error",
         });
     }
 };
@@ -57,10 +57,10 @@ const markAsRead = async (req, res) => {
         });
 
     } catch (error) {
-
+        console.error(error);
         res.status(500).json({
             success: false,
-            message: error.message,
+            message: "Internal server error",
         });
 
     }
@@ -90,9 +90,9 @@ const markAllAsRead = async (req, res) => {
         });
 
     } catch (error) {
-
+        console.error(error);
         res.status(500).json({
-            message: error.message,
+            message: "Internal server error",
         });
     }
 };
@@ -120,9 +120,9 @@ const deleteNotification = async (req, res) => {
         });
 
     } catch (error) {
-
+        console.error(error);
         res.status(500).json({
-            message: error.message,
+            message: "Internal server error",
         });
     }
 };

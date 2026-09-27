@@ -106,9 +106,10 @@ const createCompany = async (req, res) => {
         });
 
     } catch (error) {
+        console.error(error);
         return res.status(500).json({
             success: false,
-            message: error.message,
+            message: "Internal server error",
         });
     }
 };
@@ -142,9 +143,10 @@ const getAllCompanies = async (req, res) => {
         });
 
     } catch (error) {
+        console.error(error);
         return res.status(500).json({
             success: false,
-            message: error.message,
+            message: "Internal server error",
         });
     }
 };
@@ -180,9 +182,10 @@ const getCompanyById = async (req, res) => {
         });
 
     } catch (error) {
+        console.error(error);
         return res.status(500).json({
             success: false,
-            message: error.message,
+            message: "Internal server error",
         });
     }
 };
@@ -271,9 +274,10 @@ const updateCompany = async (req, res) => {
         });
 
     } catch (error) {
+        console.error(error);
         return res.status(500).json({
             success: false,
-            message: error.message,
+            message: "Internal server error",
         });
     }
 };
@@ -298,9 +302,10 @@ const deleteCompany = async (req, res) => {
         });
 
     } catch (error) {
+        console.error(error);
         return res.status(500).json({
             success: false,
-            message: error.message,
+            message: "Internal server error",
         });
     }
 };

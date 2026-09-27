@@ -32,8 +32,9 @@ const createStudent = async (req, res) => {
         res.status(201).json(student);
 
     } catch (error) {
+        console.error(error);
         res.status(500).json({
-            message: error.message,
+            message: "Internal server error",
         });
     }
 };
@@ -54,10 +55,10 @@ const getMyProfile = async (req, res) => {
         res.status(200).json(student);
 
     } catch (error) {
-
+        console.error(error);
         res.status(500).json({
             success: false,
-            message: error.message,
+            message: "Internal server error",
         });
     }
 };
@@ -145,8 +146,9 @@ const updateMyProfile = async (req, res) => {
         res.status(200).json(updatedStudent);
 
     } catch (error) {
+        console.error(error);
         res.status(500).json({
-            message: error.message,
+            message: "Internal server error",
         });
     }
 };
@@ -186,19 +188,14 @@ const uploadResume = async (req, res) => {
         await student.save();
 
         res.status(200).json({
-
             message: "Resume uploaded successfully",
-
             resume: student.resume,
-
         });
 
     } catch (error) {
-
+        console.error(error);
         res.status(500).json({
-
-            message: error.message,
-
+            message: "Internal server error",
         });
 
     }
@@ -239,8 +236,9 @@ const verifyStudent = async (req, res) => {
         });
 
     } catch (error) {
+        console.error(error);
         res.status(500).json({
-            message: error.message,
+            message: "Internal server error",
         });
     }
 };
@@ -253,8 +251,9 @@ const getAllStudents = async (req, res) => {
         res.status(200).json(students);
 
     } catch (error) {
+        console.error(error);
         res.status(500).json({
-            message: error.message,
+            message: "Internal server error",
         });
     }
 };
@@ -274,8 +273,9 @@ const getStudentById = async (req, res) => {
         res.status(200).json(student);
 
     } catch (error) {
+        console.error(error);
         res.status(500).json({
-            message: error.message,
+            message: "Internal server error",
         });
     }
 };
@@ -320,9 +320,9 @@ const updateStudent = async (req, res) => {
         res.status(200).json(updatedStudent);
 
     } catch (error) {
-
+        console.error(error);
         res.status(500).json({
-            message: error.message,
+            message: "Internal server error",
         });
     }
 };
@@ -339,8 +339,9 @@ const deleteStudent = async (req, res) => {
         });
 
     } catch (error) {
+        console.error(error);
         res.status(500).json({
-            message: error.message,
+            message: "Internal server error",
         });
     }
 };

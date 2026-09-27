@@ -45,10 +45,10 @@ const createApplication = async (req, res) => {
         });
 
     } catch (error) {
-
+        console.error(error);
         res.status(500).json({
             success: false,
-            message: error.message,
+            message: "Internal server error",
         });
 
     }
@@ -77,10 +77,10 @@ const getMyApplications = async (req, res) => {
         res.status(200).json(applications);
 
     } catch (error) {
-
+        console.error(error);
         res.status(500).json({
             success: false,
-            message: error.message,
+            message: "Internal server error",
         });
 
     }
@@ -97,10 +97,10 @@ const getAllApplications = async (req, res) => {
         res.status(200).json(applications);
 
     } catch (error) {
-
+        console.error(error);
         res.status(500).json({
             success: false,
-            message: error.message,
+            message: "Internal server error",
         });
 
     }
@@ -123,10 +123,10 @@ const getApplicationById = async (req, res) => {
         res.status(200).json(application);
 
     } catch (error) {
-
+        console.error(error);
         res.status(500).json({
             success: false,
-            message: error.message,
+            message: "Internal server error",
         });
 
     }
@@ -159,10 +159,10 @@ const updateApplication = async (req, res) => {
         });
 
     } catch (error) {
-
+        console.error(error);
         res.status(500).json({
             success: false,
-            message: error.message,
+            message: "Internal server error",
         });
 
     }
@@ -188,10 +188,10 @@ const deleteApplication = async (req, res) => {
         });
 
     } catch (error) {
-
+        console.error(error);
         res.status(500).json({
             success: false,
-            message: error.message,
+            message: "Internal server error",
         });
 
     }
