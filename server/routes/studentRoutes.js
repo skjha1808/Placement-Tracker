@@ -11,6 +11,8 @@ const {
     getMyProfile,
     updateMyProfile,
     uploadResume,
+    getMyResume,
+    getStudentResume,
     verifyStudent,
     getAllStudents,
     getStudentById,
@@ -34,10 +36,10 @@ router.get(
     getMyProfile
 );
 
-router.put(
-    "/me",
+router.get(
+    "/me/resume",
     studentMiddleware,
-    updateMyProfile
+    getMyResume
 );
 
 router.post(
@@ -47,7 +49,19 @@ router.post(
     uploadResume
 );
 
+router.put(
+    "/me",
+    studentMiddleware,
+    updateMyProfile
+);
+
 // Admin Routes
+router.get(
+    "/:id/resume",
+    adminMiddleware,
+    getStudentResume
+);
+
 router.put(
     "/:id/verify",
     adminMiddleware,

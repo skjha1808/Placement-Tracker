@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import api from "../../services/api";
 import LoadingSpinner from "../../components/ui/LoadingSpinner";
 import EmptyState from "../../components/ui/EmptyState";
+import StudentDrawer from "../../components/admin/StudentDrawer";
 import "./Students.css";
 
 function Students() {
@@ -9,6 +10,8 @@ function Students() {
     const [students, setStudents] = useState([]);
     const [loading, setLoading] = useState(true);
     const [search, setSearch] = useState("");
+    const [selectedStudent, setSelectedStudent] = useState(null);
+    const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
     const fetchStudents = async () => {
 
@@ -45,6 +48,16 @@ function Students() {
                 error.response?.data || error.message
             );
         }
+    };
+
+    const handleViewStudent = (student) => {
+        setSelectedStudent(student);
+        setIsDrawerOpen(true);
+    };
+
+    const handleCloseDrawer = () => {
+        setSelectedStudent(null);
+        setIsDrawerOpen(false);
     };
 
     const searchText = search.toLowerCase();
@@ -162,24 +175,23 @@ function Students() {
                                         </td>
 
                                         <td>
-                                            {!student.isVerified ? (
+                                            <button
+                                                className="btn"
+                                                onClick={() =>
+                                                    handleViewStudent(student)
+                                                }
+                                            >
+                                                View
+                                            </button>
 
+                                            {!student.isVerified && (
                                                 <button
                                                     className="btn btn-success"
                                                     onClick={() =>
-                                                        handleVerify(
-                                                            student._id
-                                                        )
+                                                        handleVerify(student._id)
                                                     }
                                                 >
                                                     Verify
-                                                </button>
-                                            ) : (
-                                                <button
-                                                    className="btn"
-                                                    disabled
-                                                >
-                                                    Verified
                                                 </button>
                                             )}
                                         </td>
@@ -190,6 +202,11 @@ function Students() {
                     </table>
                 </div>
             )}
+            <StudentDrawer
+                isOpen={isDrawerOpen}
+                onClose={handleCloseDrawer}
+                student={selectedStudent}
+            />
         </div>
     );
 }

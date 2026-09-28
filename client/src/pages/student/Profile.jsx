@@ -38,9 +38,59 @@ function Profile() {
     const [errors, setErrors] = useState({});
 
     const navigate = useNavigate();
-    const BASE_URL =
-        import.meta.env.VITE_API_URL?.replace(/\/api\/?$/, "") ||
-        "http://localhost:5000";
+    const openResume = async () => {
+        try {
+            const response = await api.get("/students/me/resume", {
+                responseType: "blob",
+            });
+
+            const fileURL = URL.createObjectURL(
+                new Blob([response.data], {
+                    type: "application/pdf",
+                })
+            );
+
+            window.open(fileURL, "_blank");
+
+            setTimeout(() => {
+                URL.revokeObjectURL(fileURL);
+            }, 60000);
+        } catch (error) {
+            console.error(
+                error.response?.data || error.message
+            );
+        }
+    };
+
+    const downloadResume = async () => {
+        try {
+            const response = await api.get("/students/me/resume", {
+                responseType: "blob",
+            });
+
+            const fileURL = URL.createObjectURL(
+                new Blob([response.data], {
+                    type: "application/pdf",
+                })
+            );
+
+            const link = document.createElement("a");
+            link.href = fileURL;
+            link.download = resume?.fileName || "resume.pdf";
+
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+
+            setTimeout(() => {
+                URL.revokeObjectURL(fileURL);
+            }, 60000);
+        } catch (error) {
+            console.error(
+                error.response?.data || error.message
+            );
+        }
+    };
 
     const fetchProfile = async () => {
         try {
@@ -543,22 +593,21 @@ function Profile() {
                             {
                                 resume?.fileName && (
                                     <div className="resume-actions">
-                                        <a
-                                            href={`${BASE_URL}${resume.filePath}`}
-                                            target="_blank"
-                                            rel="noreferrer"
+                                        <button
+                                            type="button"
+                                            onClick={openResume}
                                             className="resume-btn view-btn"
                                         >
                                             👁 View
-                                        </a>
+                                        </button>
 
-                                        <a
-                                            href={`${BASE_URL}${resume.filePath}`}
-                                            download
+                                        <button
+                                            type="button"
+                                            onClick={downloadResume}
                                             className="resume-btn download-btn"
                                         >
                                             ⬇ Download
-                                        </a>
+                                        </button>
 
                                     </div>
                                 )

@@ -29,11 +29,7 @@ app.use(
 );
 app.use(express.json());
 
-// Static Folder
-app.use(
-    "/uploads",
-    express.static(path.join(__dirname, "uploads"))
-);
+
 
 // Routes
 app.get("/", (req, res) => {

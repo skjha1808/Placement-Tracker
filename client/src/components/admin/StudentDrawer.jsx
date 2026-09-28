@@ -1,3 +1,4 @@
+import api from "../../services/api";
 import "./StudentDrawer.css";
 
 function StudentDrawer({
@@ -5,6 +6,32 @@ function StudentDrawer({
     onClose,
     student,
 }) {
+        const viewResume = async () => {
+        try {
+            const response = await api.get(
+                `/students/${student._id}/resume`,
+                {
+                    responseType: "blob",
+                }
+            );
+
+            const fileURL = URL.createObjectURL(
+                new Blob([response.data], {
+                    type: "application/pdf",
+                })
+            );
+
+            window.open(fileURL, "_blank");
+
+            setTimeout(() => {
+                URL.revokeObjectURL(fileURL);
+            }, 60000);
+        } catch (error) {
+            console.error(
+                error.response?.data || error.message
+            );
+        }
+    };
 
     if (!isOpen || !student) return null;
 
@@ -29,7 +56,6 @@ function StudentDrawer({
                     >
                         ✕
                     </button>
-
                 </div>
 
                 <div className="drawer-avatar">
@@ -93,48 +119,25 @@ function StudentDrawer({
 
                                 )
                             )
-
                         ) : (
-
                             <p>No skills added.</p>
-
                         )}
-
                     </div>
-
                 </div>
 
                 {student.resume?.filePath && (
 
-                    <a
-
-                        href={`${import.meta.env.VITE_API_URL?.replace(/\/api\/?$/, "")}/${student.resume.filePath}`}
-
-                        target="_blank"
-
-                        rel="noreferrer"
-
-                        className="btn btn-primary"
-
-                        style={{
-                            width: "100%",
-                            marginTop: "25px",
-                        }}
-
+                    <button
+                        type="button"
+                        onClick={viewResume}
+                        className="resume-btn"
                     >
-
                         📄 View Resume
-
-                    </a>
-
+                    </button>
                 )}
-
             </div>
-
         </>
-
     );
-
 }
 
 export default StudentDrawer;

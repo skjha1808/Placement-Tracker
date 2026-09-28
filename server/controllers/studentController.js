@@ -1,4 +1,8 @@
+const path = require("path");
+const fs = require("fs");
+
 const Student = require("../models/Student");
+
 const Notification = require("../models/Notification");
 const {
     formatName,
@@ -202,6 +206,82 @@ const uploadResume = async (req, res) => {
 
 };
 
+const getMyResume = async (req, res) => {
+    try {
+        const student = await Student.findOne({
+            user: req.user._id,
+        });
+
+        if (!student || !student.resume?.filePath) {
+            return res.status(404).json({
+                success: false,
+                message: "Resume not found",
+            });
+        }
+
+        const fileName = path.basename(student.resume.filePath);
+        const filePath = path.join(
+            __dirname,
+            "..",
+            "uploads",
+            "resumes",
+            fileName
+        );
+
+        if (!fs.existsSync(filePath)) {
+            return res.status(404).json({
+                success: false,
+                message: "Resume file not found",
+            });
+        }
+
+        res.sendFile(filePath);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            success: false,
+            message: "Internal server error",
+        });
+    }
+};
+
+const getStudentResume = async (req, res) => {
+    try {
+        const student = await Student.findById(req.params.id);
+
+        if (!student || !student.resume?.filePath) {
+            return res.status(404).json({
+                success: false,
+                message: "Resume not found",
+            });
+        }
+
+        const fileName = path.basename(student.resume.filePath);
+        const filePath = path.join(
+            __dirname,
+            "..",
+            "uploads",
+            "resumes",
+            fileName
+        );
+
+        if (!fs.existsSync(filePath)) {
+            return res.status(404).json({
+                success: false,
+                message: "Resume file not found",
+            });
+        }
+
+        res.sendFile(filePath);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            success: false,
+            message: "Internal server error",
+        });
+    }
+};
+
 const verifyStudent = async (req, res) => {
 
     try {
@@ -351,6 +431,8 @@ module.exports = {
     getMyProfile,
     updateMyProfile,
     uploadResume,
+    getMyResume,
+    getStudentResume,
     verifyStudent,
     getAllStudents,
     getStudentById,
