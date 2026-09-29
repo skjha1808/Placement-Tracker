@@ -29,7 +29,7 @@ const createStudent = async (req, res) => {
             education: req.body.education,
             cgpa: req.body.cgpa,
             skills: req.body.skills,
-            resumeLink: req.body.resumeLink,
+            
             user: req.user._id,
         });
 
@@ -94,8 +94,7 @@ const updateMyProfile = async (req, res) => {
 
             if (attemptedLockedFieldUpdate) {
                 return res.status(403).json({
-                    message:
-                        "Academic details cannot be updated after verification",
+                    message: "Academic details cannot be updated after verification",
                 });
             }
         }
@@ -131,10 +130,6 @@ const updateMyProfile = async (req, res) => {
             updateData.skills = req.body.skills;
         }
 
-        if (req.body.resumeLink !== undefined) {
-            updateData.resumeLink = req.body.resumeLink;
-        }
-
         const updatedStudent =
             await Student.findOneAndUpdate(
                 {
@@ -166,27 +161,20 @@ const uploadResume = async (req, res) => {
         });
 
         if (!student) {
-
             return res.status(404).json({
                 message: "Student profile not found",
             });
-
         }
 
         if (!req.file) {
-
             return res.status(400).json({
                 message: "Please upload a PDF resume",
             });
-
         }
 
         student.resume = {
-
             fileName: req.file.originalname,
-
             filePath: `/uploads/resumes/${req.file.filename}`,
-
         };
 
         await student.save();
@@ -201,9 +189,7 @@ const uploadResume = async (req, res) => {
         res.status(500).json({
             message: "Internal server error",
         });
-
     }
-
 };
 
 const getMyResume = async (req, res) => {
