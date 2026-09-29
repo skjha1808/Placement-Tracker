@@ -46,6 +46,38 @@ app.use("/api/notifications", notificationRoutes);
 
 // AI Routes
 app.use("/api/ai", aiRoutes);
+
+// Global Error Handler
+app.use((err, req, res, next) => {
+    console.error(err);
+
+    if (err.name === "MulterError") {
+        if (err.code === "LIMIT_FILE_SIZE") {
+            return res.status(413).json({
+                success: false,
+                message: "File size must not exceed 5 MB.",
+            });
+        }
+
+        return res.status(400).json({
+            success: false,
+            message: err.message,
+        });
+    }
+
+    if (err.message === "Only PDF files are allowed.") {
+        return res.status(400).json({
+            success: false,
+            message: err.message,
+        });
+    }
+
+    res.status(500).json({
+        success: false,
+        message: "Internal server error",
+    });
+});
+
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
