@@ -4,7 +4,10 @@ const router = express.Router();
 const authMiddleware = require("../middleware/authMiddleware");
 const studentMiddleware = require("../middleware/studentMiddleware");
 const adminMiddleware = require("../middleware/adminMiddleware");
-const uploadResumeMiddleware = require("../middleware/uploadResume");
+const {
+    uploadResume: uploadResumeMiddleware,
+    validateResumePDF,
+} = require("../middleware/uploadResume");
 
 const {
     createStudent,
@@ -46,6 +49,7 @@ router.post(
     "/upload-resume",
     studentMiddleware,
     uploadResumeMiddleware.single("resume"),
+    validateResumePDF,
     uploadResume
 );
 

@@ -6,7 +6,10 @@ const authMiddleware = require("../middleware/authMiddleware");
 
 const studentMiddleware = require("../middleware/studentMiddleware");
 
-const uploadAIResume = require("../middleware/uploadAIResume");
+const {
+    uploadAIResume,
+    validateAIResumePDF,
+} = require("../middleware/uploadAIResume");
 
 const { aiLimiter } = require("../middleware/rateLimiter");
 
@@ -18,6 +21,7 @@ router.post(
     studentMiddleware,
     aiLimiter,
     uploadAIResume.single("resume"),
+    validateAIResumePDF,
     analyzeResumeController
 );
 

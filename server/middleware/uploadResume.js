@@ -2,6 +2,8 @@ const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
 
+const isValidPDF = require("../utils/pdfValidator");
+
 const uploadPath = "uploads/resumes";
 
 // Create upload directory if it doesn't exist
@@ -38,4 +40,22 @@ const uploadResume = multer({
     },
 });
 
-module.exports = uploadResume;
+const validateResumePDF = (req, res, next) => {
+    if (!req.file || !isValidPDF(fs.readFileSync(req.file.path))) {
+        if (req.file?.path && fs.existsSync(req.file.path)) {
+            fs.unlinkSync(req.file.path);
+        }
+
+        return res.status(400).json({
+            success: false,
+            message: "Invalid PDF file.",
+        });
+    }
+
+    next();
+};
+
+module.exports = {
+    uploadResume,
+    validateResumePDF,
+};
