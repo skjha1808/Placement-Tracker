@@ -293,8 +293,6 @@ Open another terminal:
 ```bash
 cd client
 npm install
-npm run dev
-```
 
 The frontend can then be accessed through the Vite development server.
 
