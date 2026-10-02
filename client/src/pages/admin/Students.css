@@ -1,0 +1,85 @@
+.students-toolbar{
+
+    display:flex;
+
+    justify-content:flex-end;
+
+    margin-bottom:24px;
+}
+
+.search-input{
+
+    width:320px;
+}
+
+.table-container{
+
+    overflow-x:auto;
+
+    background:var(--card-bg);
+
+    border-radius:12px;
+
+    box-shadow:var(--shadow-sm);
+}
+
+.students-table{
+
+    width:100%;
+
+    border-collapse:collapse;
+}
+
+.students-table thead{
+
+    background:var(--primary-color);
+}
+
+.students-table th{
+
+    color:white;
+
+    padding:16px;
+
+    font-size:15px;
+
+    text-align:center;
+}
+
+.students-table td{
+
+    padding:16px;
+
+    text-align:center;
+
+    border-bottom:1px solid var(--border-color);
+}
+
+.students-table tbody tr{
+
+    transition:var(--transition);
+}
+
+.students-table tbody tr:hover{
+
+    background:rgba(255,255,255,.03);
+}
+
+.students-table button{
+
+    min-width:110px;
+}
+
+@media(max-width:768px){
+
+    .students-toolbar{
+
+        justify-content:center;
+    }
+
+    .search-input{
+
+        width:100%;
+    }
+
+}

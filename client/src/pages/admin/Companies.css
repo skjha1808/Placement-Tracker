@@ -1,0 +1,95 @@
+.companies-toolbar{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:20px;
+
+    margin-bottom:25px;
+
+    flex-wrap:wrap;
+}
+
+.search-input{
+
+    width:320px;
+}
+
+.table-container{
+
+    overflow-x:auto;
+
+    background:var(--card-bg);
+
+    border-radius:12px;
+
+    box-shadow:var(--shadow-sm);
+}
+
+.companies-table{
+
+    width:100%;
+
+    border-collapse:collapse;
+}
+
+.companies-table thead{
+
+    background:var(--primary-color);
+}
+
+.companies-table th{
+
+    color:white;
+
+    padding:16px;
+
+    text-align:center;
+
+    font-size:15px;
+}
+
+.companies-table td{
+
+    padding:16px;
+
+    text-align:center;
+
+    border-bottom:1px solid var(--border-color);
+}
+
+.companies-table tbody tr{
+
+    transition:var(--transition);
+}
+
+.companies-table tbody tr:hover{
+
+    background:rgba(255,255,255,.03);
+}
+
+.action-buttons{
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:10px;
+}
+
+@media(max-width:768px){
+
+    .companies-toolbar{
+
+        flex-direction:column;
+    }
+
+    .search-input{
+
+        width:100%;
+    }
+
+}

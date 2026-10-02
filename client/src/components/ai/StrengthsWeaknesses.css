@@ -1,0 +1,77 @@
+.strengths-weaknesses-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-top: 28px;
+}
+
+.strengths-card,
+.weaknesses-card {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 18px;
+    padding: 28px;
+    box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
+    box-sizing: border-box;
+}
+
+.strengths-card h3,
+.weaknesses-card h3 {
+    margin: 0 0 22px;
+    color: #1f2937;
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
+.strengths-card h3 {
+    color: #15803d;
+}
+
+.weaknesses-card h3 {
+    color: #b45309;
+}
+
+.strengths-card ul,
+.weaknesses-card ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.strengths-card li,
+.weaknesses-card li {
+    position: relative;
+    padding: 14px 0 14px 28px;
+    border-bottom: 1px solid #e5e7eb;
+    color: #475569;
+    line-height: 1.6;
+}
+
+.strengths-card li:last-child,
+.weaknesses-card li:last-child {
+    border-bottom: none;
+}
+
+.strengths-card li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    top: 14px;
+    font-weight: 700;
+    color: #16a34a;
+}
+
+.weaknesses-card li::before {
+    content: "!";
+    position: absolute;
+    left: 4px;
+    top: 14px;
+    font-weight: 700;
+    color: #f59e0b;
+}
+
+@media (max-width: 768px) {
+    .strengths-weaknesses-grid {
+        grid-template-columns: 1fr;
+    }
+}
