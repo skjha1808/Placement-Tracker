@@ -19,6 +19,7 @@ const aiRoutes = require("./routes/aiRoutes");
 
 // Connect Database
 connectDB();
+
 const app = express();
 
 // Render and other managed hosts sit behind a reverse proxy.
@@ -34,7 +35,11 @@ app.use(
     cors({
         origin: (origin, callback) => {
             // Allow non-browser requests (curl, health checks, server-to-server).
-            if (!origin || allowedOrigins.length === 0 || allowedOrigins.includes(origin)) {
+            if (
+                !origin ||
+                allowedOrigins.length === 0 ||
+                allowedOrigins.includes(origin)
+            ) {
                 return callback(null, true);
             }
 
@@ -42,6 +47,7 @@ app.use(
         },
     })
 );
+
 app.use(express.json());
 
 // Uploaded resumes are served from the backend.
