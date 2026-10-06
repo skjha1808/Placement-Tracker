@@ -1,0 +1,1277 @@
+/* =========================================================
+
+   PROFILE PAGE
+
+\========================================================= */
+
+
+
+.page {
+
+    width: 100%;
+
+    max-width: 1180px;
+
+    margin: 0 auto;
+
+    padding: 42px 42px 70px;
+
+    box-sizing: border-box;
+
+}
+
+
+
+/* =========================================================
+
+   PAGE HEADER
+
+\========================================================= */
+
+
+
+.page-title {
+
+    margin: 0 0 28px;
+
+    color: #172033;
+
+    font-size: 36px;
+
+    font-weight: 800;
+
+    letter-spacing: -1.2px;
+
+    line-height: 1.15;
+
+}
+
+
+
+/* =========================================================
+
+   VERIFICATION STATUS
+
+\========================================================= */
+
+
+
+.profile-status-container {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+
+
+    padding: 18px 20px;
+
+    margin-bottom: 22px;
+
+
+
+    background: #ffffff;
+
+    border: 1px solid #e8edf5;
+
+    border-radius: 14px;
+
+    box-shadow: 0 6px 18px rgba(23, 32, 51, 0.04);
+
+}
+
+
+
+.profile-status-container h3 {
+
+    margin: 0;
+
+    color: #26324a;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+}
+
+
+
+/* =========================================================
+
+   PROFILE SECTIONS
+
+\========================================================= */
+
+
+
+.profile-section {
+
+    position: relative;
+
+    margin-bottom: 18px;
+
+    padding: 24px;
+
+
+
+    background: #ffffff;
+
+    border: 1px solid #e8edf5;
+
+    border-radius: 16px;
+
+    box-shadow: 0 6px 18px rgba(23, 32, 51, 0.04);
+
+}
+
+
+
+.profile-section h2 {
+
+    padding-right: 100px;
+    margin: 0 0 22px;
+
+    color: #172033;
+
+    font-size: 18px;
+
+    font-weight: 800;
+
+    letter-spacing: -0.2px;
+
+}
+
+
+
+/* Sub-headings such as:
+
+   10th Standard
+
+   12th Standard
+
+   Graduation
+
+*/
+
+
+
+.profile-section h3 {
+
+    margin: 14px 0 10px;
+
+    color: #26324a;
+
+    font-size: 14px;
+
+    font-weight: 800;
+
+}
+
+
+
+.profile-section > h3:first-of-type {
+
+    margin-top: 0;
+
+}
+
+
+
+/* =========================================================
+
+   FORM GRID
+
+\========================================================= */
+
+
+
+.profile-grid {
+
+    display: grid;
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    column-gap: 18px;
+
+    row-gap: 1px;
+
+}
+
+
+
+.form-group {
+
+    display: flex;
+
+    flex-direction: column;
+
+    min-width: 0;
+
+}
+
+
+
+.form-group label {
+
+    margin-bottom: 6px;
+
+    color: #344054;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+}
+
+
+
+/* =========================================================
+
+   INPUTS
+
+\========================================================= */
+
+
+
+.form-group .input {
+
+    width: 100%;
+
+    min-height: 46px;
+
+    padding: 11px 13px;
+
+
+
+    box-sizing: border-box;
+
+
+
+    color: #172033;
+
+    background: #f8fafc;
+
+
+
+    border: 1px solid #dce3ed;
+
+    border-radius: 10px;
+
+
+
+    font-family: inherit;
+
+    font-size: 14px;
+
+    line-height: 1.5;
+
+
+
+    outline: none;
+
+
+
+    transition:
+
+        border-color 0.2s ease,
+
+        box-shadow 0.2s ease,
+
+        background 0.2s ease;
+
+}
+
+
+
+.form-group textarea.input {
+
+    min-height: 110px;
+
+    resize: vertical;
+
+}
+
+
+
+.form-group .input:focus {
+
+    background: #ffffff;
+
+    border-color: #8da2c5;
+
+    box-shadow: 0 0 0 3px rgba(71, 98, 145, 0.08);
+
+}
+
+
+
+.form-group .input:disabled {
+
+    color: #667085;
+
+    background: #f1f4f8;
+
+    cursor: not-allowed;
+
+}
+
+
+
+.form-group select.input {
+
+    cursor: pointer;
+
+}
+
+
+
+.form-group small,
+
+.profile-section > small {
+
+    margin-top: 7px;
+
+    color: #98a2b3;
+
+    font-size: 11px;
+
+    line-height: 1.5;
+
+}
+
+
+
+/* =========================================================
+
+   VALIDATION
+
+\========================================================= */
+
+
+
+.error-text {
+
+    margin: 7px 0 0;
+
+    color: #dc2626;
+
+    font-size: 12px;
+
+    line-height: 1.4;
+
+}
+
+
+
+/* =========================================================
+
+   REPEATABLE PROFILE CARDS
+
+\========================================================= */
+
+
+
+.profile-card {
+
+    position: relative;
+
+
+
+    margin-bottom: 16px;
+
+    padding: 20px;
+
+
+
+    background: #f8fafc;
+
+    border: 1px solid #e2e8f0;
+
+    border-radius: 14px;
+
+}
+
+
+
+.profile-card:last-of-type {
+
+    margin-bottom: 18px;
+
+}
+
+
+
+.profile-card .profile-grid {
+
+    gap: 18px;
+
+}
+
+
+
+/* =========================================================
+
+   ADD / REMOVE BUTTONS
+
+\========================================================= */
+
+
+
+.add-btn,
+
+.remove-btn {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+
+
+    min-height: 38px;
+
+    padding: 9px 14px;
+
+
+
+    border-radius: 9px;
+
+
+
+    font-family: inherit;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+
+
+    cursor: pointer;
+
+
+
+    transition:
+
+        background 0.2s ease,
+
+        border-color 0.2s ease,
+
+        color 0.2s ease,
+
+        transform 0.2s ease;
+
+}
+
+
+
+.add-btn {
+
+    color: #315b9a;
+
+    background: #ffffff;
+
+    border: 1px solid #cfd9e7;
+
+}
+
+
+
+.add-btn:hover {
+
+    background: #f4f7fb;
+
+    border-color: #aebdd0;
+
+    transform: translateY(-1px);
+
+}
+
+
+
+.remove-btn {
+
+    margin-top: 16px;
+
+
+
+    color: #b42318;
+
+    background: #ffffff;
+
+    border: 1px solid #f1c7c3;
+
+}
+
+
+
+.remove-btn:hover {
+
+    background: #fff5f4;
+
+    border-color: #e7aaa4;
+
+    transform: translateY(-1px);
+
+}
+
+
+
+/* =========================================================
+
+   RESUME CARD
+
+\========================================================= */
+
+
+
+.resume-card {
+
+    margin-top: 0;
+
+    padding: 20px;
+
+
+
+    background: #f8fafc;
+
+    border: 1px solid #e2e8f0;
+
+    border-radius: 14px;
+
+}
+
+
+
+.resume-header {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 12px;
+
+
+
+    margin-bottom: 12px;
+
+}
+
+
+
+.resume-header h3 {
+
+    margin: 0;
+
+    color: #172033;
+
+    font-size: 15px;
+
+    font-weight: 800;
+
+}
+
+
+
+.resume-badge {
+
+    padding: 5px 10px;
+
+
+
+    color: #166534;
+
+    background: #dcfce7;
+
+    border: 1px solid #bbf7d0;
+
+    border-radius: 999px;
+
+
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+}
+
+
+
+.resume-name {
+
+    margin: 0 0 16px;
+
+    color: #667085;
+
+    font-size: 13px;
+
+    line-height: 1.5;
+
+    word-break: break-word;
+
+}
+
+
+
+/* =========================================================
+
+   RESUME ACTIONS
+
+\========================================================= */
+
+
+
+.resume-actions {
+
+    display: flex;
+
+    gap: 10px;
+
+    margin-bottom: 18px;
+
+}
+
+
+
+.resume-btn {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+
+
+    padding: 9px 14px;
+
+
+
+    color: #344054;
+
+    background: #ffffff;
+
+
+
+    border: 1px solid #dce3ed;
+
+    border-radius: 9px;
+
+
+
+    text-decoration: none;
+
+    font-family: inherit;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+
+
+    cursor: pointer;
+
+
+
+    transition:
+
+        transform 0.2s ease,
+
+        border-color 0.2s ease,
+
+        background 0.2s ease;
+
+}
+
+
+
+.resume-btn:hover {
+
+    transform: translateY(-1px);
+
+    border-color: #b8c4d6;
+
+    background: #f8fafc;
+
+}
+
+
+
+.view-btn {
+
+    color: #315b9a;
+
+}
+
+
+
+.download-btn {
+
+    color: #24724b;
+
+}
+
+
+
+/* =========================================================
+
+   RESUME UPLOAD
+
+\========================================================= */
+
+
+
+.resume-upload {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    flex-wrap: wrap;
+
+}
+
+
+
+.resume-upload input[type="file"] {
+
+    max-width: 100%;
+
+    padding: 8px;
+
+
+
+    color: #667085;
+
+    background: #ffffff;
+
+
+
+    border: 1px solid #dce3ed;
+
+    border-radius: 9px;
+
+
+
+    font-family: inherit;
+
+    font-size: 12px;
+
+}
+
+
+
+.upload-btn {
+
+    padding: 10px 16px;
+
+
+
+    color: #ffffff;
+
+    background: #263b5d;
+
+
+
+    border: none;
+
+    border-radius: 9px;
+
+
+
+    font-family: inherit;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+
+
+    cursor: pointer;
+
+
+
+    transition:
+
+        background 0.2s ease,
+
+        transform 0.2s ease;
+
+}
+
+
+
+.upload-btn:hover {
+
+    background: #1d2f4b;
+
+    transform: translateY(-1px);
+
+}
+
+
+
+/* =========================================================
+
+   PROFILE ACTIONS
+
+\========================================================= */
+
+
+
+.profile-actions {
+
+    display: flex;
+
+    justify-content: flex-end;
+
+
+
+    margin-top: 24px;
+
+    padding-bottom: 10px;
+
+}
+
+
+
+.profile-actions button {
+
+    min-width: 190px;
+
+}
+
+
+
+.full-width {
+
+    grid-column: 1 / -1;
+
+}
+
+
+
+/* =========================================================
+
+   RESPONSIVE
+
+\========================================================= */
+
+
+
+@media (max-width: 900px) {
+
+
+
+    .page {
+
+        max-width: none;
+
+        padding: 34px 28px 60px;
+
+    }
+
+}
+
+
+
+@media (max-width: 768px) {
+
+
+
+    .page {
+
+        padding: 30px 22px 55px;
+
+    }
+
+
+
+    .page-title {
+
+        font-size: 32px;
+
+    }
+
+
+
+    .profile-grid {
+
+        grid-template-columns: 1fr;
+
+    }
+
+
+
+    .profile-status-container {
+
+        flex-direction: column;
+
+        align-items: flex-start;
+
+    }
+
+
+
+    .profile-section {
+
+        padding: 20px;
+
+    }
+
+
+
+    .profile-card {
+
+        padding: 18px;
+
+    }
+
+
+
+    .profile-actions {
+
+        justify-content: stretch;
+
+    }
+
+
+
+    .profile-actions button {
+
+        width: 100%;
+
+    }
+
+}
+
+
+
+@media (max-width: 600px) {
+
+
+
+    .page {
+
+        padding: 26px 18px 48px;
+
+    }
+
+
+
+    .page-title {
+
+        margin-bottom: 22px;
+
+        font-size: 29px;
+
+        letter-spacing: -0.8px;
+
+    }
+
+
+
+    .profile-section {
+
+        padding: 18px;
+
+        border-radius: 14px;
+
+    }
+
+
+
+    .profile-section h2 {
+
+        font-size: 17px;
+
+    }
+
+
+
+    .profile-section h3 {
+
+        font-size: 13px;
+
+    }
+
+
+
+    .profile-card {
+
+        padding: 16px;
+
+        border-radius: 12px;
+
+    }
+
+
+
+    .resume-actions {
+
+        flex-direction: column;
+
+        align-items: stretch;
+
+    }
+
+
+
+    .resume-btn {
+
+        width: 100%;
+
+    }
+
+
+
+    .resume-upload {
+
+        align-items: stretch;
+
+        flex-direction: column;
+
+    }
+
+
+
+    .resume-upload input[type="file"],
+
+    .upload-btn {
+
+        width: 100%;
+
+        box-sizing: border-box;
+
+    }
+
+
+
+    .add-btn,
+
+    .remove-btn {
+
+        width: 100%;
+
+    }
+
+}
+
+
+/* =========================================================
+   PROFILE EDIT / VIEW MODE
+========================================================= */
+
+.section-toolbar {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+    margin: 0;
+}
+
+.section-actions {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.section-locked {
+    color: #98a2b3;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.section-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 34px;
+    padding: 8px 13px;
+    color: #315b9a;
+    background: #ffffff;
+    border: 1px solid #cfd9e7;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1;
+    cursor: pointer;
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.section-btn:hover {
+    background: #f4f7fb;
+    border-color: #aebdd0;
+    transform: translateY(-1px);
+}
+
+.section-btn.secondary {
+    color: #667085;
+    background: #ffffff;
+    border-color: #dce3ed;
+}
+
+.section-btn.secondary:hover {
+    color: #344054;
+    background: #f8fafc;
+    border-color: #c4cedd;
+}
+
+.section-btn.primary {
+    color: #ffffff;
+    background: #263b5d;
+    border-color: #263b5d;
+}
+
+.section-btn.primary:hover {
+    background: #1d2f4b;
+    border-color: #1d2f4b;
+}
+
+/* =========================================================
+   READ-ONLY VIEW GRID
+========================================================= */
+
+.profile-view-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 18px;
+    row-gap: 10px;
+    margin-bottom: 18px;
+}
+
+.profile-view-grid > div {
+    min-width: 0;
+    padding: 11px 13px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+}
+
+.profile-view-grid > div > span {
+    display: block;
+    margin-bottom: 5px;
+    color: #98a2b3;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1.4;
+}
+
+.profile-view-grid > div > strong {
+    display: block;
+    color: #26324a;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1.55;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+}
+
+/* =========================================================
+   REPEATABLE ENTRY ACTIONS
+========================================================= */
+
+.entry-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+    width: 100%;
+    margin-top: auto;
+    padding-top: 18px;
+    box-sizing: border-box;
+}
+
+.profile-card .profile-view-grid {
+    margin-bottom: 0;
+    width: 100%;
+}
+
+.profile-card {
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+}
+
+.profile-card .entry-actions {
+    margin-top: auto;
+}
+
+.profile-card .entry-actions .section-btn,
+.profile-card .entry-actions .remove-btn {
+    min-width: 82px;
+    margin-top: 0;
+}
+
+.profile-card .entry-actions .remove-btn {
+    margin-left: 0;
+}
+
+/* =========================================================
+   RESPONSIVE EDIT / VIEW MODE
+========================================================= */
+
+@media (max-width: 768px) {
+    .section-toolbar {
+        top: 20px;
+        right: 20px;
+        justify-content: flex-start;
+    }
+
+    .profile-view-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .entry-actions {
+        justify-content: flex-start;
+    }
+}
+
+@media (max-width: 600px) {
+    .profile-section h2 {
+        padding-right: 0;
+    }
+
+    .section-toolbar {
+        position: static;
+        margin: -8px 0 16px;
+        justify-content: flex-start;
+    }
+
+    .section-actions {
+        width: 100%;
+    }
+
+    .section-actions .section-btn {
+        flex: 1;
+    }
+
+    .entry-actions {
+        flex-direction: column;
+        align-items: stretch;
+        width: 100%;
+    }
+
+    .entry-actions .section-btn,
+    .entry-actions .remove-btn {
+        width: 100%;
+        min-width: 0;
+    }
+}

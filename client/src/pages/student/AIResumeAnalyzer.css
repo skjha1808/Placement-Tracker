@@ -1,0 +1,95 @@
+.ai-resume-page {
+    width: 100%;
+    max-width: 1180px;
+
+    margin: 0 auto;
+    padding: 42px 42px 70px;
+
+    box-sizing: border-box;
+}
+
+/* Page header */
+
+.ai-page-header {
+    margin-bottom: 28px;
+}
+
+.ai-page-header .eyebrow {
+    display: inline-block;
+    margin-bottom: 8px;
+}
+
+.ai-page-header h2 {
+    margin: 0 0 10px;
+
+    color: #172033;
+
+    font-size: 36px;
+    font-weight: 800;
+    letter-spacing: -1.2px;
+    line-height: 1.15;
+}
+
+.ai-page-header p {
+    max-width: 760px;
+    margin: 0;
+
+    color: #718096;
+
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+/* Upload / analysis top section */
+
+.ai-top-section {
+    display: grid;
+    grid-template-columns: 340px minmax(0, 1fr);
+    gap: 18px;
+
+    margin-top: 24px;
+}
+
+/* All following AI sections */
+
+.ai-section {
+    margin-top: 18px;
+}
+
+/* Prevent oversized nested elements */
+
+.ai-resume-page > * {
+    box-sizing: border-box;
+}
+
+/* Responsive */
+
+@media (max-width: 900px) {
+    .ai-resume-page {
+        max-width: none;
+        padding: 34px 28px 60px;
+    }
+
+    .ai-top-section {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 600px) {
+    .ai-resume-page {
+        padding: 28px 18px 50px;
+    }
+
+    .ai-page-header h2 {
+        font-size: 30px;
+        letter-spacing: -0.8px;
+    }
+
+    .ai-page-header p {
+        font-size: 13px;
+    }
+
+    .ai-section {
+        margin-top: 14px;
+    }
+}

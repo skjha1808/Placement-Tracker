@@ -1,0 +1,463 @@
+/* =========================================
+   PAGE
+========================================= */
+
+.applications-page {
+    min-height: calc(100vh - 76px);
+
+    padding: 34px 36px 50px;
+
+    background: #f5f7fb;
+    color: #172033;
+}
+
+
+/* =========================================
+   PAGE HEADER
+========================================= */
+
+.applications-page-header {
+    margin-bottom: 28px;
+}
+
+.applications-eyebrow {
+    display: inline-block;
+
+    margin-bottom: 8px;
+
+    color: #3157d5;
+
+    font-size: 11px;
+    font-weight: 800;
+
+    letter-spacing: 0.12em;
+}
+
+.applications-page-title {
+    margin: 0;
+
+    color: #172033;
+
+    font-size: 32px;
+    line-height: 1.15;
+
+    font-weight: 750;
+
+    letter-spacing: -0.025em;
+}
+
+.applications-page-subtitle {
+    margin: 9px 0 0;
+
+    color: #68738a;
+
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+
+/* =========================================
+   SEARCH TOOLBAR
+========================================= */
+
+.applications-toolbar {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 18px;
+
+    margin-bottom: 14px;
+}
+
+.applications-search-wrapper {
+    position: relative;
+
+    width: min(460px, 100%);
+}
+
+.applications-search-icon {
+    position: absolute;
+
+    top: 50%;
+    left: 15px;
+
+    z-index: 1;
+
+    transform: translateY(-50%);
+
+    font-size: 14px;
+
+    pointer-events: none;
+}
+
+.applications-search-input {
+    width: 100%;
+    height: 44px;
+
+    padding: 0 42px;
+
+    border: 1px solid #dfe4ed;
+    border-radius: 10px;
+
+    outline: none;
+
+    background: #ffffff;
+    color: #172033;
+
+    font-size: 13px;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.applications-search-input::placeholder {
+    color: #929bad;
+}
+
+.applications-search-input:hover {
+    border-color: #cfd6e3;
+}
+
+.applications-search-input:focus {
+    border-color: #3157d5;
+
+    box-shadow:
+        0 0 0 3px rgba(
+            49,
+            87,
+            213,
+            0.1
+        );
+}
+
+.applications-search-clear {
+    position: absolute;
+
+    top: 50%;
+    right: 10px;
+
+    width: 26px;
+    height: 26px;
+
+    transform: translateY(-50%);
+
+    border: none;
+    border-radius: 7px;
+
+    background: #f0f2f6;
+    color: #68738a;
+
+    font-size: 18px;
+    line-height: 1;
+
+    cursor: pointer;
+
+    transition:
+        background 0.18s ease,
+        color 0.18s ease;
+}
+
+.applications-search-clear:hover {
+    background: #e4e8f0;
+    color: #172033;
+}
+
+.applications-result-count {
+    color: #68738a;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================
+   FILTER BAR
+========================================= */
+
+.applications-filter-bar {
+    margin-bottom: 18px;
+}
+
+.applications-filter-list {
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    flex-wrap: wrap;
+}
+
+.application-filter-btn {
+    height: 36px;
+
+    padding: 0 14px;
+
+    border: 1px solid #dfe4ed;
+    border-radius: 9px;
+
+    background: #ffffff;
+    color: #68738a;
+
+    font-size: 12px;
+    font-weight: 650;
+
+    cursor: pointer;
+
+    transition:
+        border-color 0.18s ease,
+        background 0.18s ease,
+        color 0.18s ease,
+        transform 0.18s ease;
+}
+
+.application-filter-btn:hover {
+    border-color: #c7d0df;
+
+    background: #f8faff;
+
+    color: #3157d5;
+}
+
+.application-filter-btn.active {
+    border-color: #3157d5;
+
+    background: #3157d5;
+    color: #ffffff;
+
+    box-shadow:
+        0 4px 12px rgba(
+            49,
+            87,
+            213,
+            0.16
+        );
+}
+
+
+/* =========================================
+   INTERVIEW STAGE FILTER
+========================================= */
+
+.applications-interview-filter {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    margin-top: 12px;
+
+    padding: 10px 12px;
+
+    border: 1px solid #e4e8f0;
+    border-radius: 11px;
+
+    background: #ffffff;
+}
+
+.applications-interview-filter-label {
+    color: #68738a;
+
+    font-size: 11px;
+    font-weight: 750;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.06em;
+
+    white-space: nowrap;
+}
+
+.applications-interview-filter-list {
+    display: flex;
+
+    align-items: center;
+
+    gap: 6px;
+
+    flex-wrap: wrap;
+}
+
+.application-stage-filter-btn {
+    height: 30px;
+
+    padding: 0 12px;
+
+    border: 1px solid #dfe4ed;
+    border-radius: 8px;
+
+    background: #ffffff;
+
+    color: #68738a;
+
+    font-size: 11px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        border-color 0.18s ease,
+        background 0.18s ease,
+        color 0.18s ease;
+}
+
+.application-stage-filter-btn:hover {
+    border-color: #c7d0df;
+
+    background: #f8faff;
+
+    color: #3157d5;
+}
+
+.application-stage-filter-btn.active {
+    border-color: #3157d5;
+
+    background: #edf1ff;
+
+    color: #3157d5;
+}
+
+
+/* =========================================
+   APPLICATION GRID
+========================================= */
+
+.applications-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(430px, 1fr)
+        );
+
+    gap: 18px;
+}
+
+
+/* =========================================
+   EMPTY STATE
+========================================= */
+
+.applications-empty-card {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    min-height: 300px;
+
+    padding: 30px;
+
+    border: 1px solid #e4e8f0;
+    border-radius: 16px;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 10px 35px rgba(
+            29,
+            42,
+            68,
+            0.06
+        );
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 1000px) {
+
+    .applications-page {
+        padding: 28px 22px 40px;
+    }
+
+}
+
+
+@media (max-width: 800px) {
+
+    .applications-toolbar {
+        align-items: flex-start;
+
+        flex-direction: column;
+    }
+
+    .applications-search-wrapper {
+        width: 100%;
+    }
+
+    .applications-result-count {
+        align-self: flex-end;
+    }
+
+    .applications-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .applications-interview-filter {
+        align-items: flex-start;
+
+        flex-direction: column;
+
+        gap: 8px;
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .applications-page {
+        padding: 22px 16px 32px;
+    }
+
+    .applications-page-title {
+        font-size: 27px;
+    }
+
+    .applications-page-subtitle {
+        font-size: 13px;
+    }
+
+    .applications-filter-list {
+        gap: 7px;
+    }
+
+    .application-filter-btn {
+        height: 34px;
+
+        padding: 0 11px;
+
+        font-size: 11px;
+    }
+
+    .applications-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .applications-interview-filter {
+        padding: 9px 10px;
+    }
+
+    .applications-interview-filter-label {
+        font-size: 10px;
+    }
+
+    .application-stage-filter-btn {
+        height: 29px;
+
+        padding: 0 10px;
+
+        font-size: 10px;
+    }
+
+}

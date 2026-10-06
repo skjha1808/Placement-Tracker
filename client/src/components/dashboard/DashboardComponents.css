@@ -1,0 +1,32 @@
+.profile-progress-card{
+    margin:25px 0;
+}
+
+.profile-progress-track{
+    width:100%;
+    height:12px;
+    background:#3b3f47;
+    border-radius:20px;
+    overflow:hidden;
+    margin:20px 0;
+}
+
+.profile-progress-fill{
+    height:100%;
+    background:#2563eb;
+    transition:.4s ease;
+}
+
+.profile-checklist{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:12px;
+    margin-top:20px;
+}
+
+.check-item{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-size:15px;
+}

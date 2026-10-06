@@ -1,0 +1,93 @@
+.role-fit-card {
+    margin-top: 0;
+    background: #ffffff;
+    border: 1px solid #e6eaf0;
+    border-radius: 18px;
+    padding: 30px;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+    box-sizing: border-box;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.role-fit-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 32px rgba(15, 23, 42, 0.09);
+}
+
+.role-fit-card h3 {
+    margin: 0 0 8px;
+
+    color: #26324a;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.role-fit-description {
+    max-width: 760px;
+    margin: 0 0 24px;
+
+    color: #64748b;
+    font-size: 14px;
+    line-height: 1.65;
+}
+
+.role-fit-item {
+    padding: 17px 0;
+    border-bottom: 1px solid #eef1f5;
+}
+
+.role-fit-item:first-child {
+    padding-top: 0;
+}
+
+.role-fit-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.role-fit-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 9px;
+}
+
+.role-fit-role {
+    color: #334155;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.role-fit-match {
+    color: #2563eb;
+    font-size: 13px;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.role-fit-progress {
+    width: 100%;
+    height: 7px;
+    background: #edf0f4;
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.role-fit-progress-bar {
+    height: 100%;
+    background: #2563eb;
+    border-radius: 999px;
+    transition: width 0.8s ease;
+}
+
+.role-fit-reason {
+    max-width: 900px;
+    margin: 10px 0 0;
+
+    color: #64748b;
+    font-size: 13px;
+    line-height: 1.65;
+}

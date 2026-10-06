@@ -1,0 +1,53 @@
+/* GLOBAL */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    background:var(--background-color);
+    color:var(--text-primary);
+    font-family:
+        Inter,
+        "Segoe UI",
+        Arial,
+        sans-serif;
+}
+
+/* PAGE */
+
+.page{
+    max-width:var(--container-width);
+    margin:auto;
+    padding:40px 20px;
+}
+
+
+/* PAGE TITLE */
+
+.page-title{
+    text-align:center;
+    font-size:48px;
+    margin-bottom:35px;
+    font-weight:700;
+}
+
+
+/* SECTION */
+
+.section{
+    margin-top:40px;
+}
+
+
+/* TEXT */
+
+.text-center{
+    text-align:center;
+}
+
+.text-muted{
+    color:var(--text-muted);
+}

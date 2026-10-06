@@ -1,0 +1,475 @@
+/* =========================================
+   ADMIN PROFILE PAGE
+========================================= */
+
+.admin-profile-page {
+    min-height: calc(100vh - 76px);
+    padding: 34px 36px 50px;
+    background: #f5f7fb;
+    color: #172033;
+}
+
+
+/* =========================================
+   PAGE HEADER
+========================================= */
+
+.admin-profile-page-header {
+    margin-bottom: 28px;
+}
+
+.admin-profile-eyebrow {
+    display: inline-block;
+    margin-bottom: 8px;
+    color: #3157d5;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+}
+
+.admin-profile-title {
+    margin: 0;
+    color: #172033;
+    font-size: 32px;
+    line-height: 1.15;
+    font-weight: 750;
+    letter-spacing: -0.025em;
+}
+
+.admin-profile-subtitle {
+    margin: 9px 0 0;
+    color: #68738a;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+
+/* =========================================
+   PROFILE HERO
+========================================= */
+
+.admin-profile-hero {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin-bottom: 26px;
+    padding: 24px;
+    border: 1px solid #e4e8f0;
+    border-radius: 16px;
+    background: #ffffff;
+    box-shadow: 0 10px 35px rgba(29, 42, 68, 0.06);
+}
+
+.admin-profile-avatar {
+    width: 72px;
+    height: 72px;
+    flex-shrink: 0;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 18px;
+    background: #3157d5;
+    color: #ffffff;
+
+    font-size: 26px;
+    font-weight: 800;
+
+    box-shadow: 0 10px 22px rgba(49, 87, 213, 0.18);
+}
+
+.admin-profile-hero-info {
+    min-width: 0;
+}
+
+.admin-profile-hero-info h2 {
+    margin: 0;
+    color: #172033;
+    font-size: 22px;
+    line-height: 1.25;
+    font-weight: 750;
+}
+
+.admin-profile-hero-info p {
+    margin: 5px 0 11px;
+    color: #68738a;
+    font-size: 13px;
+}
+
+.admin-profile-hero-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.admin-profile-role,
+.admin-profile-active {
+    display: inline-flex;
+    align-items: center;
+    min-height: 27px;
+    padding: 0 10px;
+    border-radius: 7px;
+
+    font-size: 11px;
+    font-weight: 750;
+}
+
+.admin-profile-role {
+    background: #edf1ff;
+    color: #3157d5;
+}
+
+.admin-profile-active {
+    gap: 6px;
+    background: #e8f7f0;
+    color: #138a5b;
+}
+
+.admin-profile-status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #138a5b;
+}
+
+
+/* =========================================
+   SECTION
+========================================= */
+
+.admin-profile-section {
+    margin-bottom: 22px;
+}
+
+.admin-profile-section-heading {
+    margin-bottom: 11px;
+}
+
+.admin-profile-section-eyebrow {
+    display: block;
+    margin-bottom: 5px;
+    color: #8993a6;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.admin-profile-section-heading h2 {
+    margin: 0;
+    color: #172033;
+    font-size: 18px;
+    line-height: 1.3;
+    font-weight: 750;
+}
+
+
+/* =========================================
+   PERSONAL INFORMATION
+========================================= */
+
+.admin-profile-info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.admin-profile-info-card {
+    min-height: 84px;
+    padding: 16px 18px;
+
+    border: 1px solid #e4e8f0;
+    border-radius: 12px;
+    background: #ffffff;
+
+    box-shadow: 0 6px 20px rgba(29, 42, 68, 0.035);
+}
+
+.admin-profile-info-label {
+    display: block;
+    margin-bottom: 8px;
+    color: #8993a6;
+    font-size: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+}
+
+.admin-profile-info-card strong {
+    display: block;
+    overflow: hidden;
+
+    color: #172033;
+    font-size: 14px;
+    line-height: 1.4;
+    font-weight: 700;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.admin-profile-status-text {
+    color: #138a5b !important;
+}
+
+
+/* =========================================
+   ACCOUNT INFORMATION
+========================================= */
+
+.admin-profile-account-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.admin-profile-account-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+
+    min-height: 84px;
+    padding: 15px 16px;
+
+    border: 1px solid #e4e8f0;
+    border-radius: 12px;
+    background: #ffffff;
+
+    box-shadow: 0 6px 20px rgba(29, 42, 68, 0.035);
+}
+
+.admin-profile-account-icon {
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 9px;
+    background: #edf1ff;
+    color: #3157d5;
+
+    font-size: 10px;
+    font-weight: 850;
+}
+
+.admin-profile-account-card > div:last-child {
+    min-width: 0;
+}
+
+.admin-profile-account-card span,
+.admin-profile-account-card strong {
+    display: block;
+}
+
+.admin-profile-account-card span {
+    margin-bottom: 4px;
+    color: #8993a6;
+    font-size: 10px;
+    font-weight: 700;
+}
+
+.admin-profile-account-card strong {
+    overflow: hidden;
+    color: #172033;
+    font-size: 12px;
+    line-height: 1.35;
+    font-weight: 700;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+/* =========================================
+   SECURITY
+========================================= */
+
+.admin-profile-security-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+
+    min-height: 88px;
+    padding: 16px 18px;
+
+    border: 1px solid #e4e8f0;
+    border-radius: 12px;
+    background: #ffffff;
+
+    box-shadow: 0 6px 20px rgba(29, 42, 68, 0.035);
+}
+
+.admin-profile-security-icon {
+    width: 38px;
+    height: 38px;
+    flex-shrink: 0;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 10px;
+    background: #e8f7f0;
+
+    font-size: 16px;
+}
+
+.admin-profile-security-copy {
+    min-width: 0;
+    flex: 1;
+}
+
+.admin-profile-security-copy strong {
+    display: block;
+    margin-bottom: 4px;
+    color: #172033;
+    font-size: 13px;
+    font-weight: 750;
+}
+
+.admin-profile-security-copy p {
+    margin: 0;
+    color: #68738a;
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+.admin-profile-security-badge {
+    flex-shrink: 0;
+
+    padding: 6px 9px;
+    border-radius: 7px;
+
+    background: #e8f7f0;
+    color: #138a5b;
+
+    font-size: 10px;
+    font-weight: 800;
+}
+
+
+/* =========================================
+   ERROR
+========================================= */
+
+.admin-profile-error {
+    max-width: 560px;
+    margin: 80px auto;
+    padding: 32px;
+
+    border: 1px solid #e4e8f0;
+    border-radius: 16px;
+    background: #ffffff;
+
+    text-align: center;
+    box-shadow: 0 10px 35px rgba(29, 42, 68, 0.06);
+}
+
+.admin-profile-error-icon {
+    width: 44px;
+    height: 44px;
+    margin: 0 auto 14px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 50%;
+    background: #ffedf0;
+    color: #c83d4d;
+
+    font-size: 18px;
+    font-weight: 800;
+}
+
+.admin-profile-error h2 {
+    margin: 0;
+    color: #172033;
+    font-size: 18px;
+}
+
+.admin-profile-error p {
+    margin: 8px 0 0;
+    color: #68738a;
+    font-size: 13px;
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 1000px) {
+
+    .admin-profile-page {
+        padding: 28px 22px 40px;
+    }
+
+    .admin-profile-account-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+@media (max-width: 700px) {
+
+    .admin-profile-page {
+        padding: 24px 18px 34px;
+    }
+
+    .admin-profile-title {
+        font-size: 28px;
+    }
+
+    .admin-profile-info-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-profile-hero {
+        align-items: flex-start;
+    }
+
+    .admin-profile-security-card {
+        align-items: flex-start;
+        flex-wrap: wrap;
+    }
+
+    .admin-profile-security-badge {
+        margin-left: 52px;
+    }
+}
+
+
+@media (max-width: 500px) {
+
+    .admin-profile-page {
+        padding: 22px 16px 30px;
+    }
+
+    .admin-profile-hero {
+        gap: 14px;
+        padding: 18px;
+    }
+
+    .admin-profile-avatar {
+        width: 58px;
+        height: 58px;
+        border-radius: 14px;
+        font-size: 21px;
+    }
+
+    .admin-profile-hero-info h2 {
+        font-size: 18px;
+    }
+
+    .admin-profile-hero-info p {
+        font-size: 12px;
+    }
+
+    .admin-profile-info-card,
+    .admin-profile-account-card {
+        padding: 14px;
+    }
+}

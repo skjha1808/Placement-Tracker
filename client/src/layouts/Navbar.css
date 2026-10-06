@@ -1,0 +1,1127 @@
+/* =========================================================
+   STUDENT SIDEBAR
+
+   DO NOT MODIFY STUDENT DESIGN
+   ========================================================= */
+
+.student-sidebar {
+    position: fixed;
+
+    inset: 0 auto 0 0;
+
+    width: 248px;
+    height: 100vh;
+
+    box-sizing: border-box;
+
+    background: #101a2d;
+
+    color: #dce4f4;
+
+    padding: 24px 16px;
+
+    display: flex;
+    flex-direction: column;
+
+    z-index: 20;
+
+    box-shadow:
+        10px 0 30px rgba(
+            16,
+            26,
+            45,
+            0.08
+        );
+
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+
+/* =========================================================
+   STUDENT BRAND
+   ========================================================= */
+
+.sidebar-brand {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 4px 10px 28px;
+}
+
+.brand-mark {
+    width: 40px;
+    height: 40px;
+
+    border: 0;
+    border-radius: 12px;
+
+    background: #5574e9;
+
+    color: #fff;
+
+    font-weight: 800;
+
+    letter-spacing: -0.5px;
+
+    cursor: pointer;
+}
+
+.sidebar-brand strong,
+.sidebar-brand span {
+    display: block;
+}
+
+.sidebar-brand strong {
+    font-size: 16px;
+
+    color: #fff;
+}
+
+.sidebar-brand span {
+    font-size: 12px;
+
+    color: #8492ac;
+
+    margin-top: 2px;
+}
+
+
+/* =========================================================
+   STUDENT LABEL
+   ========================================================= */
+
+.sidebar-label {
+    font-size: 10px;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.14em;
+
+    color: #66738d;
+
+    padding: 0 12px 9px;
+
+    margin-top: 8px;
+}
+
+
+/* =========================================================
+   STUDENT NAVIGATION
+   ========================================================= */
+
+.student-nav {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 4px;
+}
+
+.student-link {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    color: #9ba8bd;
+
+    text-decoration: none;
+
+    padding: 11px 12px;
+
+    border-radius: 10px;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    transition: 0.2s;
+}
+
+.student-link:hover {
+    color: #fff;
+
+    background: #19253c;
+}
+
+.student-link.active {
+    background: #243453;
+
+    color: #fff;
+
+    box-shadow:
+        inset 3px 0 #7f98ff;
+}
+
+.nav-icon {
+    width: 20px;
+
+    text-align: center;
+
+    font-size: 16px;
+}
+
+.sidebar-spacer {
+    flex: 1;
+
+    min-height: 16px;
+}
+
+
+/* =========================================================
+   STUDENT USER
+   ========================================================= */
+
+.sidebar-user {
+    display: flex;
+
+    flex-shrink: 0;
+
+    align-items: center;
+
+    gap: 9px;
+
+    border-top: 1px solid #263149;
+
+    padding: 16px 6px 12px;
+
+    margin-top: 16px;
+}
+
+.user-avatar {
+    width: 34px;
+    height: 34px;
+
+    border-radius: 10px;
+
+    background: #30405f;
+
+    color: #fff;
+
+    display: grid;
+
+    place-items: center;
+
+    font-weight: 800;
+}
+
+.user-copy {
+    min-width: 0;
+
+    flex: 1;
+}
+
+.user-copy strong,
+.user-copy span {
+    display: block;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+}
+
+.user-copy strong {
+    font-size: 12px;
+
+    color: #fff;
+}
+
+.user-copy span {
+    font-size: 11px;
+
+    color: #7f8da4;
+
+    margin-top: 2px;
+}
+
+.sidebar-user button {
+    background: transparent;
+
+    border: 0;
+
+    color: #98a5bb;
+
+    padding: 2px;
+}
+
+.sidebar-logout {
+    flex-shrink: 0;
+
+    width: 100%;
+
+    box-sizing: border-box;
+
+    margin-top: 12px;
+
+    border: 1px solid #2a3852;
+
+    background: #18243a;
+
+    color: #aebbd0;
+
+    border-radius: 9px;
+
+    padding: 10px;
+
+    text-align: left;
+
+    cursor: pointer;
+}
+
+
+/* =========================================================
+   PUBLIC NAVIGATION
+   ========================================================= */
+
+.public-nav {
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 70px;
+
+    background: transparent;
+
+    color: #fff;
+
+    display: flex;
+
+    align-items: center;
+
+    padding: 0 28px;
+
+    gap: 30px;
+
+    z-index: 30;
+
+    box-sizing: border-box;
+}
+
+
+/* =========================================================
+   ADMIN LAYOUT
+   ========================================================= */
+
+.admin-layout {
+    position: relative;
+
+    z-index: 40;
+}
+
+
+/* =========================================================
+   ADMIN SIDEBAR
+========================================================= */
+
+.admin-sidebar {
+    position: fixed;
+
+    inset: 0 auto 0 0;
+
+    width: 248px;
+    height: 100vh;
+
+    box-sizing: border-box;
+
+    /*
+     * Lighter professional navy.
+     * This is intentionally different from
+     * the frozen student sidebar.
+     */
+    background: #1c2940;
+
+    color: #dce4f4;
+
+    padding: 24px 16px 18px;
+
+    display: flex;
+    flex-direction: column;
+
+    z-index: 50;
+
+    border-right: 1px solid #2a3952;
+
+    box-shadow:
+        10px 0 30px rgba(
+            16,
+            26,
+            45,
+            0.10
+        );
+
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    /* Hide scrollbar while preserving scrolling */
+    scrollbar-width: none;
+}
+
+.admin-sidebar::-webkit-scrollbar {
+    display: none;
+}
+
+
+/* =========================================================
+   ADMIN BRAND
+========================================================= */
+
+.admin-sidebar-brand {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 4px 10px 30px;
+}
+
+.admin-brand-mark {
+    width: 42px;
+    height: 42px;
+
+    border: 0;
+    border-radius: 12px;
+
+    background: #5574e9;
+
+    color: #fff;
+
+    font-weight: 900;
+
+    font-size: 14px;
+
+    letter-spacing: -0.5px;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 8px 20px rgba(
+            85,
+            116,
+            233,
+            0.25
+        );
+
+    transition: 0.2s ease;
+}
+
+.admin-brand-mark:hover {
+    transform: translateY(-1px);
+
+    background: #6481ef;
+}
+
+.admin-brand-copy strong,
+.admin-brand-copy span {
+    display: block;
+}
+
+.admin-brand-copy strong {
+    color: #fff;
+
+    font-size: 16px;
+
+    line-height: 1.2;
+}
+
+.admin-brand-copy span {
+    color: #93a2ba;
+
+    font-size: 12px;
+
+    margin-top: 3px;
+}
+
+
+/* =========================================================
+   ADMIN SECTION LABEL
+========================================================= */
+
+.admin-sidebar-label {
+    font-size: 10px;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.14em;
+
+    color: #8291aa;
+
+    padding: 0 12px 9px;
+
+    margin-top: 8px;
+}
+
+
+/* =========================================================
+   ADMIN WORKSPACE NAVIGATION
+========================================================= */
+
+.admin-sidebar-nav {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 5px;
+}
+
+.admin-nav-link {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    min-height: 44px;
+
+    box-sizing: border-box;
+
+    padding: 10px 12px;
+
+    border-radius: 10px;
+
+    color: #aebbd0;
+
+    text-decoration: none;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.admin-nav-link:hover {
+    color: #fff;
+
+    background: #263754;
+
+    transform: translateX(2px);
+}
+
+.admin-nav-link.active {
+    color: #fff;
+
+    background: #30456b;
+
+    box-shadow:
+        inset 3px 0 #8ba3ff,
+        0 4px 14px rgba(
+            0,
+            0,
+            0,
+            0.08
+        );
+}
+
+.admin-nav-icon {
+    width: 22px;
+
+    flex-shrink: 0;
+
+    text-align: center;
+
+    font-size: 17px;
+
+    color: #9aa9c1;
+}
+
+.admin-nav-link.active .admin-nav-icon {
+    color: #c0cbff;
+}
+
+.admin-sidebar-spacer {
+    flex: 1;
+
+    min-height: 20px;
+}
+
+
+/* =========================================================
+   ADMINISTRATION / PLACEMENT CELL
+========================================================= */
+
+.admin-info-card {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    margin: 0 4px 14px;
+
+    padding: 12px;
+
+    border: 1px solid #344563;
+
+    border-radius: 12px;
+
+    background: #202f48;
+
+    transition:
+        border-color 0.2s ease,
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+.admin-info-card:hover {
+    border-color: #435879;
+
+    background: #263752;
+
+    transform: translateY(-1px);
+}
+
+.admin-info-icon {
+    width: 30px;
+    height: 30px;
+
+    flex-shrink: 0;
+
+    display: grid;
+
+    place-items: center;
+
+    border-radius: 9px;
+
+    background:
+        rgba(
+            85,
+            116,
+            233,
+            0.20
+        );
+
+    color: #a8b8ff;
+
+    font-size: 13px;
+
+    font-weight: 800;
+}
+
+.admin-info-card strong,
+.admin-info-card span {
+    display: block;
+}
+
+.admin-info-card strong {
+    color: #eef3ff;
+
+    font-size: 11px;
+
+    line-height: 1.2;
+}
+
+.admin-info-card span {
+    color: #91a0b8;
+
+    font-size: 10px;
+
+    margin-top: 3px;
+
+    line-height: 1.3;
+}
+
+
+/* =========================================================
+   ADMIN ACCOUNT LABEL
+========================================================= */
+
+.admin-info-card + .admin-sidebar-label {
+    margin-top: 2px;
+
+    padding-top: 2px;
+
+    padding-bottom: 7px;
+
+    color: #8291aa;
+}
+
+
+/* =========================================================
+   ADMIN USER AREA
+========================================================= */
+
+.admin-sidebar-user {
+    width: calc(100% - 8px);
+    box-sizing: border-box;
+
+    display: flex;
+    align-items: center;
+    gap: 9px;
+
+    flex-shrink: 0;
+    margin: 0 4px;
+    padding: 10px 8px;
+
+    border: 1px solid #344563;
+    border-radius: 11px;
+
+    background: #202f48;
+    color: inherit;
+
+    font: inherit;
+    text-align: left;
+
+    cursor: pointer;
+
+    transition:
+        border-color 0.2s ease,
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+.admin-sidebar-user:hover {
+    border-color: #405575;
+    background: #263752;
+    transform: translateY(-1px);
+}
+
+.admin-user-avatar {
+    width: 35px;
+    height: 35px;
+
+    flex-shrink: 0;
+
+    display: grid;
+
+    place-items: center;
+
+    border-radius: 10px;
+
+    background: #3b4f72;
+
+    color: #fff;
+
+    font-size: 13px;
+
+    font-weight: 800;
+}
+
+.admin-user-copy {
+    min-width: 0;
+
+    flex: 1;
+}
+
+.admin-user-copy strong,
+.admin-user-copy span {
+    display: block;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+}
+
+.admin-user-copy strong {
+    color: #fff;
+
+    font-size: 12px;
+}
+
+.admin-user-copy span {
+    color: #91a0b8;
+
+    font-size: 10px;
+
+    margin-top: 2px;
+}
+
+
+/* =========================================================
+   ADMIN SIDEBAR LOGOUT
+========================================================= */
+
+.admin-sidebar-logout {
+    width: 100%;
+
+    min-height: 40px;
+
+    box-sizing: border-box;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    flex-shrink: 0;
+
+    margin-top: 10px;
+
+    border: 1px solid #344563;
+
+    border-radius: 9px;
+
+    background: #202f48;
+
+    color: #b9c5d8;
+
+    padding: 9px 11px;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    text-align: left;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.admin-sidebar-logout:hover {
+    background: #2a3b59;
+
+    color: #fff;
+
+    border-color: #465b7d;
+
+    transform: translateY(-1px);
+}
+
+.admin-sidebar-logout span:first-child {
+    width: 18px;
+
+    text-align: center;
+
+    font-size: 15px;
+}
+
+
+/* =========================================================
+   ADMIN TOP BAR
+========================================================= */
+
+.admin-topbar {
+    position: fixed;
+
+    top: 0;
+
+    right: 0;
+
+    left: 248px;
+
+    height: 76px;
+
+    box-sizing: border-box;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding: 0 30px;
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            0.96
+        );
+
+    border-bottom: 1px solid #e5e9f1;
+
+    box-shadow:
+        0 4px 20px rgba(
+            15,
+            23,
+            42,
+            0.04
+        );
+
+    backdrop-filter: blur(12px);
+
+    z-index: 45;
+}
+
+.admin-topbar-title {
+    min-width: 0;
+}
+
+.admin-topbar-eyebrow {
+    display: block;
+
+    color: #7a879c;
+
+    font-size: 9px;
+
+    font-weight: 800;
+
+    letter-spacing: 0.15em;
+
+    margin-bottom: 4px;
+}
+
+.admin-topbar-title strong {
+    display: block;
+
+    color: #172033;
+
+    font-size: 18px;
+
+    line-height: 1.2;
+}
+
+.admin-topbar-actions {
+    display: flex;
+
+    align-items: center;
+
+    gap: 16px;
+}
+
+.admin-topbar-user {
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    padding-left: 4px;
+}
+
+.admin-topbar-avatar {
+    width: 36px;
+    height: 36px;
+
+    display: grid;
+
+    place-items: center;
+
+    flex-shrink: 0;
+
+    border-radius: 10px;
+
+    background: #5574e9;
+
+    color: #fff;
+
+    font-size: 13px;
+
+    font-weight: 800;
+}
+
+.admin-topbar-user-copy strong,
+.admin-topbar-user-copy span {
+    display: block;
+}
+
+.admin-topbar-user-copy strong {
+    color: #1c2638;
+
+    font-size: 12px;
+
+    white-space: nowrap;
+}
+
+.admin-topbar-user-copy span {
+    color: #7b8799;
+
+    font-size: 10px;
+
+    margin-top: 2px;
+}
+
+.admin-topbar-logout {
+    border: 0;
+
+    border-radius: 9px;
+
+    background: #e4515f;
+
+    color: #fff;
+
+    padding: 10px 15px;
+
+    font-size: 12px;
+
+    font-weight: 800;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+.admin-topbar-logout:hover {
+    background: #d94352;
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 900px) {
+
+    /* -----------------------------------------------------
+       STUDENT RESPONSIVE
+    ----------------------------------------------------- */
+
+    .student-sidebar {
+        position: static;
+
+        width: 100%;
+
+        min-height: auto;
+    }
+
+    .student-nav {
+        display: grid;
+
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .sidebar-spacer {
+        display: none;
+    }
+
+    .sidebar-user,
+    .sidebar-logout {
+        display: none;
+    }
+
+
+    /* -----------------------------------------------------
+       ADMIN RESPONSIVE
+    ----------------------------------------------------- */
+
+    .admin-sidebar {
+        position: static;
+
+        width: 100%;
+
+        height: auto;
+
+        min-height: auto;
+
+        max-height: none;
+
+        padding: 16px;
+
+        border-right: 0;
+
+        box-shadow: none;
+    }
+
+    .admin-sidebar-brand {
+        padding-bottom: 20px;
+    }
+
+    .admin-sidebar-nav {
+        display: grid;
+
+        grid-template-columns:
+            repeat(2, 1fr);
+
+        gap: 6px;
+    }
+
+    .admin-sidebar-spacer {
+        display: none;
+    }
+
+    .admin-info-card {
+        margin-top: 20px;
+    }
+
+    .admin-sidebar-user {
+        margin-top: 0;
+    }
+
+    .admin-sidebar-logout {
+        display: flex;
+    }
+
+    .admin-topbar {
+        position: sticky;
+
+        top: 0;
+
+        left: 0;
+
+        height: 68px;
+
+        padding: 0 18px;
+    }
+
+    .admin-topbar-eyebrow {
+        display: none;
+    }
+
+    .admin-topbar-title strong {
+        font-size: 16px;
+    }
+
+    .admin-topbar-user-copy {
+        display: none;
+    }
+
+    .admin-topbar-actions {
+        gap: 10px;
+    }
+
+    body:has(.admin-layout) .page {
+        margin-left: 0;
+
+        padding-top: 0;
+    }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 560px) {
+
+    .admin-sidebar-nav {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-topbar {
+        padding: 0 14px;
+    }
+
+    .admin-topbar-user {
+        display: none;
+    }
+
+    .admin-topbar-logout {
+        padding: 9px 12px;
+    }
+
+    .admin-info-card {
+        margin-left: 0;
+
+        margin-right: 0;
+    }
+
+    .admin-sidebar-user {
+        margin-left: 0;
+
+        margin-right: 0;
+    }
+}

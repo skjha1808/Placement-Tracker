@@ -1,0 +1,51 @@
+.app-main {
+    min-height: 100vh;
+    min-width: 0;
+}
+
+
+/* =========================================================
+   STUDENT WORKSPACE
+   DO NOT CHANGE STUDENT LAYOUT
+   ========================================================= */
+
+.student-main {
+    min-height: 100vh;
+    margin-left: 248px;
+    background: #f7f9fc;
+    box-sizing: border-box;
+    overflow-x: hidden;
+}
+
+
+/* =========================================================
+   ADMIN WORKSPACE
+   ========================================================= */
+
+.admin-main {
+    min-height: 100vh;
+    width: calc(100% - 248px);
+    margin-left: 248px;
+    padding-top: 76px;
+    box-sizing: border-box;
+    overflow-x: hidden;
+    min-width: 0;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    .student-main {
+        margin-left: 0;
+    }
+
+    .admin-main {
+        width: 100%;
+        margin-left: 0;
+        padding-top: 0;
+    }
+}

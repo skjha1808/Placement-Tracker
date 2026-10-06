@@ -1,0 +1,94 @@
+/* =========================================================
+   ADMIN STAT CARD
+   ========================================================= */
+
+.admin-stat-card {
+    width: 100%;
+    min-height: 150px;
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+
+    padding: 22px;
+
+    background: #ffffff;
+    border: 1px solid #e4e8f0;
+    border-radius: 16px;
+
+    text-align: left;
+
+    box-shadow:
+        0 6px 20px rgba(29, 42, 68, 0.05);
+
+    transition:
+        transform 0.22s ease,
+        box-shadow 0.22s ease,
+        border-color 0.22s ease;
+}
+
+
+.dashboard-stat-link:hover .admin-stat-card {
+    transform: translateY(-4px);
+
+    border-color: #d4dcf2;
+
+    box-shadow:
+        0 14px 30px rgba(29, 42, 68, 0.1);
+}
+
+
+/* =========================================================
+   ICON
+   ========================================================= */
+
+.admin-stat-icon {
+    width: 44px;
+    height: 44px;
+
+    margin-bottom: 16px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 12px;
+
+    font-size: 21px;
+    color: #ffffff;
+
+    box-shadow:
+        0 7px 16px rgba(29, 42, 68, 0.12);
+}
+
+
+/* =========================================================
+   VALUE
+   ========================================================= */
+
+.admin-stat-card h2 {
+    margin: 0;
+
+    color: #172033;
+
+    font-size: 30px;
+    line-height: 1;
+    font-weight: 750;
+    letter-spacing: -0.5px;
+}
+
+
+/* =========================================================
+   LABEL
+   ========================================================= */
+
+.admin-stat-card p {
+    margin: 8px 0 0;
+
+    color: #68738a;
+
+    font-size: 13px;
+    font-weight: 650;
+}

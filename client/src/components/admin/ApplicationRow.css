@@ -1,0 +1,496 @@
+/* =========================================
+   APPLICATION CARD
+========================================= */
+
+.admin-application-card {
+    width: 100%;
+    min-width: 0;
+
+    padding: 22px;
+
+    border: 1px solid #e4e8f0;
+    border-radius: 16px;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 8px 28px rgba(
+            29,
+            42,
+            68,
+            0.055
+        );
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.admin-application-card:hover {
+    transform: translateY(-2px);
+
+    border-color: #d5dce8;
+
+    box-shadow:
+        0 12px 34px rgba(
+            29,
+            42,
+            68,
+            0.09
+        );
+}
+
+
+/* =========================================
+   HEADER
+========================================= */
+
+.admin-application-header {
+    display: grid;
+
+    grid-template-columns:
+        48px
+        minmax(0, 1fr)
+        auto;
+
+    align-items: center;
+
+    column-gap: 14px;
+
+    width: 100%;
+    min-width: 0;
+
+    padding-bottom: 18px;
+
+    border-bottom: 1px solid #edf0f5;
+}
+
+.admin-application-avatar {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 48px;
+    height: 48px;
+
+    border-radius: 12px;
+
+    background: #edf1ff;
+    color: #3157d5;
+
+    font-size: 18px;
+    font-weight: 800;
+}
+
+.admin-application-student {
+    min-width: 0;
+
+    overflow: hidden;
+}
+
+.admin-application-student-name {
+    display: block;
+
+    width: 100%;
+
+    margin: 0;
+    padding: 0;
+
+    overflow: hidden;
+
+    border: none;
+
+    background: transparent;
+    color: #172033;
+
+    font-family: inherit;
+
+    font-size: 16px;
+    font-weight: 750;
+
+    line-height: 1.3;
+
+    text-align: left;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    cursor: pointer;
+}
+
+.admin-application-student-name:hover {
+    color: #3157d5;
+
+    text-decoration: underline;
+}
+
+.admin-application-email {
+    margin-top: 4px;
+
+    overflow: hidden;
+
+    color: #8a94a8;
+
+    font-size: 11px;
+    line-height: 1.4;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.admin-application-company {
+    display: flex;
+
+    align-items: center;
+
+    gap: 5px;
+
+    margin-top: 6px;
+
+    overflow: hidden;
+
+    color: #536078;
+
+    font-size: 12px;
+    font-weight: 650;
+
+    line-height: 1.4;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.admin-application-company span:last-child {
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+/* =========================================
+   STATUS
+========================================= */
+
+.admin-application-status-area {
+    display: flex;
+
+    align-items: center;
+    justify-content: flex-end;
+
+    min-width: 0;
+}
+
+.application-status-badge {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    min-height: 28px;
+
+    padding: 6px 10px;
+
+    border-radius: 999px;
+
+    font-size: 10px;
+    font-weight: 750;
+
+    line-height: 1;
+
+    white-space: nowrap;
+}
+
+.admin-application-status-dot {
+    width: 6px;
+    height: 6px;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    background: currentColor;
+}
+
+.application-status-badge.applied {
+    background: #edf1ff;
+    color: #3157d5;
+}
+
+.application-status-badge.oa-cleared {
+    background: #fff4df;
+    color: #b56a00;
+}
+
+.application-status-badge.interview {
+    background: #f0ebff;
+    color: #7351c9;
+}
+
+.application-status-badge.selected {
+    background: #e8f7f0;
+    color: #138a5b;
+}
+
+.application-status-badge.rejected {
+    background: #ffedf0;
+    color: #c83d4d;
+}
+
+
+/* =========================================
+   CONTROLS
+========================================= */
+
+.admin-application-controls {
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1fr)
+        minmax(0, 1fr);
+
+    gap: 14px;
+
+    width: 100%;
+
+    padding: 18px 0;
+}
+
+.admin-application-control {
+    min-width: 0;
+}
+
+.admin-application-control label {
+    display: block;
+
+    margin-bottom: 7px;
+
+    color: #68738a;
+
+    font-size: 10px;
+    font-weight: 800;
+
+    line-height: 1.3;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.06em;
+}
+
+.admin-application-select {
+    display: block;
+
+    width: 100%;
+    height: 40px;
+
+    padding: 0 12px;
+
+    border: 1px solid #dfe4ed;
+    border-radius: 8px;
+
+    outline: none;
+
+    background: #ffffff;
+    color: #364158;
+
+    font-family: inherit;
+
+    font-size: 12px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        border-color 0.18s ease,
+        box-shadow 0.18s ease;
+}
+
+.admin-application-select:hover {
+    border-color: #cbd3e0;
+}
+
+.admin-application-select:focus {
+    border-color: #3157d5;
+
+    box-shadow:
+        0 0 0 3px rgba(
+            49,
+            87,
+            213,
+            0.09
+        );
+}
+
+.admin-application-select:disabled {
+    background: #f5f7fb;
+
+    color: #98a2b3;
+
+    cursor: not-allowed;
+}
+
+.admin-application-not-applicable {
+    display: flex;
+
+    align-items: center;
+
+    width: 100%;
+    height: 40px;
+
+    padding: 0 12px;
+
+    box-sizing: border-box;
+
+    border: 1px solid #edf0f5;
+    border-radius: 8px;
+
+    background: #f8f9fb;
+    color: #98a2b3;
+
+    font-size: 12px;
+    font-weight: 600;
+}
+
+
+/* =========================================
+   ACTIONS
+========================================= */
+
+.admin-application-actions {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    width: 100%;
+
+    padding-top: 16px;
+
+    border-top: 1px solid #edf0f5;
+}
+
+.admin-application-update,
+.admin-application-delete {
+    height: 38px;
+
+    border-radius: 8px;
+
+    font-family: inherit;
+
+    font-size: 11px;
+    font-weight: 750;
+
+    line-height: 1;
+
+    cursor: pointer;
+
+    transition:
+        background 0.18s ease,
+        border-color 0.18s ease,
+        color 0.18s ease,
+        transform 0.18s ease;
+}
+
+.admin-application-update {
+    flex: 1;
+
+    min-width: 0;
+
+    padding: 0 14px;
+
+    border: 1px solid #3157d5;
+
+    background: #3157d5;
+    color: #ffffff;
+}
+
+.admin-application-update:hover:not(:disabled) {
+    border-color: #2749b8;
+
+    background: #2749b8;
+
+    transform: translateY(-1px);
+}
+
+.admin-application-update:disabled {
+    border-color: #e1e5ed;
+
+    background: #f0f2f6;
+    color: #9aa3b4;
+
+    cursor: not-allowed;
+}
+
+.admin-application-delete {
+    flex-shrink: 0;
+
+    padding: 0 18px;
+
+    border: 1px solid #f1cfd4;
+
+    background: #fff7f8;
+    color: #c83d4d;
+}
+
+.admin-application-delete:hover:not(:disabled) {
+    border-color: #c83d4d;
+
+    background: #ffedf0;
+
+    transform: translateY(-1px);
+}
+
+.admin-application-delete:disabled {
+    opacity: 0.6;
+
+    cursor: not-allowed;
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 600px) {
+
+    .admin-application-card {
+        padding: 18px;
+    }
+
+    .admin-application-header {
+        grid-template-columns:
+            44px
+            minmax(0, 1fr);
+
+        row-gap: 12px;
+    }
+
+    .admin-application-avatar {
+        width: 44px;
+        height: 44px;
+    }
+
+    .admin-application-status-area {
+        grid-column: 2;
+
+        justify-content: flex-start;
+    }
+
+    .admin-application-controls {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-application-actions {
+        flex-direction: column;
+    }
+
+    .admin-application-update,
+    .admin-application-delete {
+        width: 100%;
+    }
+
+}

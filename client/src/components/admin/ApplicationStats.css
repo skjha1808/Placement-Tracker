@@ -1,0 +1,230 @@
+/* =========================================
+   STATS GRID
+========================================= */
+
+.admin-stats {
+    display: grid;
+
+    grid-template-columns:
+        repeat(6, minmax(0, 1fr));
+
+    gap: 14px;
+
+    margin-bottom: 26px;
+}
+
+
+/* =========================================
+   STAT CARD
+========================================= */
+
+.admin-stat-card {
+    position: relative;
+
+    min-height: 108px;
+
+    padding: 18px 20px;
+
+    overflow: hidden;
+
+    border: 1px solid #e4e8f0;
+    border-radius: 14px;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 8px 24px rgba(
+            29,
+            42,
+            68,
+            0.045
+        );
+
+    transition:
+        transform 0.18s ease,
+        box-shadow 0.18s ease,
+        border-color 0.18s ease;
+}
+
+.admin-stat-card::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 4px;
+    height: 100%;
+
+    background: #3157d5;
+}
+
+.admin-stat-card:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 12px 30px rgba(
+            29,
+            42,
+            68,
+            0.08
+        );
+}
+
+
+/* =========================================
+   LABEL
+========================================= */
+
+.admin-stat-label {
+    margin-bottom: 12px;
+
+    color: #68738a;
+
+    font-size: 10px;
+    font-weight: 800;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.07em;
+}
+
+
+/* =========================================
+   VALUE
+========================================= */
+
+.admin-stat-value {
+    color: #172033;
+
+    font-size: 28px;
+    line-height: 1;
+
+    font-weight: 750;
+}
+
+
+/* =========================================
+   CARD VARIANTS
+========================================= */
+
+/* Applications */
+
+.admin-stat-card.total::before {
+    background: #3157d5;
+}
+
+.admin-stat-card.total .admin-stat-value {
+    color: #3157d5;
+}
+
+
+/* OA Cleared */
+
+.admin-stat-card.oa-cleared::before {
+    background: #b56a00;
+}
+
+.admin-stat-card.oa-cleared .admin-stat-value {
+    color: #b56a00;
+}
+
+
+/* Selected */
+
+.admin-stat-card.selected::before {
+    background: #138a5b;
+}
+
+.admin-stat-card.selected .admin-stat-value {
+    color: #138a5b;
+}
+
+
+/* Rejected */
+
+.admin-stat-card.rejected::before {
+    background: #c83d4d;
+}
+
+.admin-stat-card.rejected .admin-stat-value {
+    color: #c83d4d;
+}
+
+
+/* Technical Interview */
+
+.admin-stat-card.technical::before {
+    background: #3157d5;
+}
+
+.admin-stat-card.technical .admin-stat-value {
+    color: #3157d5;
+}
+
+
+/* HR Interview */
+
+.admin-stat-card.hr::before {
+    background: #138a5b;
+}
+
+.admin-stat-card.hr .admin-stat-value {
+    color: #138a5b;
+}
+
+
+/* =========================================
+   INTERVIEW CARD LABELS
+========================================= */
+
+.admin-stat-card.technical .admin-stat-label,
+.admin-stat-card.hr .admin-stat-label {
+    white-space: normal;
+    line-height: 1.25;
+    min-height: 25px;
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 1200px) {
+
+    .admin-stats {
+        grid-template-columns:
+            repeat(3, minmax(0, 1fr));
+    }
+
+}
+
+
+/* Tablet */
+
+@media (max-width: 900px) {
+
+    .admin-stats {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+}
+
+
+/* Mobile */
+
+@media (max-width: 600px) {
+
+    .admin-stats {
+        grid-template-columns: 1fr;
+
+        gap: 10px;
+
+        margin-bottom: 20px;
+    }
+
+    .admin-stat-card {
+        min-height: 92px;
+    }
+}
